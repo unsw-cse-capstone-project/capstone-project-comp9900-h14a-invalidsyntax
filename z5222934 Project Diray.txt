@@ -1,0 +1,6 @@
+Week1:	Group stand up meetings
+	Jira system setup and group member invite including tutor
+Week2:	Github class room repository setup
+	Distribute task for each group member for the Proposal
+Week2:	Create epic and user stories on Jira
+	Work on proposal 
