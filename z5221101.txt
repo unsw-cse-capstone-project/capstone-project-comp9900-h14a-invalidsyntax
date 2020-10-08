@@ -1,1 +1,32 @@
 Week 1
+What have done:
+Discussed the specifications of each project
+Choosed the project
+
+What will we do:
+Specify the requement and objectives of the project
+
+Week 2:
+What have done:
+Specified the requement and objectives of the project
+Planned the architecture of the project
+Completing the proposal
+
+What will we do:
+Complet the whole proposal
+
+Week 3:
+What have done:
+I finished the Noval functions part of the proposal
+My team finished other parts of the proposal
+The proposal has beenfinished
+
+What will we do:
+Install the environment of the project
+
+Week 4:
+What have done:
+Installed the environment of the project'
+
+What will we do:
+Complete the skeleton the website
