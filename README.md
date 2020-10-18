@@ -7,7 +7,7 @@
 参考 https://cloud.tencent.com/edu/learning/course-1934-41065
 
 ## 运行
-安装好后在目录下执行命令 npm run serve 即可
+环境搭建好后在目录下执行命令 npm run serve 即可
 
 ## 相关教程： 
 https://www.zmrenwu.com/courses/vue2x-todo-tutorial/ <br>
