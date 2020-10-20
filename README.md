@@ -1,7 +1,7 @@
 # 9900
 
 # Login 和 Register page Vue代码
-目录 /login
+目录 /login_vue
 
 ## Vue环境搭建
 参考 https://cloud.tencent.com/edu/learning/course-1934-41065
