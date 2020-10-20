@@ -19,7 +19,7 @@
         WHERE name = #{name}
     </select>
 
-    <update id="updateUser" parameterType="BaseResultMap">
+    <update id="updateUser" parameterType="java.lang.String">
         update user set user.password=#{password},user.email=#{email} where user.name=#{name}
     </update>
 

@@ -61,7 +61,7 @@ public class UserService {
         if (StringUtils.isEmpty(name)) {
             return Result.fail("Account name can not be null !");
         }
-        if (StringUtils.isEmpty(password) && StringUtils.isEmpty(password)) {
+        if (StringUtils.isEmpty(password) && StringUtils.isEmpty(email)) {
             return Result.fail("There is nothing to change !");
         }
         User user = usermapper.findUserByName(name);
@@ -80,8 +80,6 @@ public class UserService {
         if (!StringUtils.isEmpty(email)) {
             user.setEmail(email);
         }
-//        user.setPassword(password);
-//        user.setEmail(email);
         return Result.ok("Update Success", user);
     }
 }
