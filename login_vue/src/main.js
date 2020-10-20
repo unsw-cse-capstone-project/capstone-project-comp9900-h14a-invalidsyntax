@@ -18,8 +18,7 @@ const router = new VueRouter({
   routes: [
     { path: "/", redirect: "/register" },
     { path: "/register", component: () => import("@/components/register.vue") },
-    { path: "/login", component: () => import("@/components/login.vue") }, // 导航栏
-    { path: "/accmanage", component: () => import("@/components/accmanage.vue")} //email password
+    { path: "/login", component: () => import("@/components/login.vue") } // 导航栏
   ]
 });
 
