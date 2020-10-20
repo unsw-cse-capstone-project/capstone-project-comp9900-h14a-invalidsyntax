@@ -5,4 +5,10 @@ Week 2
 Discussing the task of proposal and assigning tasks for everyone
 
 Week 3
-I finish the User Story and Project Deliverables parts of proposal
+I finished the User Story and Project Deliverables parts of proposal
+
+Week 4
+I finished the user login & register function and user database parts.
+
+Week 5
+Completed the construction of the movie database and searching movie data according to movie name.

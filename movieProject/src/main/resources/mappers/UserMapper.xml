@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.movieProject.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.movieProject.entity.User">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+    </resultMap>
+    <insert id="insertUser" parameterType="java.lang.String">
+        INSERT INTO user(name, password, email)
+        VALUES(#{name}, #{password}, #{email})
+    </insert>
+
+    <select id="findUserByName" resultMap="BaseResultMap">
+        SELECT id, name, password, email
+        FROM user
+        WHERE name = #{name}
+    </select>
+</mapper>
