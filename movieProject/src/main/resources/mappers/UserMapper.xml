@@ -18,4 +18,9 @@
         FROM user
         WHERE name = #{name}
     </select>
+
+    <update id="updateUser" parameterType="BaseResultMap">
+        update user set user.password=#{password},user.email=#{email} where user.name=#{name}
+    </update>
+
 </mapper>

@@ -33,4 +33,13 @@ public class UserController {
         log.info("password:{}", password);
         return userService.addUser(name, password, email);
     }
+
+    @ApiOperation("Update API, return user data")
+    @GetMapping("update")
+    public Result update(String name, String password, String email) {
+        log.info("name:{}", name);
+        log.info("password:{}", password);
+        log.info("email:{}", email);
+        return userService.updateUser(name, password, email);
+    }
 }

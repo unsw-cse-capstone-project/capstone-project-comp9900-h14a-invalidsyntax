@@ -56,4 +56,32 @@ public class UserService {
         newUser.setEmail(email);
         return Result.ok("Register Success", newUser);
     }
+
+    public Result updateUser(String name, String password, String email) {
+        if (StringUtils.isEmpty(name)) {
+            return Result.fail("Account name can not be null !");
+        }
+        if (StringUtils.isEmpty(password) && StringUtils.isEmpty(password)) {
+            return Result.fail("There is nothing to change !");
+        }
+        User user = usermapper.findUserByName(name);
+        if (null == user) {
+            return Result.fail("Can not find user to update !");
+        }
+
+        int resultCount = usermapper.updateUser(name, password, email);
+
+        if (resultCount == 0) {
+            return Result.fail("Update failed !");
+        }
+        if (!StringUtils.isEmpty(password)) {
+            user.setPassword(password);
+        }
+        if (!StringUtils.isEmpty(email)) {
+            user.setEmail(email);
+        }
+//        user.setPassword(password);
+//        user.setEmail(email);
+        return Result.ok("Update Success", user);
+    }
 }

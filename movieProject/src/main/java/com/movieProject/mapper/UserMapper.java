@@ -11,4 +11,6 @@ public interface UserMapper extends MyMapper<User> {
     int insertUser(String name,  String password, String email);
 
     User findUserByName(String name);
+
+    int updateUser(String name,  String password, String email);
 }
