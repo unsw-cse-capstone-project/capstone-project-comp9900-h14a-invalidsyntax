@@ -82,6 +82,8 @@ public class UserService {
             return Result.fail("Update failed !");
         }
 
-        return Result.ok("Update Success", user);
+        User updateuser = usermapper.findUserByName(name);
+
+        return Result.ok("Update Success", updateuser);
     }
 }
