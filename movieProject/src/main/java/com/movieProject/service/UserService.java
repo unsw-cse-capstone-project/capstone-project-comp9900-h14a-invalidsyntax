@@ -69,17 +69,19 @@ public class UserService {
             return Result.fail("Can not find user to update !");
         }
 
+        if (StringUtils.isEmpty(password)) {
+            password = user.getPassword();
+        }
+        if (StringUtils.isEmpty(email)) {
+            email = user.getEmail();
+        }
+
         int resultCount = usermapper.updateUser(name, password, email);
 
         if (resultCount == 0) {
             return Result.fail("Update failed !");
         }
-        if (!StringUtils.isEmpty(password)) {
-            user.setPassword(password);
-        }
-        if (!StringUtils.isEmpty(email)) {
-            user.setEmail(email);
-        }
+
         return Result.ok("Update Success", user);
     }
 }
