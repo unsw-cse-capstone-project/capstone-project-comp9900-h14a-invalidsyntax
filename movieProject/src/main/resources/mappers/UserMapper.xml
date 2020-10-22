@@ -3,19 +3,27 @@
 
 <mapper namespace="com.movieProject.mapper.UserMapper">
     <resultMap id="BaseResultMap" type="com.movieProject.entity.User">
-        <id column="id" jdbcType="INTEGER" property="id" />
-        <result column="name" jdbcType="VARCHAR" property="name"/>
-        <result column="password" jdbcType="VARCHAR" property="password"/>
-        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <id column="user_id" jdbcType="INTEGER" property="user_id" />
+        <result column="name" jdbcType="CHAR" property="name"/>
+        <result column="gender" jdbcType="CHAR" property="gender"/>
+        <result column="age" jdbcType="INTEGER" property="age"/>
+        <result column="password" jdbcType="CHAR" property="password"/>
+        <result column="email" jdbcType="CHAR" property="email"/>
     </resultMap>
-    <insert id="insertUser" parameterType="java.lang.String">
-        INSERT INTO user(name, password, email)
-        VALUES(#{name}, #{password}, #{email})
+    <insert id="insertUser">
+        INSERT INTO user(name, gender, age, password, email)
+        VALUES(#{name}, #{gender}, #{age}, #{password}, #{email})
     </insert>
 
     <select id="findUserByName" resultMap="BaseResultMap">
-        SELECT id, name, password, email
+        SELECT *
         FROM user
         WHERE name = #{name}
+    </select>
+
+    <select id="findUserByID" resultMap="BaseResultMap">
+        SELECT *
+        FROM user
+        WHERE user_id = #{user_id}
     </select>
 </mapper>

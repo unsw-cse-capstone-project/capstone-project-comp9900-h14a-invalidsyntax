@@ -5,8 +5,11 @@ import com.movieProject.utils.MyMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @Mapper
 public interface MovieMapper extends MyMapper<Movie> {
-    Movie findByTitle(String title);
+    List<Movie> findMovieByTitle(String title);
+    Movie findMovieByID(Integer movie_id);
 }

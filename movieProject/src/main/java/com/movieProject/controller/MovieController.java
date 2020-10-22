@@ -21,8 +21,14 @@ public class MovieController {
     private final MovieService MovieService;
 
     @ApiOperation("Search movie API, return movie data")
-    @GetMapping("search")
-    public Result search(String title){
-        return MovieService.findByTitle(title);
+    @GetMapping("searchMovieByTitle")
+    public Result searchMovieByTitle(String title){
+        return MovieService.findMovieByTitle(title);
+    }
+
+    @ApiOperation("Search movie API, return movie data")
+    @GetMapping("searchMovieByID")
+    public Result searchMovieByID(Integer movie_id){
+        return MovieService.findMovieByID(movie_id);
     }
 }

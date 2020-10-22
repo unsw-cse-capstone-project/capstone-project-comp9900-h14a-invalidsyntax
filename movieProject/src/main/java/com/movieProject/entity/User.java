@@ -1,21 +1,23 @@
 package com.movieProject.entity;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 @Data
 @Entity
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 @Table(name = "user")
 
-public class User extends BaseEntity{
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", updatable = false)
+    private Integer user_id;
     private String name;
     private String password;
     private String email;
+    private String gender;
+    private Integer age;
+
 }

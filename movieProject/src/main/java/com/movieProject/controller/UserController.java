@@ -28,9 +28,16 @@ public class UserController {
 
     @ApiOperation("Register API, return user data")
     @GetMapping("register")
-    public Result register(String name, String password, String email) {
+    public Result register(String name, String gender, Integer age, String password, String email) {
         log.info("name:{}", name);
         log.info("password:{}", password);
-        return userService.addUser(name, password, email);
+        return userService.addUser(name, gender, age, password, email);
     }
+
+    @ApiOperation("Search user API, return user data")
+    @GetMapping("searchUserById")
+    public Result login(Integer user_id){
+        return userService.searchUserById(user_id);
+    }
+
 }

@@ -8,7 +8,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface UserMapper extends MyMapper<User> {
-    int insertUser(String name,  String password, String email);
+    int insertUser(String name, String gender, Integer age, String password, String email);
 
     User findUserByName(String name);
+
+    User findUserByID(Integer user_id);
 }
