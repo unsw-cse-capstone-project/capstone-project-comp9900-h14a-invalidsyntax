@@ -79,5 +79,3 @@ birthday
 
 ### 🔑movie_id
 actor_id
-
-*XMind - Trial Version*
