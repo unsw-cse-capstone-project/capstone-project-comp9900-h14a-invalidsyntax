@@ -18,7 +18,8 @@ const router = new VueRouter({
   routes: [
     { path: "/", redirect: "/register" },
     { path: "/register", component: () => import("@/components/register.vue") },
-    { path: "/login", component: () => import("@/components/login.vue") } // 导航栏
+    { path: "/login", component: () => import("@/components/login.vue") },
+    { path: "/home", component: () => import("@/components/home.vue") }
   ]
 });
 
