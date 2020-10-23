@@ -17,9 +17,15 @@ const router = new VueRouter({
   mode: "history",
   routes: [
     { path: "/", redirect: "/register" },
+    { path: "/home", component: () => import("@/components/home.vue") },
     { path: "/register", component: () => import("@/components/register.vue") },
-    { path: "/login", component: () => import("@/components/login.vue") },
-    { path: "/home", component: () => import("@/components/home.vue") }
+    { path: "/login", component: () => import("@/components/login.vue") }, // 导航栏
+    { path: "/changePassword", component: () => import("@/components/changePassword.vue")},
+    { path: "/changeEmail", component: () => import("@/components/changeEmail.vue")},
+    { path: "/wishList", component: () => import("@/components/wishList.vue") },
+    { path: "/banList", component: () => import("@/components/banList.vue") },
+    { path: "/acc", component: () => import("@/components/acc.vue") },
+
   ]
 });
 
