@@ -10,6 +10,10 @@ public interface UserService {
 
     Result addUser(String name, String gender, Integer age, String password, String email);
 
+    Result addwishlist(String user_id, String movie_id);
+
+    Result addBanlist(String user_id, String ban_id);
+
     Result searchUserById(Integer user_id);
 
     Result updateUser(String user_id, String password, String gender, String age, String email);

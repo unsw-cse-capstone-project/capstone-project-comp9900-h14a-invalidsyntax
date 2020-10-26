@@ -34,6 +34,22 @@ public class UserController {
         return userService.addUser(name, gender, age, password, email);
     }
 
+    @ApiOperation("Add movie to wishlist, return user")
+    @GetMapping("add_to_wishlist")
+    public Result addwishlist(String user_id, String movie_id) {
+        log.info("user_id:{}", user_id);
+        log.info("movie_id:{}", movie_id);
+        return userService.addwishlist(user_id, movie_id);
+    }
+
+    @ApiOperation("Ban other user, return banen user")
+    @GetMapping("ban_someone")
+    public Result addBanlist(String user_id, String ban_id) {
+        log.info("user_id:{}", user_id);
+        log.info("ban_id:{}", ban_id);
+        return userService.addBanlist(user_id, ban_id);
+    }
+
     @ApiOperation("Search user API, return user data")
     @GetMapping("searchUserById")
     public Result login(Integer user_id){

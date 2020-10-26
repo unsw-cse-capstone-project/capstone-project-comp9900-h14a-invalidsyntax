@@ -62,55 +62,61 @@ public class UserServiceImpl implements UserService {
         return Result.ok("Register Success", newUser);
     }
 
-//    @Override
-//    public Result addWishlist(String user_id, String movie_id) {
-//        if (StringUtils.isEmpty(user_id)) {
-//            return Result.fail("User_id can not be NULL !");
-//        }
-//        if (StringUtils.isEmpty(movie_id)) {
-//            return Result.fail("Movie_id can not be NULL !");
-//        }
-//        int new_user_id = Integer.parseInt(user_id);
-//        User user = usermapper.findUserByID(new_user_id);
-//        if (null != user) {
-//            return Result.fail("User can not be find !");
-//        }
-//        int new_movie_id = Integer.parseInt(movie_id);
-//        Movie movie = moviemapper.findMovieByID(new_movie_id);
-//        if (null != movie) {
-//            return Result.fail("Movie can not be find !");
-//        }
-//
-//        int resultCount = usermapper.addWishlist(new_user_id, new_movie_id);
-//        if (resultCount == 0) {
-//            return Result.fail("Register failed !");
-//        }
-//
-//        return Result.ok("Register Success", );
-//    }
+    @Override
+    public Result addWishlist(String user_id, String movie_id) {
+        if (StringUtils.isEmpty(user_id)) {
+            return Result.fail("User_id can not be NULL !");
+        }
+        if (StringUtils.isEmpty(movie_id)) {
+            return Result.fail("Movie_id can not be NULL !");
+        }
+        int new_user_id = Integer.parseInt(user_id);
+        User user = usermapper.findUserByID(new_user_id);
+        if (null != user) {
+            return Result.fail("User can not be find !");
+        }
+        int new_movie_id = Integer.parseInt(movie_id);
+        Movie movie = moviemapper.findMovieByID(new_movie_id);
+        if (null != movie) {
+            return Result.fail("Movie can not be find !");
+        }
 
-//    @Override
-//    public Result addBanlist(String user_id, String ban_id) {
-//        if (StringUtils.isEmpty(name)) {
-//            return Result.fail("Account name can not be null !");
-//        }
-//        if (StringUtils.isEmpty(password)) {
-//            return Result.fail("Account password can not be null !");
-//        }
-//        User user = usermapper.findUserByName(name);
-//        if (null != user) {
-//            return Result.fail("Register failed ! User already exist !");
-//        }
-//
-//        int resultCount = usermapper.insertUser(name, gender, age, password, email);
-//        if (resultCount == 0) {
-//            return Result.fail("Register failed !");
-//        }
-//
-//        User newUser = usermapper.findUserByName(name);
-//
-//        return Result.ok("Register Success", newUser);
-//    }
+        int resultCount = usermapper.addWishlist(new_user_id, new_movie_id);
+        if (resultCount == 0) {
+            return Result.fail("addWishlist failed !");
+        }
+        User newUser = usermapper.findUserByID(new_user_id);
+
+        return Result.ok("add wishlist Success", newUser);
+    }
+
+    @Override
+    public Result addBanlist(String user_id, String ban_id) {
+        if (StringUtils.isEmpty(user_id)) {
+            return Result.fail("User_id can not be NULL !");
+        }
+        if (StringUtils.isEmpty(ban_id)) {
+            return Result.fail("Ban_id can not be NULL !");
+        }
+        int new_user_id = Integer.parseInt(user_id);
+        User user = usermapper.findUserByID(new_user_id);
+        if (null != user) {
+            return Result.fail("User can not be find !");
+        }
+        int new_ban_id = Integer.parseInt(ban_id);
+        User ban = usermapper.findUserByID(new_ban_id);
+        if (null != ban) {
+            return Result.fail("Baned People can not be find !");
+        }
+
+        int resultCount = usermapper.addBanlist(new_user_id, new_ban_id);
+        if (resultCount == 0) {
+            return Result.fail("addBanlist failed !");
+        }
+        User newUser = usermapper.findUserByID(new_ban_id);
+
+        return Result.ok("Ban people Success", newUser);
+    }
 
     @Override
     public Result searchUserById(Integer user_id) {
