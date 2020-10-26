@@ -38,14 +38,14 @@
     </select>
 
     <select id="showWishlist" resultType="Integer">
-        SELECT *
+        SELECT wishList
         FROM user_wishlist
         WHERE user_id = #{user_id}
     </select>
 
     <select id="showBanlist" resultType="Integer">
-        SELECT *
-        FROM user
+        SELECT user_baned_id
+        FROM user_banlist
         WHERE user_id = #{user_id}
     </select>
 
@@ -54,5 +54,17 @@
         set user.password=#{password}, user.age=#{age}, user.gender=#{gender}, user.email=#{email}
         WHERE user_id = #{user_id}
     </update>
+
+    <delete id="removeWishlist">
+        DELETE
+        FROM user_wishlist
+        WHERE user_id = #{user_id} AND wishList = #{wishList}
+    </delete>
+
+    <delete id="removeBanlist">
+        DELETE
+        FROM user_banlist
+        WHERE user_id = #{user_id} AND user_baned_id = #{user_baned_id}
+    </delete>
 
 </mapper>

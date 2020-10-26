@@ -102,9 +102,6 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isEmpty(ban_id)) {
             return Result.fail("Ban_id can not be NULL !");
         }
-        if (user_id == ban_id) {
-            return Result.fail("User cannot ban themselves !");
-        }
 
         int new_user_id = Integer.parseInt(user_id);
         User user = usermapper.findUserByID(new_user_id);
@@ -116,12 +113,15 @@ public class UserServiceImpl implements UserService {
         if (null == ban) {
             return Result.fail("Baned People can not be find !");
         }
+        if (new_user_id == new_ban_id) {
+            return Result.fail("User cannot ban themselves !");
+        }
 
         int resultCount = usermapper.addBanlist(new_user_id, new_ban_id);
         if (resultCount == 0) {
             return Result.fail("addBanlist failed !");
         }
-        User newUser = usermapper.findUserByID(new_ban_id);
+        User newUser = usermapper.findUserByID(new_user_id);
 
         return Result.ok("Ban people Success", newUser);
     }
@@ -207,5 +207,63 @@ public class UserServiceImpl implements UserService {
         User updateuser = usermapper.findUserByID(new_user_id);
 
         return Result.ok("Update Success", updateuser);
+    }
+
+    @Override
+    public Result removeWishlist(String user_id, String movie_id) {
+        if (StringUtils.isEmpty(user_id)) {
+            return Result.fail("User_id can not be NULL !");
+        }
+        if (StringUtils.isEmpty(movie_id)) {
+            return Result.fail("Movie_id can not be NULL !");
+        }
+        int new_user_id = Integer.parseInt(user_id);
+
+        User user = usermapper.findUserByID(new_user_id);
+        if (null == user) {
+            return Result.fail("User can not be find !");
+        }
+        int new_movie_id = Integer.parseInt(movie_id);
+        Movie movie = moviemapper.findMovieByID(new_movie_id);
+        if (null == movie) {
+            return Result.fail("Movie can not be find !");
+        }
+
+        int resultCount = usermapper.removeWishlist(new_user_id, new_movie_id);
+        if (resultCount == 0) {
+            return Result.fail("removeWishlist failed !");
+        }
+        User newUser = usermapper.findUserByID(new_user_id);
+
+        return Result.ok("RemoveWishlist Success", newUser);
+    }
+
+    @Override
+    public Result removeBanlist(String user_id, String ban_id) {
+        if (StringUtils.isEmpty(user_id)) {
+            return Result.fail("User_id can not be NULL !");
+        }
+        if (StringUtils.isEmpty(ban_id)) {
+            return Result.fail("Ban_id can not be NULL !");
+        }
+
+        int new_user_id = Integer.parseInt(user_id);
+        User user = usermapper.findUserByID(new_user_id);
+        if (null == user) {
+            return Result.fail("User can not be find !");
+        }
+        int new_ban_id = Integer.parseInt(ban_id);
+        User ban = usermapper.findUserByID(new_ban_id);
+        if (null == ban) {
+            return Result.fail("Baned People can not be find !");
+        }
+
+        int resultCount = usermapper.removeBanlist(new_user_id, new_ban_id);
+        if (resultCount == 0) {
+            return Result.fail("removeBanlist failed !");
+        }
+        User newUser = usermapper.findUserByID(new_user_id);
+
+        return Result.ok("RemoveBanlist Success", newUser);
     }
 }

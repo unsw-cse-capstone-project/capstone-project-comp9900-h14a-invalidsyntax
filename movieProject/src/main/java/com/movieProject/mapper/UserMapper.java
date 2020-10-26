@@ -25,4 +25,8 @@ public interface UserMapper extends MyMapper<User> {
     List<Integer> showBanlist(Integer user_id);
 
     int updateUser(Integer user_id, String password, String gender, Integer age, String email);
+
+    int removeWishlist(Integer user_id, Integer wishList);
+
+    int removeBanlist(Integer user_id, Integer user_baned_id);
 }
