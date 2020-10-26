@@ -16,6 +16,10 @@ public interface UserService {
 
     Result searchUserById(Integer user_id);
 
+    Result showwish(String user_id);
+
+    Result showban(String user_id);
+
     Result updateUser(String user_id, String password, String gender, String age, String email);
 
 

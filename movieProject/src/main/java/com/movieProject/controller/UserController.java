@@ -52,8 +52,20 @@ public class UserController {
 
     @ApiOperation("Search user API, return user data")
     @GetMapping("searchUserById")
-    public Result login(Integer user_id){
+    public Result searchUserById(Integer user_id){
         return userService.searchUserById(user_id);
+    }
+
+    @ApiOperation("Show wishlist API, return wishlist")
+    @GetMapping("showWishList")
+    public Result showwish(String user_id){
+        return userService.showwish(user_id);
+    }
+
+    @ApiOperation("Show banlist API, return banlist")
+    @GetMapping("showBanList")
+    public Result showban(String user_id){
+        return userService.showban(user_id);
     }
 
     @ApiOperation("Update API, return user data")

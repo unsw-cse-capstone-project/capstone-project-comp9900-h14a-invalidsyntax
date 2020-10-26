@@ -5,17 +5,20 @@ import com.movieProject.entity.User;
 import com.movieProject.entity.Movie;
 import com.movieProject.mapper.UserMapper;
 import com.movieProject.mapper.MovieMapper;
+import com.movieProject.service.MovieService;
 import com.movieProject.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
 @Service
 @AllArgsConstructor
+
 public class UserServiceImpl implements UserService {
     private final UserMapper usermapper;
     private final MovieMapper moviemapper;
@@ -63,7 +66,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result addWishlist(String user_id, String movie_id) {
+    public Result addwishlist(String user_id, String movie_id) {
         if (StringUtils.isEmpty(user_id)) {
             return Result.fail("User_id can not be NULL !");
         }
@@ -71,13 +74,14 @@ public class UserServiceImpl implements UserService {
             return Result.fail("Movie_id can not be NULL !");
         }
         int new_user_id = Integer.parseInt(user_id);
+
         User user = usermapper.findUserByID(new_user_id);
-        if (null != user) {
+        if (null == user) {
             return Result.fail("User can not be find !");
         }
         int new_movie_id = Integer.parseInt(movie_id);
         Movie movie = moviemapper.findMovieByID(new_movie_id);
-        if (null != movie) {
+        if (null == movie) {
             return Result.fail("Movie can not be find !");
         }
 
@@ -98,14 +102,18 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isEmpty(ban_id)) {
             return Result.fail("Ban_id can not be NULL !");
         }
+        if (user_id == ban_id) {
+            return Result.fail("User cannot ban themselves !");
+        }
+
         int new_user_id = Integer.parseInt(user_id);
         User user = usermapper.findUserByID(new_user_id);
-        if (null != user) {
+        if (null == user) {
             return Result.fail("User can not be find !");
         }
         int new_ban_id = Integer.parseInt(ban_id);
         User ban = usermapper.findUserByID(new_ban_id);
-        if (null != ban) {
+        if (null == ban) {
             return Result.fail("Baned People can not be find !");
         }
 
@@ -128,6 +136,34 @@ public class UserServiceImpl implements UserService {
             return Result.fail("User not find !");
         }
         return Result.ok("User found !", user);
+    }
+
+    @Override
+    public Result showwish(String user_id) {
+        if (StringUtils.isEmpty(user_id)) {
+            return Result.fail("User not find !");
+        }
+        int new_user_id = Integer.parseInt(user_id);
+        User user = usermapper.findUserByID(new_user_id);
+        if (null == user) {
+            return Result.fail("User not find !");
+        }
+        List<Integer> wishlist = usermapper.showWishlist(new_user_id);
+        return Result.ok("Wishlist found !", wishlist);
+    }
+
+    @Override
+    public Result showban(String user_id) {
+        if (StringUtils.isEmpty(user_id)) {
+            return Result.fail("User not find !");
+        }
+        int new_user_id = Integer.parseInt(user_id);
+        User user = usermapper.findUserByID(new_user_id);
+        if (null == user) {
+            return Result.fail("User not find !");
+        }
+        List<Integer> banlist = usermapper.showBanlist(new_user_id);
+        return Result.ok("Wishlist found !", banlist);
     }
 
     @Override

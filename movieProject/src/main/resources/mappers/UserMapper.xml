@@ -16,13 +16,13 @@
     </insert>
 
     <insert id="addWishlist">
-        INSERT INTO user_wishlist(user_id, movie_id)
-        VALUES(#{user_id}, #{movie_id})
+        INSERT INTO user_wishlist(user_id, wishList)
+        VALUES(#{user_id}, #{wishList})
     </insert>
 
     <insert id="addBanlist">
-        INSERT INTO user_banlist(user_id, ban_id)
-        VALUES(#{user_id}, #{ban_id})
+        INSERT INTO user_banlist(user_id, user_baned_id)
+        VALUES(#{user_id}, #{user_baned_id})
     </insert>
 
     <select id="findUserByName" resultMap="BaseResultMap">
@@ -32,6 +32,18 @@
     </select>
 
     <select id="findUserByID" resultMap="BaseResultMap">
+        SELECT *
+        FROM user
+        WHERE user_id = #{user_id}
+    </select>
+
+    <select id="showWishlist">
+        SELECT *
+        FROM user_wishlist
+        WHERE user_id = #{user_id}
+    </select>
+
+    <select id="showBanlist">
         SELECT *
         FROM user
         WHERE user_id = #{user_id}
