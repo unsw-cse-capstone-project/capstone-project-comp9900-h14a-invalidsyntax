@@ -15,6 +15,16 @@
         VALUES(#{name}, #{gender}, #{age}, #{password}, #{email})
     </insert>
 
+    <insert id="addWishlist">
+        INSERT INTO user_wishlist(user_id, movie_id)
+        VALUES(#{user_id}, #{movie_id})
+    </insert>
+
+    <insert id="addBanlist">
+        INSERT INTO user_banlist(user_id, ban_id)
+        VALUES(#{user_id}, #{ban_id})
+    </insert>
+
     <select id="findUserByName" resultMap="BaseResultMap">
         SELECT *
         FROM user
@@ -26,4 +36,11 @@
         FROM user
         WHERE user_id = #{user_id}
     </select>
+
+    <update id="updateUser">
+        update user
+        set user.password=#{password}, user.age=#{age}, user.gender=#{gender}, user.email=#{email}
+        WHERE user_id = #{user_id}
+    </update>
+
 </mapper>

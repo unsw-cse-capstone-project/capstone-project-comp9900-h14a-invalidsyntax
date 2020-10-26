@@ -40,4 +40,15 @@ public class UserController {
         return userService.searchUserById(user_id);
     }
 
+    @ApiOperation("Update API, return user data")
+    @GetMapping("update")
+    public Result update(String user_id, String password, String gender, String age, String email) {
+        log.info("user_id:{}", user_id);
+        log.info("password:{}", password);
+        log.info("gender:{}", gender);
+        log.info("age:{}", age);
+        log.info("email:{}", email);
+        return userService.updateUser(user_id, password, gender, age, email);
+    }
+
 }
