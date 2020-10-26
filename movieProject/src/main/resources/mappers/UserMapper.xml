@@ -37,13 +37,13 @@
         WHERE user_id = #{user_id}
     </select>
 
-    <select id="showWishlist">
+    <select id="showWishlist" resultType="Integer">
         SELECT *
         FROM user_wishlist
         WHERE user_id = #{user_id}
     </select>
 
-    <select id="showBanlist">
+    <select id="showBanlist" resultType="Integer">
         SELECT *
         FROM user
         WHERE user_id = #{user_id}
