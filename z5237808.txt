@@ -12,3 +12,6 @@ I finished the user login & register function and user database parts.
 
 Week 5
 Completed the construction of the movie database and searching movie data according to movie name.
+
+Week 6
+Completed the adding movie review part and listing all reviews of the user.
