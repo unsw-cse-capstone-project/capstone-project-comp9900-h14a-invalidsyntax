@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result addBanlist(String user_id, String ban_id) {
         if (StringUtils.isEmpty(user_id)) {
-            return Result.fail("User_id can not be NULL !");
+            return Result.fail("User id can not be NULL !");
         }
         if (StringUtils.isEmpty(ban_id)) {
             return Result.fail("Ban_id can not be NULL !");
@@ -163,7 +163,7 @@ public class UserServiceImpl implements UserService {
             return Result.fail("User not find !");
         }
         List<User> banlist = usermapper.showBanlist(new_user_id);
-        return Result.ok("Banlist found !", banlist);
+        return Result.ok("Wishlist found !", banlist);
     }
 
     @Override

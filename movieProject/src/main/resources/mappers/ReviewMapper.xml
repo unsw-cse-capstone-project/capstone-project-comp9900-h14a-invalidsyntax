@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.movieProject.mapper.ReviewMapper">
+    <resultMap id="BaseResultMap" type="com.movieProject.entity.Review">
+        <id column="review_id" jdbcType="INTEGER" property="review_id"/>
+        <result column="rate" jdbcType="FLOAT" property="rate"/>
+        <result column="review" jdbcType="VARCHAR" property="review"/>
+    </resultMap>
+
+    <insert id="addReview" parameterType="com.movieProject.entity.Review">
+        <selectKey keyProperty="review_id" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO review(review, rate)
+        VALUES (#{review}, #{rate})
+    </insert>
+
+    <insert id="addUserReview">
+        INSERT INTO user_review(user_id, review_id)
+        VALUES (#{user_id}, #{review_id})
+    </insert>
+
+    <insert id="addMovieReview">
+        INSERT INTO movie_review(movie_id, review_id)
+        VALUES (#{movie_id}, #{review_id})
+    </insert>
+
+    <select id="listUserReview" resultType="com.movieProject.entity.Review">
+        SELECT review_id, user_id
+        FROM user_review
+        WHERE user_id = #{user_id}
+    </select>
+
+    <select id="searchReviewByID" parameterType="com.movieProject.entity.Review"
+            resultType="com.movieProject.entity.Review">
+        SELECT rate, review
+        FROM review
+        WHERE review_id = #{review_id}
+    </select>
+
+    <select id="searchMovieID" resultType="java.lang.Integer">
+        SELECT movie_id
+        FROM movie_review
+        WHERE review_id = #{review_id}
+    </select>
+
+</mapper>
