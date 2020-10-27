@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.movieProject.mapper.UserMapper">
-    <resultMap id="BaseResultMap" type="com.movieProject.entity.User">
+    <resultMap id="BaseResultMapU" type="com.movieProject.entity.User">
         <id column="user_id" jdbcType="INTEGER" property="user_id" />
         <result column="name" jdbcType="CHAR" property="name"/>
         <result column="gender" jdbcType="CHAR" property="gender"/>
@@ -10,6 +10,18 @@
         <result column="password" jdbcType="CHAR" property="password"/>
         <result column="email" jdbcType="CHAR" property="email"/>
     </resultMap>
+
+    <resultMap id="BaseResultMapM" type="com.movieProject.entity.Movie">
+        <id column="movie_id" jdbcType="INTEGER" property="movie_id" />
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="release_time" jdbcType="VARCHAR" property="release_time"/>
+        <result column="poster" jdbcType="VARCHAR" property="poster"/>
+        <result column="rate" jdbcType="FLOAT" property="rate"/>
+        <result column="homepage" jdbcType="VARCHAR" property="homepage"/>
+        <result column="overview" jdbcType="VARCHAR" property="overview"/>
+        <result column="rate_number" jdbcType="VARCHAR" property="rate_number"/>
+    </resultMap>
+
     <insert id="insertUser">
         INSERT INTO user(name, gender, age, password, email)
         VALUES(#{name}, #{gender}, #{age}, #{password}, #{email})
@@ -25,28 +37,28 @@
         VALUES(#{user_id}, #{user_baned_id})
     </insert>
 
-    <select id="findUserByName" resultMap="BaseResultMap">
+    <select id="findUserByName" resultMap="BaseResultMapU">
         SELECT *
         FROM user
         WHERE name = #{name}
     </select>
 
-    <select id="findUserByID" resultMap="BaseResultMap">
+    <select id="findUserByID" resultMap="BaseResultMapU">
         SELECT *
         FROM user
         WHERE user_id = #{user_id}
     </select>
 
-    <select id="showWishlist" resultType="Integer">
-        SELECT wishList
-        FROM user_wishlist
-        WHERE user_id = #{user_id}
+    <select id="showWishlist" resultMap="BaseResultMapM">
+        SELECT movie.movie_id, movie.title, movie.release_time, movie.poster, movie.rate, movie.homepage, movie.overview, movie.rate_number
+        FROM user_wishlist,movie
+        WHERE user_wishlist.user_id = #{user_id} AND user_wishlist.wishList = movie.movie_id
     </select>
 
-    <select id="showBanlist" resultType="Integer">
-        SELECT user_baned_id
-        FROM user_banlist
-        WHERE user_id = #{user_id}
+    <select id="showBanlist" resultMap="BaseResultMapU">
+        SELECT user.user_id, user.name, user.gender, user.age, user.password, user.email
+        FROM user_banlist,user
+        WHERE user_banlist.user_id = #{user_id} AND user_banlist.user_baned_id = user.user_id
     </select>
 
     <update id="updateUser">

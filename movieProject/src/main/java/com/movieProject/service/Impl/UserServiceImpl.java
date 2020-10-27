@@ -148,7 +148,7 @@ public class UserServiceImpl implements UserService {
         if (null == user) {
             return Result.fail("User not find !");
         }
-        List<Integer> wishlist = usermapper.showWishlist(new_user_id);
+        List<Movie> wishlist = usermapper.showWishlist(new_user_id);
         return Result.ok("Wishlist found !", wishlist);
     }
 
@@ -162,8 +162,8 @@ public class UserServiceImpl implements UserService {
         if (null == user) {
             return Result.fail("User not find !");
         }
-        List<Integer> banlist = usermapper.showBanlist(new_user_id);
-        return Result.ok("Wishlist found !", banlist);
+        List<User> banlist = usermapper.showBanlist(new_user_id);
+        return Result.ok("Banlist found !", banlist);
     }
 
     @Override

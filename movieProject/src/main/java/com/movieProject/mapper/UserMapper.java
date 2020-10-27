@@ -1,6 +1,7 @@
 package com.movieProject.mapper;
 
 import com.movieProject.entity.User;
+import com.movieProject.entity.Movie;
 import com.movieProject.utils.MyMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -20,9 +21,9 @@ public interface UserMapper extends MyMapper<User> {
 
     User findUserByID(Integer user_id);
 
-    List<Integer> showWishlist(Integer user_id);
+    List<Movie> showWishlist(Integer user_id);
 
-    List<Integer> showBanlist(Integer user_id);
+    List<User> showBanlist(Integer user_id);
 
     int updateUser(Integer user_id, String password, String gender, Integer age, String email);
 
