@@ -34,10 +34,65 @@ public class UserController {
         return userService.addUser(name, gender, age, password, email);
     }
 
+    @ApiOperation("Add movie to wishlist, return user")
+    @GetMapping("add_to_wishlist")
+    public Result addwishlist(String user_id, String movie_id) {
+        log.info("user_id:{}", user_id);
+        log.info("movie_id:{}", movie_id);
+        return userService.addwishlist(user_id, movie_id);
+    }
+
+    @ApiOperation("Remove movie from wishlist, return user")
+    @GetMapping("remove_from_wishlist")
+    public Result removeWishlist(String user_id, String movie_id) {
+        log.info("user_id:{}", user_id);
+        log.info("movie_id:{}", movie_id);
+        return userService.removeWishlist(user_id, movie_id);
+    }
+
+    @ApiOperation("Ban other user, return user")
+    @GetMapping("ban_someone")
+    public Result addBanlist(String user_id, String ban_id) {
+        log.info("user_id:{}", user_id);
+        log.info("ban_id:{}", ban_id);
+        return userService.addBanlist(user_id, ban_id);
+    }
+
+    @ApiOperation("Cancel banlist, return user")
+    @GetMapping("cancel_ban_someone")
+    public Result removeBanlist(String user_id, String ban_id) {
+        log.info("user_id:{}", user_id);
+        log.info("ban_id:{}", ban_id);
+        return userService.removeBanlist(user_id, ban_id);
+    }
+
     @ApiOperation("Search user API, return user data")
     @GetMapping("searchUserById")
-    public Result login(Integer user_id){
+    public Result searchUserById(Integer user_id){
         return userService.searchUserById(user_id);
+    }
+
+    @ApiOperation("Show wishlist API, return wishlist")
+    @GetMapping("showWishList")
+    public Result showwish(String user_id){
+        return userService.showwish(user_id);
+    }
+
+    @ApiOperation("Show banlist API, return banlist")
+    @GetMapping("showBanList")
+    public Result showban(String user_id){
+        return userService.showban(user_id);
+    }
+
+    @ApiOperation("Update API, return user data")
+    @GetMapping("update")
+    public Result update(String user_id, String password, String gender, String age, String email) {
+        log.info("user_id:{}", user_id);
+        log.info("password:{}", password);
+        log.info("gender:{}", gender);
+        log.info("age:{}", age);
+        log.info("email:{}", email);
+        return userService.updateUser(user_id, password, gender, age, email);
     }
 
 }

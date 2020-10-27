@@ -18,17 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @Api(value="Movie Controller")
 public class MovieController {
-    private final MovieService MovieService;
+    private final MovieService movieService;
 
     @ApiOperation("Search movie API, return movie data")
     @GetMapping("searchMovieByTitle")
     public Result searchMovieByTitle(String title){
-        return MovieService.findMovieByTitle(title);
+        return movieService.findMovieByTitle(title);
     }
 
     @ApiOperation("Search movie API, return movie data")
     @GetMapping("searchMovieByID")
     public Result searchMovieByID(Integer movie_id){
-        return MovieService.findMovieByID(movie_id);
+        return movieService.findMovieByID(movie_id);
     }
 }
