@@ -28,43 +28,51 @@ export default {
       form: {},
       rules: {
         name: [
-          { required: true, message: "please enter the username", trigger: "blur" },
-          { min: 3, max: 5, message: "3 - 5 characters", trigger: "blur" }
+          {
+            required: true,
+            message: "please enter the username",
+            trigger: "blur",
+          },
+          { min: 3, max: 5, message: "3 - 5 characters", trigger: "blur" },
         ],
         password: [
-          { required: true, message: "please enter the password", trigger: "blur" },
-          { min: 6, max: 12, message: "6 - 12 characters", trigger: "blur" }
-        ]
-      }
+          {
+            required: true,
+            message: "please enter the password",
+            trigger: "blur",
+          },
+          { min: 6, max: 12, message: "6 - 12 characters", trigger: "blur" },
+        ],
+      },
     };
   },
   methods: {
     onSubmit() {
-      this.$refs["form"].validate(valid => {
+      this.$refs["form"].validate((valid) => {
         if (valid) {
-          axios.get("api/user/login",{
-                      params: this.form
-                    }
-                      )
-          .then(res => {
-            if(res.status == 404){
-              alert('Internel Error')
-              console.log('Response:')
-              console.log(res)
-            }
-            else if (res.status == 200){
-              alert('Login Success!')
-              console.log('Response:')
-              console.log(res)
-            }
-          }) // API post
+          console.log(this.form)
+          axios
+            .get("api/user/login", {
+              params: this.form,
+            })
+            .then((res) => {
+              if (res.status == 404) {
+                alert("Internel Error");
+                console.log("Response:");
+                console.log(res);
+              } else if (res.status == 200) {
+                alert("Login Success!");
+                console.log("Response:");
+                console.log(res);
+              }
+            }); // API post
           this.$router.push("/home");
         } else {
           return false;
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
