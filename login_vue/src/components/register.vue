@@ -5,6 +5,18 @@
       <el-form-item label="name" label-width="80px" prop="name">
         <el-input class="item" v-model="form.name"></el-input>
       </el-form-item>
+      <el-form-item label="gender" label-width="80px" prop="gender">
+        <el-input
+          class="item"
+          v-model="form.gender"
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="age" label-width="80px" prop="age">
+        <el-input
+          class="item"
+          v-model="form.age"
+        ></el-input>
+      </el-form-item>
       <el-form-item label="password" label-width="80px" prop="password">
         <el-input
           class="item"

@@ -1,16 +1,23 @@
 <template>
   <div class="Changepassword">
     <el-form class="form" :rules="rules" :model="form" ref="form">
-      <h3>Change password</h3>
-        <el-form-item label="Original Password" prop="password">
+      <h3>Change Information</h3>
+        <el-form-item label="User id" prop="Userid">
+            <el-input type="password" placeholder="Please enter the User id" v-model="form.user_id"></el-input>
+        </el-form-item>
+        <el-form-item label="New Password" prop="password">
             <el-input type="password" placeholder="Please enter the original password" v-model="form.password"></el-input>
         </el-form-item>
-        <el-form-item label="New Password" prop="newPassword">
-            <el-input type="password" placeholder="Please enter the new password" v-model="form.newPassword"></el-input>
+        <el-form-item label="New Gender" prop="newGender">
+            <el-input type="password" placeholder="Please enter the new Gender M/F" v-model="form.gender"></el-input>
         </el-form-item>
-        <el-form-item label="Confirm Password" prop="newPassword2">
-            <el-input type="password" placeholder="Please confirm the new password" v-model="form.newPassword2"></el-input>
+        <el-form-item label="New age" prop="newAge">
+            <el-input type="password" placeholder="Please enter the new age" v-model="form.age"></el-input>
         </el-form-item>
+        <el-form-item label="New Email" prop="newEmail">
+            <el-input type="email" placeholder="Please enter the new Email" v-model="form.email"></el-input>
+        </el-form-item>
+        
         <el-form-item>
             <el-button type="primary" @click="onSubmit('form')">Save</el-button>
             <el-button @click="$refs['form'].resetFields()">Reset</el-button>
@@ -24,45 +31,16 @@ import axios from "axios";
 
 export default {
   data() {
-    let validateNewPassword = (rule, value, callback) => {
-            if (value === this.form.password) {
-                callback(new Error('The new password cannot be the same as the old one!'))
-            } else {
-                callback()
-            }
-        }
-    let validateNewPassword2 = (rule, value, callback) => {
-            if (value !== this.form.newPassword) {
-                callback(new Error('Not the same as the new password!'))
-            } else {
-                callback()
-            }
-    }
+    
     return {
         form: {},
-        rules: {
-            password: [
-                { required: true, message: 'Please enter the original password', trigger: 'blur' }
-            ],
-            newPassword: [
-                { required: true, message: 'Please enter the new password', trigger: 'blur' },
-                { validator: validateNewPassword, trigger: 'blur' }
-            ],
-            newPassword2: [
-                { required: true, message: 'Please confirm the new password', trigger: 'blur' },
-                { validator: validateNewPassword2, trigger: 'blur' }
-            ]
-            }
-        }
-    },
+    };
+  },
   methods: {
     onSubmit() {
-      this.$refs["form"].validate(valid => {
-        if (valid) {
-          axios.get("api/user/login",{
+          axios.get("http://localhost:8080/user/update",{
                       params: this.form
-                    }
-                      )
+                    })
           .then(res => {
             if(res.status == 404){
               alert('Internel Error')
@@ -70,18 +48,15 @@ export default {
               console.log(res)
             }
             else if (res.status == 200){
-              alert('Login Success!')
+              alert('Change Success!')
               console.log('Response:')
               console.log(res)
             }
           }) // API post
-          this.$router.push("/acc");
-        } else {
-          return false;
-        }
-      });
+          this.$router.push("/home");
     }
   }
+  
 };
 </script>
 

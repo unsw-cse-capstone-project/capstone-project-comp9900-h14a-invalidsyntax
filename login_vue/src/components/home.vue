@@ -61,10 +61,7 @@
           </template>
           <el-menu-item-group>
             <el-menu-item index="/demo" @click="goTo('/changePassword')">
-            <span slot="title">Change Password</span>
-            </el-menu-item>
-            <el-menu-item index="/index" @click="goTo('/ChangeEmail')">
-            <span slot="title">Change Email</span>
+            <span slot="title">Change Information</span>
             </el-menu-item>
           </el-menu-item-group>
         </el-submenu>

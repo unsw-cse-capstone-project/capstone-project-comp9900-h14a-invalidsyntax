@@ -25,7 +25,7 @@ const router = new VueRouter({
     { path: "/wishList", component: () => import("@/components/wishList.vue") },
     { path: "/banList", component: () => import("@/components/banList.vue") },
     { path: "/acc", component: () => import("@/components/acc.vue") },
-
+    { path: "/search", component: () => import("@/components/search.vue") },
   ]
 });
 
