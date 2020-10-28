@@ -13,6 +13,13 @@ Vue.config.productionTip = false;
 Vue.use(VueRouter);
 Vue.use(ElementUI);
 
+import * as VueCookies from 'vue-cookies';
+Vue.use(VueCookies);
+
+// 导航条组件
+import navigationbar from '@/components/navigationbar.vue';
+Vue.component('nav-bar', navigationbar);
+
 const router = new VueRouter({
   mode: "history",
   routes: [
@@ -32,7 +39,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => { //beforeEach is router's hook
   if (to.meta.title) { // check it has title
-	console.log(to.meta.title)
+    console.log(to.meta.title)
     document.title = to.meta.title
   }
   next()

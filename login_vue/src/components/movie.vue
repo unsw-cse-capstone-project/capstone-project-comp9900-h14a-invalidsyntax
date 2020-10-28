@@ -14,30 +14,7 @@
         <!--Title -->
         <!-- <a class="h5 text-light mb-0 mr-auto">FilmFinder Home Page</a> -->
         <!-- 顶部导航栏 -->
-        <el-menu
-          class="el-menu-demo"
-          mode="horizontal"
-          @select="handleSelect"
-          background-color="#74b9ff"
-          text-color="#2d3436"
-          active-text-color="#0984e3"
-        >
-          <!-- Top buttoms -->
-          <el-menu-item index="1">Home</el-menu-item>
-          <el-menu-item index="2">b2</el-menu-item>
-          <el-menu-item index="3">b3</el-menu-item>
-          <el-menu-item index="4">b4</el-menu-item>
-          <el-menu-item index="5">b5</el-menu-item>
-          <!-- Avater -->
-          <el-submenu index="100">
-            <template slot="title">
-              <!-- <el-avatar :size="small" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"></el-avatar> -->
-              ACCOUNT_NAME
-            </template>
-            <el-menu-item index="100-1">Account management</el-menu-item>
-            <el-menu-item index="100-2">Log out</el-menu-item>
-          </el-submenu>
-        </el-menu>
+        <nav-bar></nav-bar>
       </el-header>
       <el-container style="height: 100%; padding-bottom: 60px">
 

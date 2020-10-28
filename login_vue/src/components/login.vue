@@ -33,7 +33,7 @@ export default {
             message: "please enter the username",
             trigger: "blur",
           },
-          { min: 3, max: 5, message: "3 - 5 characters", trigger: "blur" },
+          // { min: 3, max: 5, message: "3 - 5 characters", trigger: "blur" },
         ],
         password: [
           {
@@ -41,7 +41,7 @@ export default {
             message: "please enter the password",
             trigger: "blur",
           },
-          { min: 6, max: 12, message: "6 - 12 characters", trigger: "blur" },
+          // { min: 6, max: 12, message: "6 - 12 characters", trigger: "blur" },
         ],
       },
     };
@@ -61,12 +61,26 @@ export default {
                 console.log("Response:");
                 console.log(res);
               } else if (res.status == 200) {
-                alert("Login Success!");
-                console.log("Response:");
-                console.log(res);
+                if (res.data.code == 200){ // 如果成功登录
+                  alert("Login Success!");
+                  console.log("Response:");
+                  console.log(res);
+                  this.$router.push("/home");
+
+                  //记录Cookie
+                  this.$cookies.set('user_id', res.data.data.user_id);
+                  this.$cookies.set('user_name', res.data.data.name);
+                  this.$cookies.set('isLogon', true);
+
+                }
+                else{
+                  alert("Login Failed!");
+                  console.log("Response:");
+                  console.log(res);
+                }
               }
             }); // API post
-          this.$router.push("/home");
+          
         } else {
           return false;
         }
