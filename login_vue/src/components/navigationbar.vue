@@ -13,8 +13,8 @@
     active-text-color="#0984e3">
     <!-- Top buttoms -->
     <el-menu-item index="1">Home</el-menu-item>
-    <!-- <el-menu-item index="2">b2</el-menu-item>
-    <el-menu-item index="3">b3</el-menu-item>
+    <el-menu-item index="2">Search</el-menu-item>
+    <!-- <el-menu-item index="3">b3</el-menu-item>
     <el-menu-item index="4">b4</el-menu-item>
     <el-menu-item index="5">b5</el-menu-item> -->
     <!-- 如果已经登录 -->
@@ -43,7 +43,7 @@ export default {
         // isLogon: false,
       };
     },
-    beforeCreated: function () {
+    created: function () {
       // called when loading the home page
       this.checkIfLogon();
     },
@@ -51,10 +51,14 @@ export default {
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
         if (key == "100-1"){
-          console.log("Go to Personal Center")
+          console.log("Go to Personal Center");
+        }
+        else if (key == "2"){
+          this.$router.push("/search");
         }
       },
       checkIfLogon(){
+        this.isLogon = false;
         if (this.$cookies.isKey('isLogon')){ // 检查是否有Logon的coockie
           if (this.$cookies.get('isLogon') == true){ // 如果已登录
             this.isLogon = true;

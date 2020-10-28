@@ -8,10 +8,8 @@
         <nav-bar></nav-bar>
       </el-header>
       <el-container style="height: 100%;padding-bottom: 60px;">
-      <!-- 侧边布局 -->
-      <!-- <el-aside width="200px">
-        
-      </el-aside> -->
+      <!-- 侧边导航栏 -->
+      <side-bar> </side-bar>
       <!-- 主布局 -->
       <el-main>
         <el-row>
@@ -55,8 +53,7 @@ export default {
         }
       },
       checkIfLogon(){
-      }
-      
+      },
     }
   }
 </script>

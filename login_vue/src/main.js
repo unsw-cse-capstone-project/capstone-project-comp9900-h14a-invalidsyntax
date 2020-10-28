@@ -17,8 +17,11 @@ import * as VueCookies from 'vue-cookies';
 Vue.use(VueCookies);
 
 // 导航条组件
-import navigationbar from '@/components/navigationbar.vue';
+import navigationbar from '@/components/navigationbar.vue'; // 顶部导航栏
 Vue.component('nav-bar', navigationbar);
+
+import sidebar from '@/components/sidebar.vue'; // 侧边导航栏
+Vue.component('side-bar', sidebar);
 
 const router = new VueRouter({
   mode: "history",
@@ -33,7 +36,13 @@ const router = new VueRouter({
     { path: "/movie/:id", 
       component: () => import("@/components/movie.vue"),
       meta: {title: 'Movie title'}
-    }
+    },
+    { path: "/changePassword", component: () => import("@/components/changePassword.vue")},
+    { path: "/changeEmail", component: () => import("@/components/changeEmail.vue")},
+    { path: "/wishList", component: () => import("@/components/wishList.vue") },
+    { path: "/banList", component: () => import("@/components/banList.vue") },
+    // { path: "/acc", component: () => import("@/components/acc.vue") },
+    { path: "/search", component: () => import("@/components/search.vue") },
   ]
 });
 
