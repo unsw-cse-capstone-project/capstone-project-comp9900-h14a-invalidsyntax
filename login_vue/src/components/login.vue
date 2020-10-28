@@ -70,7 +70,7 @@ export default {
                   //记录Cookie
                   this.$cookies.set('user_id', res.data.data.user_id);
                   this.$cookies.set('user_name', res.data.data.name);
-                  this.$cookies.set('isLogon', true);
+                  this.$cookies.set('isLogon', 'true');
 
                 }
                 else{

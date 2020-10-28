@@ -12,15 +12,17 @@
       <side-bar> </side-bar>
       <!-- 主布局 -->
       <el-main>
-        <el-row>
-          <el-col :span="4" v-for="(o, index) in 6" :key="o" :offset="index > 0 ? 0 : 0">
+        <!-- 主页展示电影 -->
+        <el-row v-if="this.mList.length">
+          <el-col :span="4" v-for="(o, index) in mList" :key="index" :offset="index > 0 ? 0 : 0">
             <el-card :body-style="{ padding: '0px' }">
-              <img src="https://upload.wikimedia.org/wikipedia/zh/1/13/Sheep_Without_a_Shepherd.jpg" class="image">
+              <img :src="o.poster" class="image">
               <div style="padding: 14px;">
-                <span>Movie {{o}} </span>
+                <!-- <span>{{o.title}} </span> -->
+                <span>{{o.title}}</span>
                 <div class="bottom clearfix">
                   <!-- <time class="time">{{ currentDate }}</time> -->
-                  <el-button type="text" class="button">Button</el-button>
+                  <el-button  type="text" class="button" @click="goTo(`/movie/${o.movie_id}`)">{{o.title}}</el-button>
                 </div>
               </div>
             </el-card>
@@ -34,16 +36,24 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     data() {
       return {
         navBarIndex: '1',
-        currentDate: new Date()
+        currentDate: new Date(),
+        mList: []
       };
     },
     created: function () {
       // called when loading the home page
       this.checkIfLogon();
+      this.getMovieList();
+    },
+    watch: {
+    // 如果路由有变化，会再次执行该方法
+    '$route': 'getMovieList()'
     },
     methods: {
       handleSelect(key, keyPath) {
@@ -54,6 +64,28 @@ export default {
       },
       checkIfLogon(){
       },
+      getMovieList(){ // 获得n个电影详情
+        for (let movieID = 1; movieID <= 5; movieID++){
+          axios.get(
+            "./api/movie/searchMovieByID", // 关键：..表示请求上一级
+            { params: { movie_id: movieID } }
+          )
+          .then((res) => {
+            if (res.status == 404) {
+              alert("Internel Error");
+              console.log("Response:");
+              console.log(res);
+            } else if (res.status == 200) {
+              // console.log(res.data.data);
+              this.mList.push(res.data.data);
+            }
+          }); // API post
+        }
+        // console.log(this.mList);
+      },
+      goTo(path) {
+            this.$router.replace(path);
+        }
     }
   }
 </script>

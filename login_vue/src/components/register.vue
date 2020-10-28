@@ -2,17 +2,30 @@
   <div class="register">
     <el-form class="form" :rules="rules" :model="form" ref="form">
       <h3>Register Page</h3>
-      <el-form-item label="name" label-width="80px" prop="name">
+
+      <el-form-item label="Username" label-width="80px" prop="name">
         <el-input class="item" v-model="form.name"></el-input>
       </el-form-item>
-      <el-form-item label="password" label-width="80px" prop="password">
+
+      <el-form-item label="Gender" label-width="80px" prop="gender">
+        <el-radio-group v-model="form.gender" @change="gender_change">
+            <el-radio label="M" border>Male</el-radio>
+            <el-radio label="F" border>Female</el-radio>
+        </el-radio-group>
+      </el-form-item>
+
+      <el-form-item label="Age" label-width="80px" prop="age">
+        <el-input class="item" v-model="form.age"></el-input>
+      </el-form-item>
+
+      <el-form-item label="Password" label-width="80px" prop="password">
         <el-input
           class="item"
           type="password"
           v-model="form.password"
         ></el-input>
       </el-form-item>
-      <el-form-item label="email" label-width="80px" prop="email">
+      <el-form-item label="E-mail" label-width="80px" prop="email">
         <el-input
           class="item"
           v-model="form.email"
@@ -32,20 +45,31 @@ export default {
   data() {
     return {
       form: {},
-      rules: {
-        name: [
-          { required: true, message: "please enter the username", trigger: "blur" },
-          { min: 3, max: 5, message: "3 - 5 characters", trigger: "blur" }
-        ],
-        password: [
-          { required: true, message: "please enter the password", trigger: "blur" },
-          { min: 6, max: 12, message: "6 - 12 characters", trigger: "blur" }
-        ]
-      }
+      rules: {}
+      // rules: {
+      //   name: [
+      //     { required: true, message: "please enter the username", trigger: "blur" },
+      //     { min: 3, max: 5, message: "3 - 5 characters", trigger: "blur" }
+      //   ],
+      //   password: [
+      //     { required: true, message: "please enter the password", trigger: "blur" },
+      //     { min: 6, max: 12, message: "6 - 12 characters", trigger: "blur" }
+      //   ]
+      // }
     };
   },
   methods: {
+    gender_change(){
+      // if (val == 'male'){
+      //   this.form.gender = 'male';
+      // }
+      // else{
+      //   this.form.gender = 'female';
+      // }
+      console.log(this.form);
+    },
     onSubmit() {
+      console.log(this.form)
       this.$refs["form"].validate(valid => {
         if (valid) {
           axios.get("api/user/register",{

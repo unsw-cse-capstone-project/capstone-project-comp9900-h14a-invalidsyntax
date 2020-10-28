@@ -18,16 +18,20 @@
     <el-menu-item index="4">b4</el-menu-item>
     <el-menu-item index="5">b5</el-menu-item> -->
     <!-- 如果已经登录 -->
-    <el-submenu v-if = "this.isLogon === true" index="100">
+    <el-submenu v-if = "isLogon === 'true'" index="100">
       <template slot="title">
       <!-- <el-avatar :size="small" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"></el-avatar> -->
-        {{user_name}} 
-        <el-menu-item index="100-1">User Center</el-menu-item>
-        <el-menu-item index="100-2" @click="logout">Log out</el-menu-item>
+      {{user_name}}
       </template>
+      <!-- <el-menu-item index="100-1">User Center</el-menu-item> -->
+      <el-menu-item index="100-2">Log out</el-menu-item>
     </el-submenu>
     <!-- 如果未登录 -->
-    <el-menu-item v-else index="6" @click="login">Login</el-menu-item>
+    <template v-else> 
+      <el-menu-item  index="6">Login</el-menu-item>
+      <el-menu-item  index="7">Register</el-menu-item>
+    </template>
+    
 
   </el-menu>
   </div>
@@ -40,7 +44,6 @@ export default {
       return {
         navBarIndex: '1',
         currentDate: new Date(),
-        // isLogon: false,
       };
     },
     created: function () {
@@ -48,20 +51,11 @@ export default {
       this.checkIfLogon();
     },
     methods: {
-      handleSelect(key, keyPath) {
-        console.log(key, keyPath);
-        if (key == "100-1"){
-          console.log("Go to Personal Center");
-        }
-        else if (key == "2"){
-          this.$router.push("/search");
-        }
-      },
-      checkIfLogon(){
+      checkIfLogon(){   
         this.isLogon = false;
         if (this.$cookies.isKey('isLogon')){ // 检查是否有Logon的coockie
-          if (this.$cookies.get('isLogon') == true){ // 如果已登录
-            this.isLogon = true;
+          if (this.$cookies.get('isLogon') == 'true'){ // 如果已登录
+            this.isLogon = 'true';
             this.user_name = this.$cookies.get('user_name');
             this.user_id = this.$cookies.get('user_id');
             console.log(this.user_id);
@@ -74,14 +68,37 @@ export default {
           // this.$router.push("/login");
         }
       },
+      refreshView() {
+        window.location.reload();
+      },
       logout(){
+        console.log('Process log out');
         this.$cookies.remove('user_id');
         this.$cookies.remove('user_name');
         this.$cookies.set('isLogon', false);
-        this.$router.push("/login");
+        this.$router.push("/home");
+        this.refreshView();
       },
       login(){
         this.$router.push("/login");
+      },
+      handleSelect(key, keyPath) {
+        console.log(key, keyPath);
+        if (key == "1"){
+          this.$router.push("/home");
+        }
+        if (key == "2"){
+          this.$router.push("/search");
+        }
+        if (key == "100-2"){
+          this.logout();
+        }
+        if (key == "6"){
+          this.login();
+        }
+        if (key == "7"){
+          this.$router.push("/register");
+        }
       }
     }
   }

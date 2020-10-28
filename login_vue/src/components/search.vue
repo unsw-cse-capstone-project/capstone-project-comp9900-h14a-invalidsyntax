@@ -1,5 +1,6 @@
 <template>
 <div>
+    <nav-bar></nav-bar>
     <el-input 
         class= "search"
         placeholder="Please search"
@@ -14,10 +15,8 @@
         v-for="(item,index) of moiveData"
         :key="index"
     >
-    <div>
         <img :src="item.poster">
-        {{ item.title }}
-    </div>
+        <el-button @click="goTo(`/movie/${item.movie_id}`)">{{ item.title }}</el-button>
     </li>
 </div>
 </template>
@@ -39,12 +38,17 @@ import axios from "axios";
                 if (res.status == 200){ 
                     console.log(res.data)
                     this.moiveData = res.data.data
-                    console.log(this.moiveData.length)
+
+                    console.log(this.moiveData[0].movie_id)
                     console.log(this.moiveData)
                     alert(res.data.message)
                 }
             })
+        },
+        goTo(path) {
+            this.$router.replace(path);
         }
+
     }
    }
 </script>

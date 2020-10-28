@@ -36,15 +36,25 @@
             <el-col :span="18">
               <!-- Movie Details -->
               <div style="padding: 14px">
-                <div class="movieTitle">{{ movieTitle }}</div>
-                <div class="movieOverview">{{ movieOverview }}</div>
+                <el-row>
+                  <el-col :span="12"><div class="movieTitle"></div>{{ movieTitle }}</el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="12"><div class="movieOverview"></div>{{ movieOverview }}</el-col>
+                </el-row>
+                <el-row>
+                  <el-button v-if="!addedWish" type="primary"  @click="addToWishList()">Add to Wishlist</el-button>
+                  <el-button v-if="addedWish" type="success" @click="addToWishList()">Added to Wish List!</el-button>
+                </el-row>
               </div>
+              
+              
             </el-col>
           </el-row>
           <!-- Comment -->
           <el-row>
             <el-input type="textarea" :rows="2" v-model="comment" placeholder="Please Write Your Comment" clearable></el-input>
-
+            <el-button type="primary">Post Comment</el-button>
           </el-row>
         </el-main>
       </el-container>
@@ -61,7 +71,8 @@ export default {
       movieTitle: this.movieTitle,
       movieOverview: this.overview,
       moviePoster: this.moviePoster,
-      comment: ''
+      comment: '',
+      addedWish: false,
     };
   },
   created: function () {
@@ -105,6 +116,9 @@ export default {
           }
         }); // API post
     },
+    addToWishList(){
+      this.addedWish = !this.addedWish;
+    }
   },
 };
 </script>
