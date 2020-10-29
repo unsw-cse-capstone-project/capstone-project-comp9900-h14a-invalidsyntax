@@ -28,7 +28,7 @@ public class MovieController {
 
     @ApiOperation("Search movie API, return movie data")
     @GetMapping("searchMovieByID")
-    public Result searchMovieByID(Integer movie_id){
-        return movieService.findMovieByID(movie_id);
+    public Result searchMovieByID(Integer movie_id, Integer user_id){
+        return movieService.findMovieByUserID(movie_id, user_id);
     }
 }

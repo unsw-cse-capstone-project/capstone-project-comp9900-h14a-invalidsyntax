@@ -35,11 +35,23 @@ public class ReviewServiceImpl implements ReviewService {
             return Result.fail("Movie not find !");
         }
 
+        // update rate and rate number
+
+        float new_rate = (rate+movie.getRate()*movie.getRate_number())/(movie.getRate_number()+1);
+        new_rate = (float) ((float)Math.round(new_rate*10.0)/10.0);
+        movie.setRate_number(movie.getRate_number()+1);
+        movie.setRate(new_rate);
+        int resultCount = moviemapper.updateMovieRate(movie);
+        if (resultCount == 0) {
+            return Result.fail("Movie rate updating failed !");
+        }
+
+        // add review
         Review new_review = new Review();
         new_review.setRate(rate);
         new_review.setReview(review);
 
-        int resultCount = reviewMapper.addReview(new_review);
+        resultCount = reviewMapper.addReview(new_review);
         if (resultCount == 0) {
             return Result.fail("Add review failed !");
         }

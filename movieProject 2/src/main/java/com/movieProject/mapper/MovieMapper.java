@@ -12,4 +12,6 @@ import java.util.List;
 public interface MovieMapper extends MyMapper<Movie> {
     List<Movie> findMovieByTitle(String title);
     Movie findMovieByID(Integer movie_id);
+    int updateMovieRate(Movie movie);
+    List<Float> findRateByUser(Integer movie_id, Integer user_id);
 }

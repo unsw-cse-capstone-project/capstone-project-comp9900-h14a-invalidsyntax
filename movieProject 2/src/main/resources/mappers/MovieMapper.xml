@@ -28,5 +28,17 @@
         FROM movie
         WHERE movie_id = #{movie_id}
     </select>
+    <select id="findRateByUser" resultType="java.lang.Float">
+        SELECT rate
+        FROM review r, user_review ur, movie_review mr
+        WHERE ur.user_id = #{user_id} AND ur.review_id = r.review_id AND ur.review_id = mr.review_id AND mr.movie_id = #{movie_id}
+    </select>
+
+    <update id="updateMovieRate" parameterType="com.movieProject.entity.Movie">
+        UPDATE movie
+        SET title = #{title}, poster = #{poster}, rate = #{rate}, rate_number = #{rate_number},
+            release_time = #{release_time}, homepage = #{homepage}, overview = #{overview}
+        WHERE movie_id = #{movie_id}
+    </update>
 
 </mapper>
