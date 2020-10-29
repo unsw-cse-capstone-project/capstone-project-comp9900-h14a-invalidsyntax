@@ -62,13 +62,13 @@ public class ReviewServiceImpl implements ReviewService {
         if (resultCount == 0) {
             return Result.fail("User add review failed !");
         }
-        new_review.setUser_id(user_id);
+        new_review.setUser_name(user.getName());
 
         resultCount = reviewMapper.addMovieReview(movie_id, review_id);
         if (resultCount == 0) {
             return Result.fail("Movie add review failed !");
         }
-        new_review.setMovie_id(movie_id);
+        new_review.setMovie_title(movie.getTitle());
 
         return Result.ok("Add review Success", new_review);
     }
@@ -87,8 +87,8 @@ public class ReviewServiceImpl implements ReviewService {
 
         List<Review> newReviewList = new ArrayList<>();
         for (Review review : reviewList) {
-            Review new_review;
-            new_review = reviewMapper.searchReviewByID(review);
+            Review new_review = reviewMapper.searchReviewByID(review);
+            // search movie in movie_review
             Integer movie_id = reviewMapper.searchMovieID(review.getReview_id());
             if (movie_id == null){
                 return Result.fail("Movie not find !");
@@ -97,12 +97,56 @@ public class ReviewServiceImpl implements ReviewService {
             if (movie == null) {
                 return Result.fail("Movie not find !");
             }
-            new_review.setMovie_id(movie_id);
-            new_review.setUser_id(review.getUser_id());
-            new_review.setReview_id(review.getReview_id());
+            new_review.setMovie_title(movie.getTitle());
+            new_review.setUser_name(user.getName());
             newReviewList.add(new_review);
         }
         return Result.ok("User reviews find !", newReviewList);
     }
 
+    @Override
+    public Result listMovieReview(Integer movie_id, Integer user_id) {
+        Movie movie = moviemapper.findMovieByID(movie_id);
+        if (movie == null) {
+            return Result.fail("Movie not find !");
+        }
+
+        List<Integer> reviewIds = reviewMapper.searchReviewByMovie(movie_id);
+        List<Review> movieReviews = new ArrayList<>();
+        for (Integer reviewId : reviewIds) {
+            Review review = new Review();
+            review.setReview_id(reviewId);
+            review = reviewMapper.searchReviewByID(review);
+            Integer userId = reviewMapper.searchUserByReview(reviewId);
+            User user = usermapper.findUserByID(userId);
+            if (null == user) {
+                return Result.fail("User can not be find !");
+            }
+            review.setUser_name(user.getName());
+            review.setMovie_title(movie.getTitle());
+
+            // if user_id is 0, list all review
+            if (user_id == 0) {
+                movieReviews.add(review);
+            } else {
+                user = usermapper.findUserByID(user_id);
+                if (null == user) {
+                    return Result.fail("User can not be find !");
+                }
+                // list reviews which add by user who is in the banList
+                List<Integer> banList = usermapper.showBanlist(user_id);
+                boolean banned = false;
+                for (Integer integer : banList) {
+                    if (userId.equals(integer)) {
+                        banned = true;
+                        break;
+                    }
+                }
+                if (!banned) {
+                    movieReviews.add(review);
+                }
+            }
+        }
+        return Result.ok("Movie reviews found !", movieReviews);
+    }
 }

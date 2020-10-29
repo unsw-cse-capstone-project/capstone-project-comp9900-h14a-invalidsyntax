@@ -31,4 +31,10 @@ public class ReviewController {
         return reviewService.listUserReview(user_id);
     }
 
+    @ApiOperation("List movie review, return reviews")
+    @GetMapping("List_movie_review")
+    public  Result listMovieReview(Integer movie_id, Integer user_id){
+        return reviewService.listMovieReview(movie_id, user_id);
+    }
+
 }

@@ -27,14 +27,14 @@
     </insert>
 
     <select id="listUserReview" resultType="com.movieProject.entity.Review">
-        SELECT review_id, user_id
+        SELECT review_id
         FROM user_review
         WHERE user_id = #{user_id}
     </select>
 
     <select id="searchReviewByID" parameterType="com.movieProject.entity.Review"
             resultType="com.movieProject.entity.Review">
-        SELECT rate, review
+        SELECT review_id, rate, review
         FROM review
         WHERE review_id = #{review_id}
     </select>
@@ -42,6 +42,18 @@
     <select id="searchMovieID" resultType="java.lang.Integer">
         SELECT movie_id
         FROM movie_review
+        WHERE review_id = #{review_id}
+    </select>
+
+    <select id="searchReviewByMovie" resultType="java.lang.Integer">
+        SELECT review_id
+        FROM movie_review
+        WHERE movie_id = #{movie_id}
+    </select>
+
+    <select id="searchUserByReview" resultType="java.lang.Integer">
+        SELECT user_id
+        FROM user_review
         WHERE review_id = #{review_id}
     </select>
 

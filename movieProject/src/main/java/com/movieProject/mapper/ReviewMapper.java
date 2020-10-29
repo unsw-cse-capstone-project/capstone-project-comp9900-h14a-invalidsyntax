@@ -16,4 +16,7 @@ public interface ReviewMapper extends MyMapper<Review> {
     List<Review> listUserReview(int user_id);
     Review searchReviewByID(Review review);
     Integer searchMovieID(int review_id);
+    List<Integer> searchReviewByMovie(int movie_id);
+    Integer searchUserByReview(int review_id);
+
 }
