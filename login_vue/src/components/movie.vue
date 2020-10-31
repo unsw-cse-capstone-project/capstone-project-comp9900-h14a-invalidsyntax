@@ -44,17 +44,24 @@
                 </el-row>
                 <el-row>
                   <el-button v-if="!addedWish" type="primary"  @click="addToWishList()">Add to Wishlist</el-button>
-                  <el-button v-if="addedWish" type="success" @click="addToWishList()">Added to Wish List!</el-button>
+                  <el-button v-if="addedWish" type="success" @click="deleteFromWishList()">Added to Wish List!</el-button>
                 </el-row>
               </div>
               
               
             </el-col>
           </el-row>
-          <!-- Comment -->
+
+          <!--  Review List  -->
           <el-row>
-            <el-input type="textarea" :rows="2" v-model="comment" placeholder="Please Write Your Comment" clearable></el-input>
-            <el-button type="primary">Post Comment</el-button>
+            <span> Review List </span>
+          </el-row>
+
+          <!-- Post Review -->
+          <el-row>
+            <el-rate v-model="reviewRating"></el-rate>
+            <el-input v-model="reviewInput" :span="12" type="textarea" :rows="2" placeholder="Please Write Your Comment" clearable></el-input>
+            <el-button type="primary"  @click="postReview()">Post Review</el-button>
           </el-row>
         </el-main>
       </el-container>
@@ -68,22 +75,36 @@ import axios from "axios";
 export default {
   data() {
     return {
+      movieID: 0,
       movieTitle: this.movieTitle,
       movieOverview: this.overview,
       moviePoster: this.moviePoster,
-      comment: '',
       addedWish: false,
+      reviewRating: 0,
+      reviewInput: '',
     };
   },
   created: function () {
     // called when loading the page
     this.getMovieDetail();
+    this.isLogon();
   },
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
       if (key == "100-1") {
         console.log("Go to Personal Center");
+      }
+    },
+    isLogon(){
+      this.isLogon = false;
+      if (this.$cookies.isKey('isLogon')){ // 检查是否有Logon的coockie
+        if (this.$cookies.get('isLogon') == 'true'){ // 如果已登录
+          this.isLogon = 'true';
+          this.user_name = this.$cookies.get('user_name');
+          this.user_id = this.$cookies.get('user_id');
+          console.log(this.user_id);
+        }
       }
     },
     getMovieDetail() {
@@ -117,7 +138,50 @@ export default {
         }); // API post
     },
     addToWishList(){
+      if (this.isLogon){
+        this.addedWish = !this.addedWish;
+        axios.get(
+            "../api/user/add_to_wishlist", // 关键：..表示请求上一级
+            { params: { user_id: this.user_id, movie_id: this.movieID } }
+          )
+          .then((res) => {
+            if (res.status == 404) {
+              alert("Internel Error");
+              console.log("Response:");
+              console.log(res);
+            } else if (res.status == 200) {
+              console.log(res.data.data);
+              alert("Add wishlist success")
+            }
+          }
+        ); // API post
+      }
+      else{
+        alert("You did not login!")
+        this.$router.push("/login");
+      }
+    },
+    deleteFromWishList(){
       this.addedWish = !this.addedWish;
+    },
+    pullReviewList(){
+
+    },
+    postReview(){
+      console.log(this.reviewRating, this.reviewInput);
+      axios.get('../api/review/add_review', 
+                  {params: { user_id: this.user_id, movie_id: this.movieID, rate: this.reviewRating, review: this.reviewInput }})
+                .then((res) => {
+                  if (res.status == 404) {
+                    alert("Internel Error");
+                    console.log("Response:");
+                    console.log(res);
+                  } else if (res.status == 200) {
+                    console.log(res.data.data);
+                    alert("Review success")
+                  }
+                }
+      )
     }
   },
 };
