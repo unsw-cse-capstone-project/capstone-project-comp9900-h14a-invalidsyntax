@@ -14,4 +14,5 @@ public interface MovieMapper extends MyMapper<Movie> {
     Movie findMovieByID(Integer movie_id);
     int updateMovieRate(Movie movie);
     List<Float> findRateByUser(Integer movie_id, Integer user_id);
+    List<Movie> listMovie();
 }

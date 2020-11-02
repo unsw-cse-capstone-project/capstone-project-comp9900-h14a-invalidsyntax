@@ -162,8 +162,8 @@ public class UserServiceImpl implements UserService {
         if (null == user) {
             return Result.fail("User not find !");
         }
-        List<Integer> banlist = usermapper.showBanlist(new_user_id);
-        return Result.ok("Wishlist found !", banlist);
+        List<Integer> banList = usermapper.showBanlist(new_user_id);
+        return Result.ok("Ban list found !", banList);
     }
 
     @Override

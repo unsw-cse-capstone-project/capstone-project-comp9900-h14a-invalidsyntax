@@ -34,6 +34,12 @@
         WHERE ur.user_id = #{user_id} AND ur.review_id = r.review_id AND ur.review_id = mr.review_id AND mr.movie_id = #{movie_id}
     </select>
 
+    <select id="listMovie" resultType="com.movieProject.entity.Movie">
+        SELECT *
+        FROM movie
+        ORDER BY rate DESC
+    </select>
+
     <update id="updateMovieRate" parameterType="com.movieProject.entity.Movie">
         UPDATE movie
         SET title = #{title}, poster = #{poster}, rate = #{rate}, rate_number = #{rate_number},

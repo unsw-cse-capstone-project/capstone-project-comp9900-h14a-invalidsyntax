@@ -64,4 +64,10 @@ public class MovieServiceImpl implements MovieService {
         }
         return Result.ok("Movie found !", movie);
     }
+
+    @Override
+    public Result listTopMovie() {
+        List<Movie> movies = movieMapper.listMovie();
+        return Result.ok("Movie found !", movies);
+    }
 }

@@ -122,6 +122,7 @@ public class ReviewServiceImpl implements ReviewService {
             if (null == user) {
                 return Result.fail("User can not be find !");
             }
+            review.setUser_id(userId);
             review.setUser_name(user.getName());
             review.setMovie_title(movie.getTitle());
 

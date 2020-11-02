@@ -8,13 +8,14 @@ import javax.persistence.*;
 @Entity
 @Table(name = "review")
 public class Review {
+    private String movie_title;
+    private float rate;
+    private String review;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id", updatable = false)
     private Integer review_id;
     private String user_name;
-    private String movie_title;
-    private float rate;
-    private String review;
-
+    private Integer user_id;
 }

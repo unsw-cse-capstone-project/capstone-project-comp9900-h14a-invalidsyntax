@@ -18,7 +18,7 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @ApiOperation("Add movie review, return review")
-    @PostMapping("add_review")
+    @GetMapping("add_review")
     public Result addReview(String review, float rate, Integer user_id, Integer movie_id) {
         log.info("user_id:{}", user_id);
         log.info("movie_id:{}", movie_id);
