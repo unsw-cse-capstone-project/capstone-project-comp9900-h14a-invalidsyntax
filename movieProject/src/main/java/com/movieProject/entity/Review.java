@@ -18,4 +18,5 @@ public class Review {
     private Integer review_id;
     private String user_name;
     private Integer user_id;
+    private Integer movie_id;
 }

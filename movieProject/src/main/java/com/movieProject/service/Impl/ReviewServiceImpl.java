@@ -97,6 +97,7 @@ public class ReviewServiceImpl implements ReviewService {
             if (movie == null) {
                 return Result.fail("Movie not find !");
             }
+            new_review.setMovie_id(movie_id);
             new_review.setMovie_title(movie.getTitle());
             new_review.setUser_name(user.getName());
             newReviewList.add(new_review);
@@ -149,5 +150,43 @@ public class ReviewServiceImpl implements ReviewService {
             }
         }
         return Result.ok("Movie reviews found !", movieReviews);
+    }
+
+    @Override
+    public Result deleteReview(Integer review_id) {
+        Review review = new Review();
+        review.setReview_id(review_id);
+        review = reviewMapper.searchReviewByID(review);
+        if (review == null) {
+            return Result.fail("Review not found !");
+        }
+
+        Integer movie_id = reviewMapper.searchMovieID(review.getReview_id());
+        if (movie_id == null){
+            return Result.fail("Movie not find !");
+        }
+
+        Movie movie = moviemapper.findMovieByID(movie_id);
+        if (movie == null) {
+            return Result.fail("Movie not find !");
+        }
+
+        // update rate and rate number
+
+        float new_rate = (movie.getRate()*movie.getRate_number() - review.getRate())/(movie.getRate_number()-1);
+        new_rate = (float) ((float)Math.round(new_rate*10.0)/10.0);
+        movie.setRate_number(movie.getRate_number()-1);
+        movie.setRate(new_rate);
+        int resultCount = moviemapper.updateMovieRate(movie);
+        if (resultCount == 0) {
+            return Result.fail("Movie rate updating failed !");
+        }
+
+        resultCount = reviewMapper.deleteReview(review_id);
+        if (resultCount == 0) {
+            return Result.fail("Review delete fail !");
+        }
+
+        return Result.ok("Delete success !", review);
     }
 }

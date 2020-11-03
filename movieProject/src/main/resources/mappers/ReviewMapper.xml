@@ -25,6 +25,11 @@
         INSERT INTO movie_review(movie_id, review_id)
         VALUES (#{movie_id}, #{review_id})
     </insert>
+    <delete id="deleteReview">
+        DELETE
+        FROM review
+        WHERE review_id = #{review_id}
+    </delete>
 
     <select id="listUserReview" resultType="com.movieProject.entity.Review">
         SELECT review_id

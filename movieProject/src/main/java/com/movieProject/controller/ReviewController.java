@@ -33,8 +33,15 @@ public class ReviewController {
 
     @ApiOperation("List movie review, return reviews")
     @GetMapping("List_movie_review")
-    public  Result listMovieReview(Integer movie_id, Integer user_id){
+    public Result listMovieReview(Integer movie_id, Integer user_id){
         return reviewService.listMovieReview(movie_id, user_id);
     }
+
+    @ApiOperation("Delete review")
+    @GetMapping("Delete_review")
+    public Result deleteReview(Integer review_id) {
+        return reviewService.deleteReview(review_id);
+    }
+
 
 }
