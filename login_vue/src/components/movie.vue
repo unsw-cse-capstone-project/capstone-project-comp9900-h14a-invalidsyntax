@@ -31,30 +31,48 @@
               <!-- Interpolation inside attributes has been removed. Use v-bind or the 
               colon shorthand instead. For example, instead of 
               <div id="{{ val }}">, use <div :id="val">. -->
-              <img :src="moviePoster" class="image" />
+              <img :src="movieData.poster" class="image" />
             </el-col>
-            <el-col :span="18">
+            <el-col :span="12">
               <!-- Movie Details -->
               <div style="padding: 14px">
                 <el-row>
-                  <el-col :span="12"><div class="movieTitle"></div>{{ movieTitle }}</el-col>
+                  <el-col ><div class="movieTitle"></div>{{ movieData.title }}</el-col>
                 </el-row>
                 <el-row>
-                  <el-col :span="12"><div class="movieOverview"></div>{{ movieOverview }}</el-col>
+                  <el-col ><div class="movieOverview"></div>{{ movieData.overview }}</el-col>
                 </el-row>
                 <el-row>
-                  <el-button v-if="!addedWish" type="primary"  @click="addToWishList()">Add to Wishlist</el-button>
-                  <el-button v-if="addedWish" type="success" @click="deleteFromWishList()">Added to Wish List!</el-button>
+                  <el-col ><div class="movieReleaseTime"></div>Release time: {{ movieData.release_time }}</el-col>
                 </el-row>
               </div>
-              
-              
+            </el-col>
+            <el-col :span="6">
+              <!-- 评分和add wishlist区域 -->
+              <span> Movie Rating {{ movieData.rate }}/10 </span>
+              <el-row>
+                <el-button v-if="!addedWish" type="primary"  @click="addToWishList()">Add to Wishlist</el-button>
+                <el-button v-if="addedWish" type="success" @click="deleteFromWishList()">Added to Wish List!</el-button>
+              </el-row>
             </el-col>
           </el-row>
 
           <!--  Review List  -->
-          <el-row>
-            <span> Review List </span>
+          <el-row :span="24" v-for="(o, index) in this.reviewList" :key="index">
+            <el-card class="box-card">
+              <div slot="header" class="clearfix">
+                <el-link style="float: left; padding: 3px 0" type="primary" :href="'/user/' + o.user_id">{{ o.user_name }}</el-link>
+                <div style="float: center"> Rated: {{ o.rate}}/10 </div>
+                <!-- 需要改成user_id -->
+                <el-button v-if="o.user_id === user_id" style="float: right; padding: 3px 0" type="text" @click="deleteReview()">
+                  delete review
+                </el-button>
+              </div>
+                <div class="text item">
+                  {{ o.review }}
+                </div>
+              
+            </el-card>
           </el-row>
 
           <!-- Post Review -->
@@ -75,19 +93,31 @@ import axios from "axios";
 export default {
   data() {
     return {
-      movieID: 0,
-      movieTitle: this.movieTitle,
-      movieOverview: this.overview,
-      moviePoster: this.moviePoster,
+      // movie info
+      movieID: -1,
+      movieData: {},
+      // let movieData = res.data.data;
+      // this.movieTitle = movieData.title;
+      // this.movieOverview = movieData.overview;
+      // this.moviePoster = movieData.poster;
+      // wishlist info
       addedWish: false,
+      // review posting info
       reviewRating: 0,
       reviewInput: '',
+      reviewList: {},
+      // user info
+      isLogon: false,
+      user_name: '',
+      user_id: 0, // default user id
     };
   },
   created: function () {
     // called when loading the page
     this.getMovieDetail();
-    this.isLogon();
+    this.checkLogon();
+    this.getReviewList();
+    this.checkAddedWishlist();
   },
   methods: {
     handleSelect(key, keyPath) {
@@ -96,26 +126,26 @@ export default {
         console.log("Go to Personal Center");
       }
     },
-    isLogon(){
+    checkLogon(){
       this.isLogon = false;
       if (this.$cookies.isKey('isLogon')){ // 检查是否有Logon的coockie
         if (this.$cookies.get('isLogon') == 'true'){ // 如果已登录
           this.isLogon = 'true';
           this.user_name = this.$cookies.get('user_name');
-          this.user_id = this.$cookies.get('user_id');
+          this.user_id = parseInt(this.$cookies.get('user_id'));
           console.log(this.user_id);
         }
       }
     },
     getMovieDetail() {
       // Obtain details of requested movie ID
-      this.movieID = this.$route.params.id; //qeury he params 区别
+      this.movieID = parseInt(this.$route.params.id); //qeury he params 区别
       console.log("movieID", this.movieID);
 
       axios
         .get(
           "../api/movie/searchMovieByID", // 关键：..表示请求上一级
-          { params: { movie_id: this.movieID } }
+          { params: { movie_id: this.movieID, user_id: this.user_id } }
         )
         .then((res) => {
           if (res.status == 404) {
@@ -125,15 +155,7 @@ export default {
           } else if (res.status == 200) {
             console.log("Response:");
             console.log(res.data.data);
-            // Record movie detail
-            let movieData = res.data.data;
-            this.movieTitle = movieData.title;
-            this.movieOverview = movieData.overview;
-            this.moviePoster = movieData.poster;
-
-            console.log(this.movieTitle);
-            console.log(this.movieOverview);
-            console.log(this.moviePoster);
+            this.movieData = res.data.data;
           }
         }); // API post
     },
@@ -157,18 +179,41 @@ export default {
         ); // API post
       }
       else{
-        alert("You did not login!")
+        alert("You did not login!");
         this.$router.push("/login");
       }
     },
     deleteFromWishList(){
       this.addedWish = !this.addedWish;
+      axios.get('../api/user/remove_from_wishlist', 
+                  {params: { user_id: this.user_id, movie_id: this.movieID}})
+                .then((res) => {
+                  if (res.status == 404) {
+                    alert("Internel Error");
+                    console.log("Response:");
+                    console.log(res);
+                  } else if (res.status == 200) {
+                    alert("Removed from wishlist");
+                  }
+                }
+      )
     },
-    pullReviewList(){
-
+    getReviewList(){
+      axios.get('../api/review/List_movie_review', 
+                  {params: { user_id: this.user_id, movie_id: this.movieID}})
+                .then((res) => {
+                  if (res.status == 404) {
+                    alert("Internel Error");
+                    console.log("Response:");
+                    console.log(res);
+                  } else if (res.status == 200) {
+                    // alert("Fetched reviews");
+                    this.reviewList = res.data.data;
+                  }
+                }
+      )
     },
     postReview(){
-      console.log(this.reviewRating, this.reviewInput);
       axios.get('../api/review/add_review', 
                   {params: { user_id: this.user_id, movie_id: this.movieID, rate: this.reviewRating, review: this.reviewInput }})
                 .then((res) => {
@@ -179,6 +224,26 @@ export default {
                   } else if (res.status == 200) {
                     console.log(res.data.data);
                     alert("Review success")
+                  }
+                }
+      )
+      window.location.reload();
+    },
+    deleteReview(){
+      alert("where is delete review")
+    },
+    checkAddedWishlist(){
+      axios.get('../api/user/showWishList', 
+                  {params: { user_id: this.user_id}})
+                .then((res) => {
+                  if (res.status == 404) {
+                    alert("Internel Error");
+                    console.log("Response:");
+                    console.log(res);
+                  } else if (res.status == 200) {
+                    if (res.data.data.includes(this.movieID)){
+                      this.addedWish = true;
+                    }
                   }
                 }
       )

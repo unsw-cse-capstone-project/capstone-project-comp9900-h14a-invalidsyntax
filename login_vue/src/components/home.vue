@@ -68,7 +68,7 @@ export default {
         for (let movieID = 1; movieID <= 5; movieID++){
           axios.get(
             "./api/movie/searchMovieByID", // 关键：..表示请求上一级
-            { params: { movie_id: movieID } }
+            { params: { movie_id: movieID, user_id: 0 } } // 默认user_id = 0 获取详情即可
           )
           .then((res) => {
             if (res.status == 404) {
