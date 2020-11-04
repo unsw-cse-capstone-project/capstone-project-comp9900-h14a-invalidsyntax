@@ -1,17 +1,17 @@
 /*
- Navicat MySQL Data Transfer
+ Navicat Premium Data Transfer
 
- Source Server         : 127.0.0.1
+ Source Server         : spring-boot-test
  Source Server Type    : MySQL
  Source Server Version : 80021
  Source Host           : localhost:3306
- Source Schema         : userInfo
+ Source Schema         : MovieDB
 
  Target Server Type    : MySQL
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 04/11/2020 17:42:53
+ Date: 04/11/2020 17:14:38
 */
 
 SET NAMES utf8mb4;
@@ -30,6 +30,12 @@ CREATE TABLE `actor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
+-- Records of actor
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
 -- Table structure for movie
 -- ----------------------------
 DROP TABLE IF EXISTS `movie`;
@@ -39,21 +45,21 @@ CREATE TABLE `movie` (
   `release_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'N/A' COMMENT 'release_date',
   `poster` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'N/A' COMMENT 'movie_poster',
   `rate` float(2,1) NOT NULL DEFAULT '0.0' COMMENT 'movie_rating',
-  `rate_number` int NOT NULL DEFAULT '0',
+  `rate_number` int NOT NULL DEFAULT '1',
   `homepage` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'N/A' COMMENT 'movie_homepage',
   `overview` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   PRIMARY KEY (`movie_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4811 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of movie
 -- ----------------------------
 BEGIN;
-INSERT INTO `movie` VALUES (1, 'Avatar', '2009/12/10', 'https://m.media-amazon.com/images/M/MV5BMTYwOTEwNjAzMl5BMl5BanBnXkFtZTcwODc5MTUwMw@@._V1_SX300.jpg', 7.2, 0, 'http://www.avatarmovie.com/', 'In the 22nd century, a paraplegic Marine is dispatched to the moon Pandora on a unique mission, but becomes torn between following orders and protecting an alien civilization.');
-INSERT INTO `movie` VALUES (2, 'Pirates of the Caribbean: At World\'s End', '2007/5/19', 'https://m.media-amazon.com/images/M/MV5BMjIyNjkxNzEyMl5BMl5BanBnXkFtZTYwMjc3MDE3._V1_SX300.jpg', 6.9, 0, 'http://disney.go.com/disneypictures/pirates/', 'Captain Barbossa, long believed to be dead, has come back to life and is headed to the edge of the Earth with Will Turner and Elizabeth Swann. But nothing is quite as it seems.');
-INSERT INTO `movie` VALUES (3, 'Spectre', '2015/10/26', 'https://m.media-amazon.com/images/M/MV5BOWQ1MDE1NzgtNTQ4OC00ZjliLTllZDAtN2IyOTVmMTc5YjUxXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg', 6.3, 0, 'http://www.sonypictures.com/movies/spectre/', 'A cryptic message from Bond past sends him on a trail to uncover a sinister organization. While M battles political forces to keep the secret service alive, Bond peels back the layers of deceit to reveal the terrible truth behind SPECTRE.');
-INSERT INTO `movie` VALUES (4, 'The Dark Knight Rises', '2012/7/16', 'https://m.media-amazon.com/images/M/MV5BMTk4ODQzNDY3Ml5BMl5BanBnXkFtZTcwODA0NTM4Nw@@._V1_SX300.jpg', 7.6, 0, 'http://www.thedarkknightrises.com/', 'Following the death of District Attorney Harvey Dent, Batman assumes responsibility for Dent\'s crimes to protect the late attorney\'s reputation and is subsequently hunted by the Gotham City Police Department. Eight years later, Batman encounters the mysterious Selina Kyle and the villainous Bane, a new terrorist leader who overwhelms Gotham\'s finest. The Dark Knight resurfaces to protect a city that has branded him an enemy.');
-INSERT INTO `movie` VALUES (5, 'Spider-Man 3', '2007/5/1', 'https://m.media-amazon.com/images/M/MV5BYTk3MDljOWQtNGI2My00OTEzLTlhYjQtOTQ4ODM2MzUwY2IwXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_SX300.jpg', 5.9, 0, 'http://www.sonypictures.com/movies/spider-man3/', 'The seemingly invincible Spider-Man goes up against an all-new crop of villain 鈥 including the shape-shifting Sandman. While Spider-Man鈥檚 superpowers are altered by an alien organism, his alter ego, Peter Parker, deals with nemesis Eddie Brock and also gets caught up in a love triangle.');
+INSERT INTO `movie` VALUES (1, 'Avatar', '2009/12/10', 'https://m.media-amazon.com/images/M/MV5BMTYwOTEwNjAzMl5BMl5BanBnXkFtZTcwODc5MTUwMw@@._V1_SX300.jpg', 6.8, 18, 'http://www.avatarmovie.com/', 'In the 22nd century, a paraplegic Marine is dispatched to the moon Pandora on a unique mission, but becomes torn between following orders and protecting an alien civilization.');
+INSERT INTO `movie` VALUES (2, 'Pirates of the Caribbean: At World\'s End', '2007/5/19', 'https://m.media-amazon.com/images/M/MV5BMjIyNjkxNzEyMl5BMl5BanBnXkFtZTYwMjc3MDE3._V1_SX300.jpg', 6.9, 10, 'http://disney.go.com/disneypictures/pirates/', 'Captain Barbossa, long believed to be dead, has come back to life and is headed to the edge of the Earth with Will Turner and Elizabeth Swann. But nothing is quite as it seems.');
+INSERT INTO `movie` VALUES (3, 'Spectre', '2015/10/26', 'https://m.media-amazon.com/images/M/MV5BOWQ1MDE1NzgtNTQ4OC00ZjliLTllZDAtN2IyOTVmMTc5YjUxXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg', 6.3, 10, 'http://www.sonypictures.com/movies/spectre/', 'A cryptic message from Bond past sends him on a trail to uncover a sinister organization. While M battles political forces to keep the secret service alive, Bond peels back the layers of deceit to reveal the terrible truth behind SPECTRE.');
+INSERT INTO `movie` VALUES (4, 'The Dark Knight Rises', '2012/7/16', 'https://m.media-amazon.com/images/M/MV5BMTk4ODQzNDY3Ml5BMl5BanBnXkFtZTcwODA0NTM4Nw@@._V1_SX300.jpg', 7.6, 10, 'http://www.thedarkknightrises.com/', 'Following the death of District Attorney Harvey Dent, Batman assumes responsibility for Dent\'s crimes to protect the late attorney\'s reputation and is subsequently hunted by the Gotham City Police Department. Eight years later, Batman encounters the mysterious Selina Kyle and the villainous Bane, a new terrorist leader who overwhelms Gotham\'s finest. The Dark Knight resurfaces to protect a city that has branded him an enemy.');
+INSERT INTO `movie` VALUES (5, 'Spider-Man 3', '2007/5/1', 'https://m.media-amazon.com/images/M/MV5BYTk3MDljOWQtNGI2My00OTEzLTlhYjQtOTQ4ODM2MzUwY2IwXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_SX300.jpg', 5.9, 10, 'http://www.sonypictures.com/movies/spider-man3/', 'The seemingly invincible Spider-Man goes up against an all-new crop of villain 鈥 including the shape-shifting Sandman. While Spider-Man鈥檚 superpowers are altered by an alien organism, his alter ego, Peter Parker, deals with nemesis Eddie Brock and also gets caught up in a love triangle.');
 INSERT INTO `movie` VALUES (6, 'Close Range', '2015/12/11', 'https://m.media-amazon.com/images/M/MV5BMjA5MzYzODk2Nl5BMl5BanBnXkFtZTgwNDM4MTY3NjE@._V1_SX300.jpg', 4.9, 10, 'https://www.facebook.com/closerangemovie/', 'A rogue soldier turned outlaw is thrust into a relentless fight with a corrupt sheriff, his obedient deputies, and a dangerous drug cartel in order to protect his sister and her young daughter.');
 INSERT INTO `movie` VALUES (7, 'Boynton Beach Club', '2005/8/5', 'https://m.media-amazon.com/images/M/MV5BMTkwMDY5MTE5NF5BMl5BanBnXkFtZTcwOTc5NTUzMQ@@._V1_SX300.jpg', 6.8, 10, '', 'A handful of men and women of a certain age pick up the pieces of their lives and look for new love after the loss of their mates in this comedy drama from writer-director Susan Seidelman.');
 INSERT INTO `movie` VALUES (8, 'Amnesiac', '2015/8/14', 'https://m.media-amazon.com/images/M/MV5BODU3YjM3ZjgtZTJjZC00NDUyLTljZjctZDQ4NjkxOGJiMTE5XkEyXkFqcGdeQXVyMTIxMzA5MDI@._V1_SX300.jpg', 4.1, 10, '', 'The story of a man who wakes up in bed suffering from memory loss after being in an accident, only to begin to suspect that his wife may not be his real wife and that a web of lies and deceit deepen inside the house where he soon finds himself a prisoner.');
@@ -137,11 +143,19 @@ DROP TABLE IF EXISTS `movie_actor`;
 CREATE TABLE `movie_actor` (
   `movie_id` int NOT NULL,
   `actor_id` int NOT NULL,
-  PRIMARY KEY (`movie_id`,`actor_id`),
+  `table_id` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`table_id`) USING BTREE,
   KEY `actor_id` (`actor_id`),
-  CONSTRAINT `movie_actor_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`movie_id`),
-  CONSTRAINT `movie_actor_ibfk_2` FOREIGN KEY (`actor_id`) REFERENCES `actor` (`actor_id`)
+  KEY `movie_actor_ibfk_1` (`movie_id`),
+  CONSTRAINT `movie_actor_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`movie_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `movie_actor_ibfk_2` FOREIGN KEY (`actor_id`) REFERENCES `actor` (`actor_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of movie_actor
+-- ----------------------------
+BEGIN;
+COMMIT;
 
 -- ----------------------------
 -- Table structure for movie_director
@@ -150,11 +164,19 @@ DROP TABLE IF EXISTS `movie_director`;
 CREATE TABLE `movie_director` (
   `movie_id` int NOT NULL,
   `director_id` int NOT NULL,
-  PRIMARY KEY (`movie_id`,`director_id`),
+  `table_id` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`table_id`) USING BTREE,
   KEY `director_id` (`director_id`),
-  CONSTRAINT `movie_director_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`movie_id`),
-  CONSTRAINT `movie_director_ibfk_2` FOREIGN KEY (`director_id`) REFERENCES `actor` (`actor_id`)
+  KEY `movie_director_ibfk_1` (`movie_id`),
+  CONSTRAINT `movie_director_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`movie_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `movie_director_ibfk_2` FOREIGN KEY (`director_id`) REFERENCES `actor` (`actor_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of movie_director
+-- ----------------------------
+BEGIN;
+COMMIT;
 
 -- ----------------------------
 -- Table structure for movie_releaseTme
@@ -163,11 +185,19 @@ DROP TABLE IF EXISTS `movie_releaseTme`;
 CREATE TABLE `movie_releaseTme` (
   `releaseTime_id` int NOT NULL,
   `movie_id` int NOT NULL,
-  PRIMARY KEY (`releaseTime_id`,`movie_id`),
+  `table_id` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`table_id`) USING BTREE,
   KEY `movie_id` (`movie_id`),
-  CONSTRAINT `movie_releasetme_ibfk_1` FOREIGN KEY (`releaseTime_id`) REFERENCES `releaseTime` (`releaseTime_id`),
-  CONSTRAINT `movie_releasetme_ibfk_2` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`movie_id`)
+  KEY `movie_releasetme_ibfk_1` (`releaseTime_id`),
+  CONSTRAINT `movie_releasetme_ibfk_1` FOREIGN KEY (`releaseTime_id`) REFERENCES `releaseTime` (`releaseTime_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `movie_releasetme_ibfk_2` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`movie_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of movie_releaseTme
+-- ----------------------------
+BEGIN;
+COMMIT;
 
 -- ----------------------------
 -- Table structure for movie_review
@@ -176,11 +206,27 @@ DROP TABLE IF EXISTS `movie_review`;
 CREATE TABLE `movie_review` (
   `movie_id` int NOT NULL,
   `review_id` int NOT NULL,
-  PRIMARY KEY (`movie_id`,`review_id`),
+  `table_id` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`table_id`) USING BTREE,
   KEY `review_id` (`review_id`),
-  CONSTRAINT `movie_review_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`movie_id`),
-  CONSTRAINT `movie_review_ibfk_2` FOREIGN KEY (`review_id`) REFERENCES `review` (`review_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `movie_review_ibfk_1` (`movie_id`),
+  CONSTRAINT `movie_review_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`movie_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `movie_review_ibfk_2` FOREIGN KEY (`review_id`) REFERENCES `review` (`review_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of movie_review
+-- ----------------------------
+BEGIN;
+INSERT INTO `movie_review` VALUES (1, 23, 7);
+INSERT INTO `movie_review` VALUES (1, 25, 9);
+INSERT INTO `movie_review` VALUES (1, 26, 10);
+INSERT INTO `movie_review` VALUES (1, 27, 11);
+INSERT INTO `movie_review` VALUES (1, 28, 12);
+INSERT INTO `movie_review` VALUES (1, 29, 13);
+INSERT INTO `movie_review` VALUES (1, 30, 14);
+INSERT INTO `movie_review` VALUES (1, 31, 15);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for movie_type
@@ -189,11 +235,19 @@ DROP TABLE IF EXISTS `movie_type`;
 CREATE TABLE `movie_type` (
   `movie_id` int NOT NULL,
   `type_id` int NOT NULL,
-  PRIMARY KEY (`movie_id`,`type_id`),
+  `table_id` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`table_id`) USING BTREE,
   KEY `type_id` (`type_id`),
-  CONSTRAINT `movie_type_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`movie_id`),
-  CONSTRAINT `movie_type_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `type` (`type_id`)
+  KEY `movie_type_ibfk_1` (`movie_id`),
+  CONSTRAINT `movie_type_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`movie_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `movie_type_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `type` (`type_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of movie_type
+-- ----------------------------
+BEGIN;
+COMMIT;
 
 -- ----------------------------
 -- Table structure for releaseTime
@@ -206,6 +260,12 @@ CREATE TABLE `releaseTime` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
+-- Records of releaseTime
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
 -- Table structure for review
 -- ----------------------------
 DROP TABLE IF EXISTS `review`;
@@ -214,7 +274,21 @@ CREATE TABLE `review` (
   `rate` float(2,1) NOT NULL DEFAULT '0.0',
   `review` text,
   PRIMARY KEY (`review_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of review
+-- ----------------------------
+BEGIN;
+INSERT INTO `review` VALUES (23, 3.0, 'not good');
+INSERT INTO `review` VALUES (25, 8.0, 'good');
+INSERT INTO `review` VALUES (26, 8.0, 'good');
+INSERT INTO `review` VALUES (27, 8.0, 'good');
+INSERT INTO `review` VALUES (28, 8.0, 'good');
+INSERT INTO `review` VALUES (29, 8.0, 'good');
+INSERT INTO `review` VALUES (30, 5.0, 'not good');
+INSERT INTO `review` VALUES (31, 2.0, 'not good');
+COMMIT;
 
 -- ----------------------------
 -- Table structure for type
@@ -226,6 +300,12 @@ CREATE TABLE `type` (
   PRIMARY KEY (`type_id`),
   KEY `type_id` (`type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of type
+-- ----------------------------
+BEGIN;
+COMMIT;
 
 -- ----------------------------
 -- Table structure for user
@@ -246,7 +326,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `user` VALUES (1, 'admin', 'N/A', 0, 'admin', '');
-INSERT INTO `user` VALUES (2, '123', 'M', 20, '123', '123@163.com');
+INSERT INTO `user` VALUES (2, '123', 'F', 14, '2233', '0000@11.co m');
 INSERT INTO `user` VALUES (3, '1234', 'M', 18, '123', '123@123');
 INSERT INTO `user` VALUES (4, 'asdf', 'M', 25, 'asdf', '359931108@qq.com');
 COMMIT;
@@ -256,13 +336,23 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `user_banlist`;
 CREATE TABLE `user_banlist` (
-  `user_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
   `user_baned_id` int DEFAULT NULL,
-  PRIMARY KEY (`user_id`) USING BTREE,
+  `table_id` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`table_id`) USING BTREE,
   KEY `user_baned_id` (`user_baned_id`),
-  CONSTRAINT `user_banlist_ibfk_1` FOREIGN KEY (`user_baned_id`) REFERENCES `user` (`user_id`),
-  CONSTRAINT `user_banlist_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `user_banlist_ibfk_2` (`user_id`),
+  CONSTRAINT `user_banlist_ibfk_1` FOREIGN KEY (`user_baned_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `user_banlist_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of user_banlist
+-- ----------------------------
+BEGIN;
+INSERT INTO `user_banlist` VALUES (1, 3, 5);
+INSERT INTO `user_banlist` VALUES (2, 1, 6);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for user_review
@@ -271,11 +361,27 @@ DROP TABLE IF EXISTS `user_review`;
 CREATE TABLE `user_review` (
   `user_id` int NOT NULL,
   `review_id` int NOT NULL,
-  PRIMARY KEY (`user_id`,`review_id`),
+  `table_id` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`table_id`) USING BTREE,
   KEY `review_id` (`review_id`),
-  CONSTRAINT `user_review_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  CONSTRAINT `user_review_ibfk_2` FOREIGN KEY (`review_id`) REFERENCES `review` (`review_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `user_review_ibfk_1` (`user_id`),
+  CONSTRAINT `user_review_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `user_review_ibfk_2` FOREIGN KEY (`review_id`) REFERENCES `review` (`review_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of user_review
+-- ----------------------------
+BEGIN;
+INSERT INTO `user_review` VALUES (3, 23, 10);
+INSERT INTO `user_review` VALUES (3, 25, 12);
+INSERT INTO `user_review` VALUES (3, 26, 13);
+INSERT INTO `user_review` VALUES (3, 27, 14);
+INSERT INTO `user_review` VALUES (3, 28, 15);
+INSERT INTO `user_review` VALUES (3, 29, 16);
+INSERT INTO `user_review` VALUES (1, 30, 17);
+INSERT INTO `user_review` VALUES (1, 31, 18);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for user_wishlist
@@ -284,10 +390,33 @@ DROP TABLE IF EXISTS `user_wishlist`;
 CREATE TABLE `user_wishlist` (
   `user_id` int NOT NULL,
   `wishList` int DEFAULT NULL,
-  PRIMARY KEY (`user_id`),
+  `id` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`) USING BTREE,
   KEY `user_wishlist_ibfk_1` (`wishList`),
-  CONSTRAINT `user_wishlist_ibfk_1` FOREIGN KEY (`wishList`) REFERENCES `movie` (`movie_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `user_wishlist_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `user_wishlist_ibfk_2` (`user_id`),
+  CONSTRAINT `user_wishlist_ibfk_1` FOREIGN KEY (`wishList`) REFERENCES `movie` (`movie_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `user_wishlist_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of user_wishlist
+-- ----------------------------
+BEGIN;
+INSERT INTO `user_wishlist` VALUES (1, 1, 1);
+INSERT INTO `user_wishlist` VALUES (1, 2, 2);
+INSERT INTO `user_wishlist` VALUES (1, 3, 3);
+INSERT INTO `user_wishlist` VALUES (2, 3, 4);
+INSERT INTO `user_wishlist` VALUES (1, 2, 5);
+INSERT INTO `user_wishlist` VALUES (1, 2, 6);
+INSERT INTO `user_wishlist` VALUES (1, 2, 7);
+INSERT INTO `user_wishlist` VALUES (1, 2, 8);
+INSERT INTO `user_wishlist` VALUES (1, 2, 9);
+INSERT INTO `user_wishlist` VALUES (1, 2, 10);
+INSERT INTO `user_wishlist` VALUES (1, 2, 11);
+INSERT INTO `user_wishlist` VALUES (1, 2, 12);
+INSERT INTO `user_wishlist` VALUES (1, 2, 13);
+INSERT INTO `user_wishlist` VALUES (1, 2, 14);
+INSERT INTO `user_wishlist` VALUES (1, 2, 15);
+COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
