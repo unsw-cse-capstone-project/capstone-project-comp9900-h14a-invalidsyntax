@@ -163,7 +163,7 @@ public class UserServiceImpl implements UserService {
             return Result.fail("User not find !");
         }
         List<User> banlist = usermapper.showBanlist(new_user_id);
-        return Result.ok("Wishlist found !", banlist);
+        return Result.ok("Banlist found !", banlist);
     }
 
     @Override
