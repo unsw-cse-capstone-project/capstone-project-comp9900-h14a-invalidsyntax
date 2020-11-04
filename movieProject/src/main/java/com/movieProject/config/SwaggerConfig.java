@@ -13,7 +13,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
-@ComponentScan(basePackages = {"com.logintest.demo.controller"})
+@ComponentScan(basePackages = {"com.movieProject.controller"})
 @EnableSwagger2
 public class SwaggerConfig {
 
@@ -30,8 +30,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("User API")
-                .description("description: User Login and Register")
+                .title("Movie API")
+                .description("Description: Movie")
                 .version("1.0")
                 .build();
     }
