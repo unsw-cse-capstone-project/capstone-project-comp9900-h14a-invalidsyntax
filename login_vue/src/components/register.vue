@@ -86,9 +86,9 @@ export default {
               alert('Register Success!')
               console.log('Response:')
               console.log(res)
+              this.$router.push("/home");
             }
           }) // API post
-          this.$router.push("/home");
         } else {
           return false;
         }

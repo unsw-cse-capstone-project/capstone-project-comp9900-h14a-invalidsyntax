@@ -2,20 +2,20 @@
   <div class="Changepassword">
     <el-form class="form" :rules="rules" :model="form" ref="form">
       <h3>Change Information</h3>
-        <el-form-item label="User id" prop="Userid">
-            <el-input type="password" placeholder="Please enter the User id" v-model="form.user_id"></el-input>
+        <el-form-item label="Password" prop="password">
+            <el-input type="password" placeholder="Please enter the new password" v-model="form.password" clearable></el-input>
         </el-form-item>
-        <el-form-item label="New Password" prop="password">
-            <el-input type="password" placeholder="Please enter the original password" v-model="form.password"></el-input>
+        <el-form-item label="Gender" label-width="80px" prop="Gender">
+        <el-radio-group v-model="form.gender" @change="gender_change">
+            <el-radio label="M" border>Male</el-radio>
+            <el-radio label="F" border>Female</el-radio>
+        </el-radio-group>
+      </el-form-item>
+        <el-form-item label="Age" prop="Age">
+            <el-input type="text" placeholder="Please enter the new age" v-model="form.age" clearable></el-input>
         </el-form-item>
-        <el-form-item label="New Gender" prop="newGender">
-            <el-input type="password" placeholder="Please enter the new Gender M/F" v-model="form.gender"></el-input>
-        </el-form-item>
-        <el-form-item label="New age" prop="newAge">
-            <el-input type="password" placeholder="Please enter the new age" v-model="form.age"></el-input>
-        </el-form-item>
-        <el-form-item label="New Email" prop="newEmail">
-            <el-input type="email" placeholder="Please enter the new Email" v-model="form.email"></el-input>
+        <el-form-item label="Email" prop="Email">
+            <el-input type="email" placeholder="Please enter the new Email" v-model="form.email" clearable></el-input>
         </el-form-item>
         
         <el-form-item>
@@ -33,14 +33,50 @@ export default {
   data() {
     
     return {
-        form: {},
+        form: {
+          password: "",
+          gender: "",
+          age: "",
+          email: ""
+          },
     };
   },
+  created: function () {
+    // called when loading the home page
+    this.checkIfLogon();
+    this.getInfo();
+  },
   methods: {
+      checkIfLogon() {
+      this.isLogon = false;
+      if (this.$cookies.isKey("isLogon")) {
+        // 检查是否有Logon的coockie
+        if (this.$cookies.get("isLogon") == "true") {
+          // 如果已登录
+          this.isLogon = "true";
+          this.user_name = this.$cookies.get("user_name");
+          this.user_id = this.$cookies.get("user_id");
+          console.log(this.user_id);
+        } else {
+          this.$router.push("/login");
+        }
+      } else {
+        this.$router.push("/login");
+      }
+    },
+    getInfo() {
+      axios
+        .get(`../api/user/searchUserById?user_id=${this.user_id}`)
+        .then((res) => {
+            this.form.password = res.data.data.password
+            this.form.gender = res.data.data.gender
+            this.form.age = res.data.data.age
+            this.form.email = res.data.data.email
+        })
+
+    },
     onSubmit() {
-          axios.get("http://localhost:8080/user/update",{
-                      params: this.form
-                    })
+          axios.get(`api/user/update?user_id=${this.user_id}&password=${this.form.password}&gender=${this.form.gender}&age=${this.form.age}&email=${this.form.email}`)
           .then(res => {
             if(res.status == 404){
               alert('Internel Error')

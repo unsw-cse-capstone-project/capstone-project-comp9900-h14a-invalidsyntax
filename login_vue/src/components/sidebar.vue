@@ -1,6 +1,6 @@
 <template>
   <div id="sidebar">
-  <el-aside width="200px">
+  <el-aside width="250px">
     <el-row class="tac">
       <el-col :span="24">
         <h5>Account Management</h5>
@@ -16,8 +16,8 @@
               <span>User preference</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="1-1">Wish List</el-menu-item>
-              <el-menu-item index="1-2">Ban List</el-menu-item>
+              <el-menu-item index="1-1" @click="goTo('/wishList')">Wish List</el-menu-item>
+              <el-menu-item index="1-2" @click="goTo('/banList')">Ban List</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
 
@@ -32,6 +32,18 @@
               </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
+
+          <el-submenu index="3">
+            <template slot="title">
+              <i class="el-icon-menu"></i>
+              <span>My Review</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="/demo" @click="goTo('/reviewlist')">
+                <span slot="title">Review list</span>
+              </el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
         </el-menu>
       </el-col>
       <router-view></router-view>
@@ -43,6 +55,13 @@
 <script>
 export default {
   methods: {
+    handleOpen(key, keyPath) {
+        console.log(key, keyPath);
+      },
+      handleClose(key, keyPath) {
+        console.log(key, keyPath);
+      },
+
     goTo(path) {
       this.$router.replace(path);
     }

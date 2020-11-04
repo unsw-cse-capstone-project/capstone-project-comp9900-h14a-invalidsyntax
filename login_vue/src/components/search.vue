@@ -9,15 +9,24 @@
     </el-input>
     <el-row>
         <el-button type="primary" icon="el-icon-search" @click="onSubmit">search</el-button>
-        <el-button @click="$refs['search'].resetFields()">Reset</el-button>
+        <el-button @click="resetFields()">Reset</el-button>
     </el-row>
-    <li 
+    <el-col :span="5" 
         v-for="(item,index) of moiveData"
         :key="index"
+        :offset="index > 0 ? 1 : 0"
     >
-        <img :src="item.poster">
-        <el-button @click="goTo(`/movie/${item.movie_id}`)">{{ item.title }}</el-button>
-    </li>
+         <el-card :body-style="{ padding: '0px' }">
+              <img :src="item.poster" class="image">
+              <div style="padding: 14px;">
+                <!-- <span>{{o.title}} </span> -->
+                <div class="bottom clearfix">
+                  <!-- <time class="time">{{ currentDate }}</time> -->
+                  <el-button  type="text" class="button" @click="goTo(`/movie/${item.movie_id}`)">{{item.title}}  {{`   Rate:${item.rate}`}}</el-button>
+                </div>
+              </div>
+            </el-card>
+    </el-col>
 </div>
 </template>
 
@@ -32,6 +41,9 @@ import axios from "axios";
       }
     },
     methods:{
+        resetFields(){
+            location.reload();
+        },
         onSubmit() {
             axios.get(`api/movie/searchMovieByTitle/?title=${this.inputData}`).then(res=> {
                 console.log(this.inputData)

@@ -49,7 +49,19 @@
             </el-col>
             <el-col :span="6">
               <!-- 评分和add wishlist区域 -->
-              <span> Movie Rating {{ movieData.rate }}/10 </span>
+              <el-row>
+                <el-rate
+                  v-model="movieData.rate"
+                  :allow-half = "true"
+                  :max = "10"
+                  disabled
+                  show-score
+                  text-color="#ff9900"
+                  score-template="{value}">
+                </el-rate>
+                
+              </el-row>
+              <!-- <span> Movie Rating {{ movieData.rate }}/10 </span> -->
               <el-row>
                 <el-button v-if="!addedWish" type="primary"  @click="addToWishList()">Add to Wishlist</el-button>
                 <el-button v-if="addedWish" type="success" @click="deleteFromWishList()">Added to Wish List!</el-button>
@@ -59,25 +71,47 @@
 
           <!--  Review List  -->
           <el-row :span="24" v-for="(o, index) in this.reviewList" :key="index">
-            <el-card class="box-card">
+            <el-card class="review">
               <div slot="header" class="clearfix">
-                <el-link style="float: left; padding: 3px 0" type="primary" :href="'/user/' + o.user_id">{{ o.user_name }}</el-link>
-                <div style="float: center"> Rated: {{ o.rate}}/10 </div>
+                <div style="float: left; padding: 3px 0">
+                  User:
+                  <el-link type="primary" :href="'/user/' + o.user_id">{{ o.user_name }}</el-link>
+                </div>
+                
+                <div style="float: center">
+                  Rating:
+                  <el-rate 
+                    v-model="o.rate"
+                    :allow-half = "true"
+                    disabled
+                    :max = 10
+                    show-score
+                    text-color="#ff9900"
+                    score-template="{value}">
+                  </el-rate>
+                </div>
                 <!-- 需要改成user_id -->
-                <el-button v-if="o.user_id === user_id" style="float: right; padding: 3px 0" type="text" @click="deleteReview()">
+                <el-button v-if="o.user_id === user_id" style="float: right; padding: 3px 0" type="text" @click="deleteReview(o.review_id)">
                   delete review
                 </el-button>
               </div>
-                <div class="text item">
-                  {{ o.review }}
-                </div>
+              <div class="text item" style="float: left; padding: 0px 20px">
+                {{ o.review }}
+              </div>
               
             </el-card>
           </el-row>
 
           <!-- Post Review -->
           <el-row>
-            <el-rate v-model="reviewRating"></el-rate>
+            <el-rate 
+              v-model="reviewRating"
+              :allow-half = "true"
+              :max = 10
+              show-score
+              text-color="#ff9900"
+              score-template="{value}">
+            </el-rate>
             <el-input v-model="reviewInput" :span="12" type="textarea" :rows="2" placeholder="Please Write Your Comment" clearable></el-input>
             <el-button type="primary"  @click="postReview()">Post Review</el-button>
           </el-row>
@@ -114,8 +148,8 @@ export default {
   },
   created: function () {
     // called when loading the page
-    this.getMovieDetail();
     this.checkLogon();
+    this.getMovieDetail();
     this.getReviewList();
     this.checkAddedWishlist();
   },
@@ -140,8 +174,7 @@ export default {
     getMovieDetail() {
       // Obtain details of requested movie ID
       this.movieID = parseInt(this.$route.params.id); //qeury he params 区别
-      console.log("movieID", this.movieID);
-
+      // console.log("movieID", this.movieID);
       axios
         .get(
           "../api/movie/searchMovieByID", // 关键：..表示请求上一级
@@ -229,8 +262,17 @@ export default {
       )
       window.location.reload();
     },
-    deleteReview(){
-      alert("where is delete review")
+    deleteReview(reviewID){
+      axios
+        .get(
+          `/api/review/Delete_review?review_id=${reviewID}`
+        )
+        .then((res) => {
+          if (res.status == 200) {
+            alert("Delete review successful!");
+            location.reload();
+          }
+        });
     },
     checkAddedWishlist(){
       axios.get('../api/user/showWishList', 
@@ -256,6 +298,12 @@ export default {
 .button {
   padding: 0;
   float: right;
+}
+.review {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 .image {
   width: 90%;
