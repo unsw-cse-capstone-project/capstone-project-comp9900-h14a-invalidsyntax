@@ -11,6 +11,17 @@
         <result column="homepage" jdbcType="VARCHAR" property="homepage"/>
         <result column="overview" jdbcType="VARCHAR" property="overview"/>
         <result column="rate_number" jdbcType="VARCHAR" property="rate_number"/>
+
+        <collection property="actors" ofType="com.movieProject.entity.Actor">
+            <id column="actor_id" jdbcType="INTEGER" property="actor_id"/>
+            <result column="name" jdbcType="VARCHAR" property="name"/>
+            <result column="gender" jdbcType="VARCHAR" property="gender"/>
+        </collection>
+
+        <collection property="genres" ofType="com.movieProject.entity.Genre">
+            <id column="type_id" jdbcType="INTEGER" property="type_id"/>
+            <result column="type" jdbcType="VARCHAR" property="type"/>
+        </collection>
     </resultMap>
 
     <select id="findMovieByTitle" resultMap="BaseResultMap">
@@ -23,21 +34,42 @@
         </where>
     </select>
 
+
+
     <select id="findMovieByID" resultMap="BaseResultMap">
         SELECT *
         FROM movie
         WHERE movie_id = #{movie_id}
     </select>
+
     <select id="findRateByUser" resultType="java.lang.Float">
         SELECT rate
         FROM review r, user_review ur, movie_review mr
-        WHERE ur.user_id = #{user_id} AND ur.review_id = r.review_id AND ur.review_id = mr.review_id AND mr.movie_id = #{movie_id}
+        WHERE ur.user_id = #{user_id} AND ur.review_id = r.review_id
+            AND ur.review_id = mr.review_id AND mr.movie_id = #{movie_id}
     </select>
 
     <select id="listMovie" resultType="com.movieProject.entity.Movie">
         SELECT *
         FROM movie
-        ORDER BY rate DESC
+        ORDER BY rate DESC LIMIT 5
+    </select>
+    <select id="findMovieDirector" resultType="com.movieProject.entity.Actor">
+        SELECT actor.actor_id, actor.name, actor.gender
+        FROM movie_director md, actor
+        WHERE md.movie_id = #{movie_id} and md.director_id = actor.actor_id
+    </select>
+
+    <select id="findMovieGenre" resultType="com.movieProject.entity.Genre">
+        SELECT type.type_id, type.type
+        FROM movie_type mt, type
+        WHERE mt.movie_id = #{movie_id} AND type.type_id = mt.type_id
+    </select>
+
+    <select id="findMovieActor" resultType="com.movieProject.entity.Actor">
+        SELECT actor.actor_id, actor.name, actor.gender
+        FROM movie_actor ma, actor
+        WHERE ma.movie_id = #{movie_id} and ma.actor_id = actor.actor_id
     </select>
 
     <update id="updateMovieRate" parameterType="com.movieProject.entity.Movie">

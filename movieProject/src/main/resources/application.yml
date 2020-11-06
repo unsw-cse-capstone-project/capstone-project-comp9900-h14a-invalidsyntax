@@ -2,9 +2,9 @@ server:
   port: 8080
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/userInfo?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/MovieDB
     username: root
-    password: lhz950115
+    password: 131060.jyp12
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis:

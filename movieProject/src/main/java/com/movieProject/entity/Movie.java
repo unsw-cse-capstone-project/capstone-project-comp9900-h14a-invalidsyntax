@@ -4,6 +4,7 @@ import lombok.Data;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -23,4 +24,8 @@ public class Movie {
 
     private String homepage;
     private String overview;
+
+    private List<Genre> genres;
+    private List<Actor> director;
+    private List<Actor> actors;
 }
