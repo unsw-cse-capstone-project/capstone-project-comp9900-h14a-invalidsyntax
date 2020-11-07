@@ -43,5 +43,10 @@ public class ReviewController {
         return reviewService.deleteReview(review_id);
     }
 
+    @ApiOperation("Update review")
+    @GetMapping("Update_review")
+    public Result updateReview(Integer review_id,String review, float rate, Integer user_id, Integer movie_id) {
+        return reviewService.updateReview(review_id, review , rate, user_id, movie_id);
+    }
 
 }

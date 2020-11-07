@@ -189,4 +189,10 @@ public class ReviewServiceImpl implements ReviewService {
 
         return Result.ok("Delete success !", review);
     }
+
+    @Override
+    public Result updateReview(Integer review_id, String review, float rate, Integer user_id, Integer movie_id) {
+        deleteReview(review_id);
+        return addReview(review, rate, user_id, movie_id);
+    }
 }
