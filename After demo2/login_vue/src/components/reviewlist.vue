@@ -140,7 +140,9 @@ export default {
         )
         .then((res) => {
           if (res.status == 200) {
-            alert("Cancel successful!");
+            this.$alert(`Cancel successful!`, "Message:", {
+                    confirmButtonText: "ok",
+              });
             location.reload();
           }
         });

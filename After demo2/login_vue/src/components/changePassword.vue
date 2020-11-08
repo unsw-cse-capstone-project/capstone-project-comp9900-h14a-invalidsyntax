@@ -84,7 +84,9 @@ export default {
               console.log(res)
             }
             else if (res.status == 200){
-              alert('Change Success!')
+              this.$alert(`${res.data.message}`, "Message:", {
+                    confirmButtonText: "ok",
+                  });
               console.log('Response:')
               console.log(res)
             }

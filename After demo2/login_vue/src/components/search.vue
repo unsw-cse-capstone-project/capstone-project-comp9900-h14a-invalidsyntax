@@ -53,8 +53,10 @@ import axios from "axios";
 
                     console.log(this.moiveData[0].movie_id)
                     console.log(this.moiveData)
-                    alert(res.data.message)
-                }
+                     this.$alert(`${res.data.message}`, "Message:", {
+                    confirmButtonText: "ok",
+              });
+                              }
             })
         },
         goTo(path) {

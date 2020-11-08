@@ -14,9 +14,9 @@
     <!-- Top buttoms -->
     <el-menu-item index="1">Home</el-menu-item>
     <el-menu-item index="2">Search</el-menu-item>
-    <!-- <el-menu-item index="3">b3</el-menu-item>
-    <el-menu-item index="4">b4</el-menu-item>
-    <el-menu-item index="5">b5</el-menu-item> -->
+    <el-menu-item index="3">My center</el-menu-item>
+    <!-- <el-menu-item index="4">b4</el-menu-item>
+    <el-menu-item index="5">b5</el-menu-item> --> 
     <!-- 如果已经登录 -->
     <el-submenu v-if = "isLogon === 'true'" index="100">
       <template slot="title">
@@ -42,6 +42,7 @@
 export default {
     data() {
       return {
+        user_id: 0,
         navBarIndex: '1',
         currentDate: new Date(),
       };
@@ -89,6 +90,9 @@ export default {
         }
         if (key == "2"){
           this.$router.push("/search");
+        }
+        if (key == "3"){
+          this.$router.push(`/user/${this.user_id}`);
         }
         if (key == "100-2"){
           this.logout();

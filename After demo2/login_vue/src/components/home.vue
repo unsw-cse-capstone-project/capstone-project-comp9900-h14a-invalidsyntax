@@ -14,19 +14,21 @@
       <el-main>
         <!-- 主页展示电影 -->
         <el-row v-if="this.mList.length">
-          <el-col :span="4" v-for="(o, index) in mList" :key="index" :offset="index > 0 ? 0 : 0">
-            <el-card :body-style="{ padding: '0px' }">
-              <img :src="o.poster" class="image">
-              <div style="padding: 14px;">
-                <!-- <span>{{o.title}} </span> -->
-                <span>{{o.title}}</span>
-                <div class="bottom clearfix">
+          <el-row v-for="(l, i) in mList" :key="i">
+            <el-col :span="5" v-for="(o, index) in l" :key="index" :offset="index > 0 ? 1 : 0">
+              <el-card class="moviecard" :body-style="{ padding: '5px' }" shadow="hover" style="width:250px;height:300px">
+                <el-row>
+                  <img :src="o.poster" class="moviePoster" style="float: left">
+
+                </el-row>
+                <el-row style="padding: 14px;">
+                  <span> Rate:{{o.rate}} </span><br>
                   <!-- <time class="time">{{ currentDate }}</time> -->
-                  <el-button  type="text" class="button" @click="goTo(`/movie/${o.movie_id}`)">{{o.title}}</el-button>
-                </div>
-              </div>
-            </el-card>
-          </el-col>
+                  <el-link type="primary" :href="'/movie/' + o.movie_id">{{ o.title }}</el-link>
+                </el-row>
+              </el-card>
+            </el-col>
+          </el-row>
         </el-row>
 
       </el-main>
@@ -65,22 +67,27 @@ export default {
       checkIfLogon(){
       },
       getMovieList(){ // 获得n个电影详情
-        for (let movieID = 1; movieID <= 10; movieID++){
-          axios.get(
-            "./api/movie/searchMovieByID", // 关键：..表示请求上一级
-            { params: { movie_id: movieID, user_id: 0 } } // 默认user_id = 0 获取详情即可
-          )
-          .then((res) => {
-            if (res.status == 404) {
-              alert("Internel Error");
-              console.log("Response:");
-              console.log(res);
-            } else if (res.status == 200) {
-              // console.log(res.data.data);
-              this.mList.push(res.data.data);
+        axios.get(
+          "./api/movie/list_top_movie"
+        )
+        .then((res) => {
+          if (res.status == 404) {
+            alert("Internel Error");
+            console.log("Response:");
+            console.log(res);
+          } else if (res.status == 200) {
+            // console.log(res.data.data);
+            // this.mList.push(res.data.data);
+            // 对对电影列表进行分组
+            const chunk_size = 4;
+            const nShow = 20;
+            const topMovies = res.data.data.slice(0, nShow);
+            for (var i = 0; i < topMovies.length; i += chunk_size){
+                this.mList.push(topMovies.slice(i,i+chunk_size));
             }
-          }); // API post
-        }
+            console.log(this.mList);
+          }
+        }); // API post
         // console.log(this.mList);
       },
       goTo(path) {
@@ -95,10 +102,18 @@ export default {
     padding: 0;
     float: right;
   }
-  .image {
-    width: 50%;
-    display: block;
-    float: center;
+  .moviecard{
+    padding-top: 15px;
+    padding-right: 10px;
+    padding-bottom: 15px;
+    padding-left: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  .moviePoster {
+    width: 160px;
+    height: 230px;
+    text-align: center;
   }
   .time {
       font-size: 13px;
