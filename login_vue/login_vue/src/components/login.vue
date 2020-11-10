@@ -50,7 +50,7 @@ export default {
     onSubmit() {
       this.$refs["form"].validate((valid) => {
         if (valid) {
-          console.log(this.form)
+          console.log(this.form);
           axios
             .get("api/user/login", {
               params: this.form,
@@ -61,26 +61,28 @@ export default {
                 console.log("Response:");
                 console.log(res);
               } else if (res.status == 200) {
-                if (res.data.code == 200){ // 如果成功登录
-                  alert("Login Success!");
+                if (res.data.code == 200) {
+                  // 如果成功登录
+                  this.$alert("Login Successful!", "Message:", {
+                    confirmButtonText: "ok",
+                  });
                   console.log("Response:");
                   console.log(res);
                   this.$router.push("/home");
 
                   //记录Cookie
-                  this.$cookies.set('user_id', res.data.data.user_id);
-                  this.$cookies.set('user_name', res.data.data.name);
-                  this.$cookies.set('isLogon', 'true');
-
-                }
-                else{
-                  alert("Login Failed!");
+                  this.$cookies.set("user_id", res.data.data.user_id);
+                  this.$cookies.set("user_name", res.data.data.name);
+                  this.$cookies.set("isLogon", "true");
+                } else {
+                  this.$alert(`${res.data.message}`, "Message:", {
+                    confirmButtonText: "ok",
+                  });
                   console.log("Response:");
                   console.log(res);
                 }
               }
             }); // API post
-          
         } else {
           return false;
         }

@@ -206,13 +206,18 @@ export default {
               console.log(res);
             } else if (res.status == 200) {
               console.log(res.data.data);
-              alert("Add wishlist success")
+              this.$alert(`Add wishlist successful！`, "Message:", {
+                    confirmButtonText: "ok",
+                  });
+
             }
           }
         ); // API post
       }
       else{
-        alert("You did not login!");
+       this.$alert(`Please login！`, "Message:", {
+                    confirmButtonText: "ok",
+                  });
         this.$router.push("/login");
       }
     },
@@ -226,7 +231,9 @@ export default {
                     console.log("Response:");
                     console.log(res);
                   } else if (res.status == 200) {
-                    alert("Removed from wishlist");
+                    this.$alert(`Removed from wishlist！`, "Message:", {
+                    confirmButtonText: "ok",
+                  });
                   }
                 }
       )
@@ -256,7 +263,9 @@ export default {
                     console.log(res);
                   } else if (res.status == 200) {
                     console.log(res.data.data);
-                    alert("Review success")
+                    this.$alert(`Review successful！`, "Message:", {
+                    confirmButtonText: "ok",
+                  });
                   }
                 }
       )
@@ -269,7 +278,9 @@ export default {
         )
         .then((res) => {
           if (res.status == 200) {
-            alert("Delete review successful!");
+            this.$alert(`Delete review successful!`, "Message:", {
+                    confirmButtonText: "ok",
+                  });
             location.reload();
           }
         });

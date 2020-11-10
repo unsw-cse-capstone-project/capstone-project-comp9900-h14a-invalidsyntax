@@ -1,25 +1,18 @@
-# login
+# 9900
 
-## Project setup
-```
-npm install
-npm install axios
-```
+# Login 和 Register page Vue代码
+目录 /login_vue
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Vue环境搭建
+参考 https://cloud.tencent.com/edu/learning/course-1934-41065
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## 运行
+环境搭建好后在目录下执行命令 npm run serve 即可
 
-### Lints and fixes files
-```
-npm run lint
-```
+## 相关教程： 
+https://www.zmrenwu.com/courses/vue2x-todo-tutorial/ <br>
+https://juejin.im/post/6844903683860201486 <br>
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+-----
+The Repository for COMP9900 Project
