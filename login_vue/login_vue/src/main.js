@@ -42,7 +42,6 @@ const router = new VueRouter({
       meta: {title: 'User Center'}
     },
     { path: "/changePassword", component: () => import("@/components/changePassword.vue")},
-    { path: "/changeEmail", component: () => import("@/components/changeEmail.vue")},
     { path: "/wishList", component: () => import("@/components/wishList.vue") },
     { path: "/banList", component: () => import("@/components/banList.vue") },
     { path: "/reviewlist", component: () => import("@/components/reviewlist.vue") },

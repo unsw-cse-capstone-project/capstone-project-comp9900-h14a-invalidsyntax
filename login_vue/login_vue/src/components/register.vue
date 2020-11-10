@@ -77,13 +77,17 @@ export default {
                     }
                       )
           .then(res => {
-            if(res.status == 404){
-              alert('Internel Error')
+            if(res.data.code == 500){
+              this.$alert(`${res.data.message}`, "Message:", {
+                    confirmButtonText: "ok",
+              });
               console.log('Response:')
               console.log(res)
             }
-            else if (res.status == 200){
-              alert('Register Success!')
+            else if (res.data.code  == 200){
+              this.$alert(`Register successful`, "Message:", {
+                    confirmButtonText: "ok",
+              });
               console.log('Response:')
               console.log(res)
               this.$router.push("/home");
