@@ -121,7 +121,14 @@ public class MovieServiceImpl implements MovieService {
         set.addAll(movieId);
         movieId.clear();
         movieId.addAll(set);
-        return Result.ok("recomend movie found !", movieId);
+
+        List<Movie> movies = new LinkedList<>();
+        for(Integer num : movieId){
+            Movie movie = movieMapper.findMovieByID(num);
+            movies.add(movie);
+        }
+
+        return Result.ok("recomend movie found !", movies);
     }
 
 }
