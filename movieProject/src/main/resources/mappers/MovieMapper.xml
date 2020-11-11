@@ -79,4 +79,24 @@
         WHERE movie_id = #{movie_id}
     </update>
 
+    <select id="findMovieGenreUserReview" resultType="java.lang.Integer">
+        SELECT distinct mt.type_id
+        FROM user_review ur, movie_review mr, movie_type mt
+        WHERE ur.user_id = #{user_id} and ur.review_id = mr.review_id and mr.movie_id = mt.movie_id
+    </select>
+
+    <select id="findGenreMovieReviewed" resultType="java.lang.Integer">
+        select DISTINCT movie_type.movie_id
+        FROM	user_review
+        LEFT JOIN movie_review ON user_review.review_id = movie_review.review_id
+        LEFT JOIN movie_type ON movie_review.movie_id = movie_type.movie_id
+        WHERE user_id = #{user_id} AND type_id = #{type_id}
+    </select>
+
+    <select id="findMovieByGenre" resultType="java.lang.Integer">
+        SELECT movie_id
+        FROM movie_type
+        WHERE type_id = #{type_id}
+    </select>
+
 </mapper>

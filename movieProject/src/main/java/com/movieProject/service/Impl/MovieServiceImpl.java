@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -103,4 +106,22 @@ public class MovieServiceImpl implements MovieService {
         }
         return Result.ok("Movie found !", movies);
     }
+
+    @Override
+    public Result recommendMoive(Integer user_id) {
+        List<Integer> type_nums = movieMapper.findMovieGenreUserReview(user_id);
+        List<Integer> movieId = new LinkedList<>();
+        for (Integer num : type_nums) {
+            List<Integer> reviewed_movie = movieMapper.findGenreMovieReviewed(user_id, num);
+            List<Integer> same_genre_movie = movieMapper.findMovieByGenre(num);
+            same_genre_movie.removeAll(reviewed_movie);
+            movieId.addAll(same_genre_movie);
+        }
+        Set set = new HashSet();
+        set.addAll(movieId);
+        movieId.clear();
+        movieId.addAll(set);
+        return Result.ok("recomend movie found !", movieId);
+    }
+
 }

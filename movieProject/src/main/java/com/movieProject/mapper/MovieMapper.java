@@ -20,4 +20,7 @@ public interface MovieMapper extends MyMapper<Movie> {
     List<Actor> findMovieDirector(Integer movie_id);
     List<Genre> findMovieGenre(Integer movie_id);
     List<Actor> findMovieActor(Integer movie_id);
+    List<Integer> findMovieGenreUserReview(Integer user_id);
+    List<Integer> findGenreMovieReviewed(Integer user_id,Integer type_id);
+    List<Integer> findMovieByGenre(Integer type_id);
 }

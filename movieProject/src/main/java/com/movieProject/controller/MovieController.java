@@ -37,4 +37,10 @@ public class MovieController {
     public Result listTopMoive(){
         return movieService.listTopMovie();
     }
+
+    @ApiOperation("recommend movie according to user's review")
+    @GetMapping("recommend_movie")
+    public Result recommendMoive(Integer user_id){
+        return movieService.recommendMoive(user_id);
+    }
 }
