@@ -90,9 +90,11 @@ public class MovieServiceImpl implements MovieService {
             return Result.fail("Movie not find !");
         }
 
-        User user = userMapper.findUserByID(user_id);
-        if (null == user) {
-            return Result.fail("User not find !");
+        if (user_id != 0) {
+            User user = userMapper.findUserByID(user_id);
+            if (null == user) {
+                return Result.fail("User not find !");
+            }
         }
 
         return Result.ok("Movie found !", movie);
@@ -102,11 +104,19 @@ public class MovieServiceImpl implements MovieService {
         if (type_id == 0) {
             return Result.fail("Genre can not be null !");
         }
+
+        if (user_id != 0) {
+            User user = userMapper.findUserByID(user_id);
+            if (null == user) {
+                return Result.fail("User not find !");
+            }
+        }
+        
         List<Integer> movies_id = movieMapper.findMovieByGenre(type_id);
 
         List<Movie> movies = new LinkedList<>();
         for (Integer movie_id : movies_id) {
-            Movie movie = movieMapper.findMovieByID(movie_id);
+            Movie movie = findUserMovie(user_id, movie_id);
             if (movie == null) {
                 return Result.fail("Movie not find !");
             }
