@@ -25,6 +25,37 @@ public class MovieServiceImpl implements MovieService {
     private final MovieMapper movieMapper;
     private final UserMapper userMapper;
 
+    private Movie findUserMovie(Integer user_id, Integer movie_id) {
+        Movie movie = movieMapper.findMovieByID(movie_id);
+
+        List<Actor>  director = movieMapper.findMovieDirector(movie_id);
+        movie.setDirector(director);
+
+        List<Genre> genres = movieMapper.findMovieGenre(movie_id);
+        movie.setGenres(genres);
+
+        List<Actor> actors = movieMapper.findMovieActor(movie.getMovie_id());
+        movie.setActors(actors);
+
+        // if user id == 0 means user did not log in
+        if (user_id == 0) return movie;
+
+        // recalculate movie rate, subtract rate in ban list
+        List<Integer> banList = userMapper.showBanlist(user_id);
+        if (!banList.isEmpty()) {
+            for (Integer baned_id : banList) {
+                List<Float> banRates = movieMapper.findRateByUser(movie_id, baned_id);
+                for (Float banRate : banRates) {
+                    float newRate = (movie.getRate() * movie.getRate_number() - banRate) / (movie.getRate_number() - 1);
+                    newRate = (float) ((float) Math.round(newRate * 10.0) / 10.0);
+                    movie.setRate(newRate);
+                    movie.setRate_number(movie.getRate_number() - 1);
+                }
+            }
+        }
+        return movie;
+    }
+
     @Override
     public Result findMovieByTitle(String title) {
         if (StringUtils.isEmpty(title)) {
@@ -54,41 +85,46 @@ public class MovieServiceImpl implements MovieService {
         if (movie_id == 0) {
             return Result.fail("Movie not find !");
         }
-        Movie movie = movieMapper.findMovieByID(movie_id);
+        Movie movie = findUserMovie(user_id, movie_id);
         if (movie == null) {
             return Result.fail("Movie not find !");
         }
-        List<Actor>  director = movieMapper.findMovieDirector(movie_id);
-        movie.setDirector(director);
 
-        List<Genre> genres = movieMapper.findMovieGenre(movie_id);
-        movie.setGenres(genres);
-
-        List<Actor> actors = movieMapper.findMovieActor(movie.getMovie_id());
-        movie.setActors(actors);
-
-        if (user_id == 0) {
-            return Result.ok("Movie found !", movie);
-        }
-        User user = userMapper.findUserByID(user_id);
-        if (null == user) {
-            return Result.fail("User not find !");
-        }
-
-        // recalculate movie rate, subtract rate in ban list
-        List<Integer> banList = userMapper.showBanlist(user_id);
-        if (!banList.isEmpty()) {
-            for (Integer baned_id : banList) {
-                List<Float> banRates = movieMapper.findRateByUser(movie_id, baned_id);
-                for (Float banRate : banRates) {
-                    float newRate = (movie.getRate() * movie.getRate_number() - banRate) / (movie.getRate_number() - 1);
-                    newRate = (float) ((float) Math.round(newRate * 10.0) / 10.0);
-                    movie.setRate(newRate);
-                    movie.setRate_number(movie.getRate_number() - 1);
-                }
+        if (user_id != 0) {
+            User user = userMapper.findUserByID(user_id);
+            if (null == user) {
+                return Result.fail("User not find !");
             }
         }
+
         return Result.ok("Movie found !", movie);
+    }
+
+    public Result findMovieByUserGenre(Integer user_id, Integer type_id) {
+        if (type_id == 0) {
+            return Result.fail("Genre can not be null !");
+        }
+
+        if (user_id != 0) {
+            User user = userMapper.findUserByID(user_id);
+            if (null == user) {
+                return Result.fail("User not find !");
+            }
+        }
+
+        List<Integer> movies_id = movieMapper.findMovieByGenre(type_id);
+
+        List<Movie> movies = new LinkedList<>();
+        for (Integer movie_id : movies_id) {
+            Movie movie = findUserMovie(user_id, movie_id);
+            if (movie == null) {
+                return Result.fail("Movie not find !");
+            }
+
+            movies.add(movie);
+        }
+
+        return Result.ok("Movie found !", movies);
     }
 
     @Override
@@ -108,7 +144,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Result recommendMoive(Integer user_id) {
+    public Result recommendMovie(Integer user_id) {
         List<Integer> type_nums = movieMapper.findMovieGenreUserReview(user_id);
         List<Integer> movieId = new LinkedList<>();
         for (Integer num : type_nums) {
