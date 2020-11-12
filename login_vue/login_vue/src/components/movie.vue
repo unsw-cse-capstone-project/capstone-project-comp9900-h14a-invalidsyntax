@@ -45,6 +45,15 @@
                 <el-row>
                   <el-col ><div class="movieReleaseTime"></div>Release time: {{ movieData.release_time }}</el-col>
                 </el-row>
+                <el-row>
+                  <el-col ><div class="genres"></div>Genres: {{ movieData.genres.map(obj => {return obj.type}) }}</el-col>
+                </el-row>
+                <el-row>
+                  <el-col ><div class="director"></div>Director: {{ movieData.director.map(obj => {return obj.name}) }}</el-col>
+                </el-row>
+                <el-row>
+                  <el-col ><div class="actors"></div>Actors: {{ movieData.actors.map(obj => {return obj.name}) }}</el-col>
+                </el-row>
               </div>
             </el-col>
             <el-col :span="6">
@@ -53,7 +62,7 @@
                 <el-rate
                   v-model="movieData.rate"
                   :allow-half = "true"
-                  :max = "10"
+                  :max = "5"
                   disabled
                   show-score
                   text-color="#ff9900"
@@ -84,13 +93,12 @@
                     v-model="o.rate"
                     :allow-half = "true"
                     disabled
-                    :max = 10
+                    :max = 5
                     show-score
                     text-color="#ff9900"
                     score-template="{value}">
                   </el-rate>
                 </div>
-                <!-- 需要改成user_id -->
                 <el-button v-if="o.user_id === user_id" style="float: right; padding: 3px 0" type="text" @click="deleteReview(o.review_id)">
                   delete review
                 </el-button>
@@ -102,12 +110,29 @@
             </el-card>
           </el-row>
 
+          <!-- Movie Recommend -->
+          <!-- 
+          <el-row v-if="this.mList.length">
+            <el-col :span="5" v-for="(o, index) in l" :key="index" :offset="index > 0 ? 1 : 0">
+              <el-card class="moviecard" :body-style="{ padding: '5px' }" shadow="hover" style="width:250px;height:300px">
+                <el-row>
+                  <img :src="o.poster" class="moviePoster" style="float: left">
+
+                </el-row>
+                <el-row style="padding: 14px;">
+                  <span> Rate: {{o.rate}} </span><br>
+                  <el-link type="primary" :href="'/movie/' + o.movie_id">{{ o.title }}</el-link>
+                </el-row>
+              </el-card>
+            </el-col>
+        </el-row> -->
+
           <!-- Post Review -->
           <el-row>
             <el-rate 
               v-model="reviewRating"
               :allow-half = "true"
-              :max = 10
+              :max = 5
               show-score
               text-color="#ff9900"
               score-template="{value}">

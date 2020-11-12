@@ -22,7 +22,7 @@
 
                 </el-row>
                 <el-row style="padding: 14px;">
-                  <span> Rate:{{o.rate}} </span><br>
+                  <span> Rate: {{o.rate}} </span><br>
                   <!-- <time class="time">{{ currentDate }}</time> -->
                   <el-link type="primary" :href="'/movie/' + o.movie_id">{{ o.title }}</el-link>
                 </el-row>
