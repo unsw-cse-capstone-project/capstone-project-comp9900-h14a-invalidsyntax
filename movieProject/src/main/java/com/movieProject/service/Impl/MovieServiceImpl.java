@@ -111,7 +111,7 @@ public class MovieServiceImpl implements MovieService {
                 return Result.fail("User not find !");
             }
         }
-        
+
         List<Integer> movies_id = movieMapper.findMovieByGenre(type_id);
 
         List<Movie> movies = new LinkedList<>();
