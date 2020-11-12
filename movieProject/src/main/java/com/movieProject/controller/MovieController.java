@@ -32,6 +32,12 @@ public class MovieController {
         return movieService.findMovieByUserID(movie_id, user_id);
     }
 
+    @ApiOperation("Search movie API, return movie data")
+    @GetMapping("searchMovieByGenre")
+    public Result searchMovieByGenre(Integer user_id, Integer type_id){
+        return movieService.findMovieByUserGenre(user_id, type_id);
+    }
+
     @ApiOperation("List movie API, return movie data")
     @GetMapping("list_top_movie")
     public Result listTopMoive(){
@@ -41,6 +47,6 @@ public class MovieController {
     @ApiOperation("recommend movie according to user's review")
     @GetMapping("recommend_movie")
     public Result recommendMoive(Integer user_id){
-        return movieService.recommendMoive(user_id);
+        return movieService.recommendMovie(user_id);
     }
 }

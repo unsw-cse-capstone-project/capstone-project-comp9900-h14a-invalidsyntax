@@ -13,7 +13,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
-@ComponentScan(basePackages = {"com.logintest.demo.controller"})
+@ComponentScan(basePackages = {"com.movieProject.controller"})
 @EnableSwagger2
 public class SwaggerConfig {
 
