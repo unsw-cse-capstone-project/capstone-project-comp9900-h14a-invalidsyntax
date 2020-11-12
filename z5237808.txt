@@ -15,3 +15,9 @@ Completed the construction of the movie database and searching movie data accord
 
 Week 6
 Completed the adding movie review part and listing all reviews of the user.
+
+Week 7 
+Completed the updating rate and review according to the user banList.
+
+Week 8
+Completed the delete review part, and some small update.
