@@ -26,5 +26,19 @@ public interface UserService {
 
     Result removeBanlist(String user_id, String ban_id);
 
+    Result addFollowlist(String user_id, String follow_id);
+
+    Result removeFollowlist(String user_id, String follow_id);
+
+    Result showFollow(String user_id);
+
+    Result addMessage(String message, String user_give_id, String user_get_id);
+
+    Result removeMessage(String user_give_id, String user_get_id);
+
+    Result showGiveMessage(String user_give_id);
+
+    Result showGetMessage(String user_get_id);
+
 
 }

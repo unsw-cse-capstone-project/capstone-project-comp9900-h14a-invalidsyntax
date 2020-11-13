@@ -95,4 +95,55 @@ public class UserController {
         return userService.updateUser(user_id, password, gender, age, email);
     }
 
+
+    @ApiOperation("Follow other user, return user")
+    @GetMapping("follow_someone")
+    public Result addFollowlist(String user_id, String follow_id) {
+        log.info("user_id:{}", user_id);
+        log.info("follow_id:{}", follow_id);
+        return userService.addFollowlist(user_id, follow_id);
+    }
+
+    @ApiOperation("Cancel followlist, return user")
+    @GetMapping("cancel_follow_someone")
+    public Result removeFollowlist(String user_id, String follow_id) {
+        log.info("user_id:{}", user_id);
+        log.info("follow_id:{}", follow_id);
+        return userService.removeFollowlist(user_id, follow_id);
+    }
+
+    @ApiOperation("Show followlist API, return followlist")
+    @GetMapping("showFollowList")
+    public Result showFollow(String user_id){
+        return userService.showFollow(user_id);
+    }
+
+    @ApiOperation("Add message, return user who give message")
+    @GetMapping("add_message")
+    public Result addMessage(String message, String user_give_id, String user_get_id) {
+        log.info("user_give_id:{}", user_give_id);
+        log.info("user_get_id:{}", user_get_id);
+        return userService.addMessage(message, user_give_id, user_get_id);
+    }
+
+    @ApiOperation("Delete message, return user who give message")
+    @GetMapping("delete_message")
+    public Result removeMessage(String user_give_id, String user_get_id) {
+        log.info("user_give_id:{}", user_give_id);
+        log.info("user_get_id:{}", user_get_id);
+        return userService.removeMessage(user_give_id, user_get_id);
+    }
+
+    @ApiOperation("Show Show giveMessage API, return messages")
+    @GetMapping("showGiveMessage")
+    public Result showGiveMessage(String user_give_id){
+        return userService.showGiveMessage(user_give_id);
+    }
+
+    @ApiOperation("Show getMessage API, return messages")
+    @GetMapping("showGetMessage")
+    public Result showGetMessage(String user_get_id){
+        return userService.showGetMessage(user_get_id);
+    }
+
 }

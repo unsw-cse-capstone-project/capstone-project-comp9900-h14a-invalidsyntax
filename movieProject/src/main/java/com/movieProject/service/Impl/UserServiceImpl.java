@@ -1,17 +1,16 @@
 package com.movieProject.service.Impl;
 
 import com.movieProject.common.Result;
-import com.movieProject.entity.User;
-import com.movieProject.entity.Movie;
+import com.movieProject.entity.*;
 import com.movieProject.mapper.UserMapper;
 import com.movieProject.mapper.MovieMapper;
-import com.movieProject.service.MovieService;
 import com.movieProject.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -163,7 +162,12 @@ public class UserServiceImpl implements UserService {
             return Result.fail("User not find !");
         }
         List<Integer> banList = usermapper.showBanlist(new_user_id);
-        return Result.ok("Ban list found !", banList);
+        List<SimpleUser> userinfo = new LinkedList<>();
+        for (Integer id : banList){
+            SimpleUser su = usermapper.givebackUserNameAndID(id);
+            userinfo.add(su);
+        }
+        return Result.ok("Ban list found !", userinfo);
     }
 
     @Override
@@ -266,4 +270,171 @@ public class UserServiceImpl implements UserService {
 
         return Result.ok("RemoveBanlist Success", newUser);
     }
+
+
+    @Override
+    public Result addFollowlist(String user_id, String follow_id) {
+        if (StringUtils.isEmpty(user_id)) {
+            return Result.fail("User id can not be NULL !");
+        }
+        if (StringUtils.isEmpty(follow_id)) {
+            return Result.fail("Follow_id can not be NULL !");
+        }
+
+        int new_user_id = Integer.parseInt(user_id);
+        User user = usermapper.findUserByID(new_user_id);
+        if (null == user) {
+            return Result.fail("User can not be find !");
+        }
+        int new_follow_id = Integer.parseInt(follow_id);
+        User follow = usermapper.findUserByID(new_follow_id);
+        if (null == follow) {
+            return Result.fail("Followed People can not be find !");
+        }
+        if (new_user_id == new_follow_id) {
+            return Result.fail("User cannot follow themselves !");
+        }
+
+        int resultCount = usermapper.addFollowlist(new_user_id, new_follow_id);
+        if (resultCount == 0) {
+            return Result.fail("addFollowlist failed !");
+        }
+        User newUser = usermapper.findUserByID(new_user_id);
+
+        return Result.ok("Follow people Success", newUser);
+    }
+
+    @Override
+    public Result removeFollowlist(String user_id, String follow_id) {
+        if (StringUtils.isEmpty(user_id)) {
+            return Result.fail("User_id can not be NULL !");
+        }
+        if (StringUtils.isEmpty(follow_id)) {
+            return Result.fail("Follow_id can not be NULL !");
+        }
+
+        int new_user_id = Integer.parseInt(user_id);
+        User user = usermapper.findUserByID(new_user_id);
+        if (null == user) {
+            return Result.fail("User can not be find !");
+        }
+        int new_follow_id = Integer.parseInt(follow_id);
+        User follow = usermapper.findUserByID(new_follow_id);
+        if (null == follow) {
+            return Result.fail("Followed People can not be find !");
+        }
+
+        int resultCount = usermapper.removeFollowlist(new_user_id, new_follow_id);
+        if (resultCount == 0) {
+            return Result.fail("removeFollowlist failed !");
+        }
+        User newUser = usermapper.findUserByID(new_user_id);
+
+        return Result.ok("RemoveFollowlist Success", newUser);
+    }
+
+    @Override
+    public Result showFollow(String user_id) {
+        if (StringUtils.isEmpty(user_id)) {
+            return Result.fail("User not find !");
+        }
+        int new_user_id = Integer.parseInt(user_id);
+        User user = usermapper.findUserByID(new_user_id);
+        if (null == user) {
+            return Result.fail("User not find !");
+        }
+        List<SimpleUser> userinfo = new LinkedList<>();
+        List<Integer> followList = usermapper.showFollowlist(new_user_id);
+        for (Integer id : followList){
+            SimpleUser su = usermapper.givebackUserNameAndID(id);
+            userinfo.add(su);
+        }
+        return Result.ok("Follow list found !", userinfo);
+    }
+
+
+    @Override
+    public Result addMessage(String message, String user_give_id, String user_get_id) {
+        if (StringUtils.isEmpty(message)) {
+            return Result.fail("No Message here !");
+        }
+        if (StringUtils.isEmpty(user_give_id)) {
+            return Result.fail("Who give the Message ?");
+        }
+        if (StringUtils.isEmpty(user_get_id)) {
+            return Result.fail("Who is this Message for ?");
+        }
+        int new_user1_id = Integer.parseInt(user_give_id);
+        int new_user2_id = Integer.parseInt(user_get_id);
+        User user = usermapper.findUserByID(new_user1_id);
+        if (null == user) {
+            return Result.fail("NO This User Give Message !");
+        }
+        User user1 = usermapper.findUserByID(new_user2_id);
+        if (null == user1) {
+            return Result.fail("NO This User Get Message !");
+        }
+        int resultCount = usermapper.giveMessage(message, new_user1_id, new_user2_id);
+        if (resultCount == 0) {
+            return Result.fail("giveMessage failed !");
+        }
+        return Result.ok("give message successfully !", new_user1_id);
+    }
+
+
+    @Override
+    public Result removeMessage(String user_give_id, String user_get_id) {
+        if (StringUtils.isEmpty(user_give_id)) {
+            return Result.fail("Who give the Message ?");
+        }
+        if (StringUtils.isEmpty(user_get_id)) {
+            return Result.fail("Who is this Message for ?");
+        }
+        int new_user1_id = Integer.parseInt(user_give_id);
+        int new_user2_id = Integer.parseInt(user_get_id);
+        User user = usermapper.findUserByID(new_user1_id);
+        if (null == user) {
+            return Result.fail("NO This User Give Message !");
+        }
+        User user1 = usermapper.findUserByID(new_user2_id);
+        if (null == user1) {
+            return Result.fail("NO This User Get Message !");
+        }
+        int resultCount = usermapper.deleteMessage(new_user1_id, new_user2_id);
+        if (resultCount == 0) {
+            return Result.fail("deleteMessage failed !");
+        }
+        return Result.ok("deleteMessage successfully !", new_user1_id);
+    }
+
+    @Override
+    public Result showGiveMessage(String user_give_id) {
+        if (StringUtils.isEmpty(user_give_id)) {
+            return Result.fail("Who give the Message ?");
+        }
+        int new_user1_id = Integer.parseInt(user_give_id);
+        User user = usermapper.findUserByID(new_user1_id);
+        if (null == user) {
+            return Result.fail("NO This User Give Message !");
+        }
+
+        List<MessageGet> messages = usermapper.showGiveMessages(new_user1_id);
+        return Result.ok("showMessage successfully !", messages);
+    }
+
+    @Override
+    public Result showGetMessage (String user_get_id) {
+        if (StringUtils.isEmpty(user_get_id)) {
+            return Result.fail("Who get the Message ?");
+        }
+        int new_user1_id = Integer.parseInt(user_get_id);
+        User user = usermapper.findUserByID(new_user1_id);
+        if (null == user) {
+            return Result.fail("NO This User Get Message !");
+        }
+
+        List<MessageGive> messages = usermapper.showGetMessages(new_user1_id);
+        return Result.ok("showMessage successfully !", messages);
+    }
+
 }

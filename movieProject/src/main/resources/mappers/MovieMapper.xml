@@ -52,7 +52,7 @@
     <select id="listMovie" resultType="com.movieProject.entity.Movie">
         SELECT *
         FROM movie
-        ORDER BY rate DESC LIMIT 5
+        ORDER BY rate DESC LIMIT 20
     </select>
     <select id="findMovieDirector" resultType="com.movieProject.entity.Actor">
         SELECT actor.actor_id, actor.name, actor.gender

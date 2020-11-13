@@ -11,7 +11,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 06/11/2020 01:26:57
+ Date: 13/11/2020 01:39:38
 */
 
 SET NAMES utf8mb4;
@@ -157,6 +157,33 @@ INSERT INTO `actor` VALUES (121, 'Zoe Saldana', 'M', '1990-05-01');
 COMMIT;
 
 -- ----------------------------
+-- Table structure for messageboard
+-- ----------------------------
+DROP TABLE IF EXISTS `messageboard`;
+CREATE TABLE `messageboard` (
+  `messageboard_id` int NOT NULL AUTO_INCREMENT,
+  `message` text,
+  `user_give_id` int DEFAULT NULL,
+  `user_get_id` int DEFAULT NULL,
+  PRIMARY KEY (`messageboard_id`),
+  KEY `user_give_id` (`user_give_id`),
+  KEY `user_get_id` (`user_get_id`),
+  CONSTRAINT `messageboard_ibfk_1` FOREIGN KEY (`user_give_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `messageboard_ibfk_2` FOREIGN KEY (`user_get_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of messageboard
+-- ----------------------------
+BEGIN;
+INSERT INTO `messageboard` VALUES (2, 'love', 2, 1);
+INSERT INTO `messageboard` VALUES (3, 'love you', 3, 1);
+INSERT INTO `messageboard` VALUES (4, 'love you too', 4, 1);
+INSERT INTO `messageboard` VALUES (5, 'lwho are you', 2, 3);
+INSERT INTO `messageboard` VALUES (6, 'what\'s your real name', 2, 4);
+COMMIT;
+
+-- ----------------------------
 -- Table structure for movie
 -- ----------------------------
 DROP TABLE IF EXISTS `movie`;
@@ -177,8 +204,8 @@ CREATE TABLE `movie` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `movie` VALUES (1, 'Avatar', '2009/12/10', 'https://m.media-amazon.com/images/M/MV5BMTYwOTEwNjAzMl5BMl5BanBnXkFtZTcwODc5MTUwMw@@._V1_SX300.jpg', 3.4, 18, 'http://www.avatarmovie.com/', 'In the 22nd century, a paraplegic Marine is dispatched to the moon Pandora on a unique mission, but becomes torn between following orders and protecting an alien civilization.');
-INSERT INTO `movie` VALUES (2, 'Pirates of the Caribbean: At World\'s End', '2007/5/19', 'https://m.media-amazon.com/images/M/MV5BMjIyNjkxNzEyMl5BMl5BanBnXkFtZTYwMjc3MDE3._V1_SX300.jpg', 3.5, 10, 'http://disney.go.com/disneypictures/pirates/', 'Captain Barbossa, long believed to be dead, has come back to life and is headed to the edge of the Earth with Will Turner and Elizabeth Swann. But nothing is quite as it seems.');
-INSERT INTO `movie` VALUES (3, 'Spectre', '2015/10/26', 'https://m.media-amazon.com/images/M/MV5BOWQ1MDE1NzgtNTQ4OC00ZjliLTllZDAtN2IyOTVmMTc5YjUxXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg', 3.1, 10, 'http://www.sonypictures.com/movies/spectre/', 'A cryptic message from Bond past sends him on a trail to uncover a sinister organization. While M battles political forces to keep the secret service alive, Bond peels back the layers of deceit to reveal the terrible truth behind SPECTRE.');
+INSERT INTO `movie` VALUES (2, 'Pirates of the Caribbean: At World\'s End', '2007/5/19', 'https://m.media-amazon.com/images/M/MV5BMjIyNjkxNzEyMl5BMl5BanBnXkFtZTYwMjc3MDE3._V1_SX300.jpg', 3.5, 11, 'http://disney.go.com/disneypictures/pirates/', 'Captain Barbossa, long believed to be dead, has come back to life and is headed to the edge of the Earth with Will Turner and Elizabeth Swann. But nothing is quite as it seems.');
+INSERT INTO `movie` VALUES (3, 'Spectre', '2015/10/26', 'https://m.media-amazon.com/images/M/MV5BOWQ1MDE1NzgtNTQ4OC00ZjliLTllZDAtN2IyOTVmMTc5YjUxXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg', 3.1, 11, 'http://www.sonypictures.com/movies/spectre/', 'A cryptic message from Bond past sends him on a trail to uncover a sinister organization. While M battles political forces to keep the secret service alive, Bond peels back the layers of deceit to reveal the terrible truth behind SPECTRE.');
 INSERT INTO `movie` VALUES (4, 'The Dark Knight Rises', '2012/7/16', 'https://m.media-amazon.com/images/M/MV5BMTk4ODQzNDY3Ml5BMl5BanBnXkFtZTcwODA0NTM4Nw@@._V1_SX300.jpg', 3.8, 10, 'http://www.thedarkknightrises.com/', 'Following the death of District Attorney Harvey Dent, Batman assumes responsibility for Dent\'s crimes to protect the late attorney\'s reputation and is subsequently hunted by the Gotham City Police Department. Eight years later, Batman encounters the mysterious Selina Kyle and the villainous Bane, a new terrorist leader who overwhelms Gotham\'s finest. The Dark Knight resurfaces to protect a city that has branded him an enemy.');
 INSERT INTO `movie` VALUES (5, 'Spider-Man 3', '2007/5/1', 'https://m.media-amazon.com/images/M/MV5BYTk3MDljOWQtNGI2My00OTEzLTlhYjQtOTQ4ODM2MzUwY2IwXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_SX300.jpg', 3.0, 10, 'http://www.sonypictures.com/movies/spider-man3/', 'The seemingly invincible Spider-Man goes up against an all-new crop of villain 鈥 including the shape-shifting Sandman. While Spider-Man鈥檚 superpowers are altered by an alien organism, his alter ego, Peter Parker, deals with nemesis Eddie Brock and also gets caught up in a love triangle.');
 INSERT INTO `movie` VALUES (6, 'Close Range', '2015/12/11', 'https://m.media-amazon.com/images/M/MV5BMjA5MzYzODk2Nl5BMl5BanBnXkFtZTgwNDM4MTY3NjE@._V1_SX300.jpg', 2.5, 10, 'https://www.facebook.com/closerangemovie/', 'A rogue soldier turned outlaw is thrust into a relentless fight with a corrupt sheriff, his obedient deputies, and a dangerous drug cartel in order to protect his sister and her young daughter.');
@@ -427,7 +454,7 @@ CREATE TABLE `movie_review` (
   KEY `movie_review_ibfk_1` (`movie_id`),
   CONSTRAINT `movie_review_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`movie_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `movie_review_ibfk_2` FOREIGN KEY (`review_id`) REFERENCES `review` (`review_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of movie_review
@@ -441,6 +468,8 @@ INSERT INTO `movie_review` VALUES (1, 28, 12);
 INSERT INTO `movie_review` VALUES (1, 29, 13);
 INSERT INTO `movie_review` VALUES (1, 30, 14);
 INSERT INTO `movie_review` VALUES (1, 31, 15);
+INSERT INTO `movie_review` VALUES (2, 32, 16);
+INSERT INTO `movie_review` VALUES (3, 33, 17);
 COMMIT;
 
 -- ----------------------------
@@ -570,7 +599,7 @@ CREATE TABLE `review` (
   `rate` float(2,1) NOT NULL DEFAULT '0.0',
   `review` text,
   PRIMARY KEY (`review_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of review
@@ -584,6 +613,8 @@ INSERT INTO `review` VALUES (28, 8.0, 'good');
 INSERT INTO `review` VALUES (29, 8.0, 'good');
 INSERT INTO `review` VALUES (30, 5.0, 'not good');
 INSERT INTO `review` VALUES (31, 2.0, 'not good');
+INSERT INTO `review` VALUES (32, 3.3, 'dsfasdfsaf');
+INSERT INTO `review` VALUES (33, 3.0, '44f4ff4f');
 COMMIT;
 
 -- ----------------------------
@@ -666,6 +697,29 @@ INSERT INTO `user_banlist` VALUES (2, 1, 6);
 COMMIT;
 
 -- ----------------------------
+-- Table structure for user_followlist
+-- ----------------------------
+DROP TABLE IF EXISTS `user_followlist`;
+CREATE TABLE `user_followlist` (
+  `user_id` int DEFAULT NULL,
+  `follow_id` int DEFAULT NULL,
+  `table_id` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`table_id`),
+  KEY `user_id` (`user_id`),
+  KEY `follow_id` (`follow_id`),
+  CONSTRAINT `user_followlist_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `user_followlist_ibfk_2` FOREIGN KEY (`follow_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of user_followlist
+-- ----------------------------
+BEGIN;
+INSERT INTO `user_followlist` VALUES (1, 3, 2);
+INSERT INTO `user_followlist` VALUES (1, 4, 3);
+COMMIT;
+
+-- ----------------------------
 -- Table structure for user_review
 -- ----------------------------
 DROP TABLE IF EXISTS `user_review`;
@@ -678,7 +732,7 @@ CREATE TABLE `user_review` (
   KEY `user_review_ibfk_1` (`user_id`),
   CONSTRAINT `user_review_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `user_review_ibfk_2` FOREIGN KEY (`review_id`) REFERENCES `review` (`review_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of user_review
@@ -692,6 +746,8 @@ INSERT INTO `user_review` VALUES (3, 28, 15);
 INSERT INTO `user_review` VALUES (3, 29, 16);
 INSERT INTO `user_review` VALUES (1, 30, 17);
 INSERT INTO `user_review` VALUES (1, 31, 18);
+INSERT INTO `user_review` VALUES (1, 32, 19);
+INSERT INTO `user_review` VALUES (1, 33, 20);
 COMMIT;
 
 -- ----------------------------
