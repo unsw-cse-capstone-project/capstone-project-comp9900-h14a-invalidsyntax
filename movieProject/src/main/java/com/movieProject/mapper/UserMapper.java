@@ -1,6 +1,8 @@
 package com.movieProject.mapper;
 
-import com.movieProject.entity.Message;
+import com.movieProject.entity.MessageGet;
+import com.movieProject.entity.MessageGive;
+import com.movieProject.entity.SimpleUser;
 import com.movieProject.entity.User;
 import com.movieProject.utils.MyMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -22,6 +24,8 @@ public interface UserMapper extends MyMapper<User> {
 
     User findUserByID(Integer user_id);
 
+    SimpleUser givebackUserNameAndID(Integer user_id);
+
     List<Integer> showWishlist(Integer user_id);
 
     List<Integer> showBanlist(Integer user_id);
@@ -42,8 +46,8 @@ public interface UserMapper extends MyMapper<User> {
 
     int deleteMessage(Integer user_give_id, Integer user_get_id);
 
-    List<Message> showGetMessages(Integer user_get_id);
+    List<MessageGive> showGetMessages(Integer user_get_id);
 
-    List<Message> showGiveMessages(Integer user_give_id);
+    List<MessageGet> showGiveMessages(Integer user_give_id);
 
 }

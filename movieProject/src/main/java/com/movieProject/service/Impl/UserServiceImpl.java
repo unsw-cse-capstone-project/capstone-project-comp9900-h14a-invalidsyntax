@@ -1,18 +1,16 @@
 package com.movieProject.service.Impl;
 
 import com.movieProject.common.Result;
-import com.movieProject.entity.Message;
-import com.movieProject.entity.User;
-import com.movieProject.entity.Movie;
+import com.movieProject.entity.*;
 import com.movieProject.mapper.UserMapper;
 import com.movieProject.mapper.MovieMapper;
-import com.movieProject.service.MovieService;
 import com.movieProject.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -164,7 +162,12 @@ public class UserServiceImpl implements UserService {
             return Result.fail("User not find !");
         }
         List<Integer> banList = usermapper.showBanlist(new_user_id);
-        return Result.ok("Ban list found !", banList);
+        List<SimpleUser> userinfo = new LinkedList<>();
+        for (Integer id : banList){
+            SimpleUser su = usermapper.givebackUserNameAndID(id);
+            userinfo.add(su);
+        }
+        return Result.ok("Ban list found !", userinfo);
     }
 
     @Override
@@ -340,8 +343,13 @@ public class UserServiceImpl implements UserService {
         if (null == user) {
             return Result.fail("User not find !");
         }
+        List<SimpleUser> userinfo = new LinkedList<>();
         List<Integer> followList = usermapper.showFollowlist(new_user_id);
-        return Result.ok("Follow list found !", followList);
+        for (Integer id : followList){
+            SimpleUser su = usermapper.givebackUserNameAndID(id);
+            userinfo.add(su);
+        }
+        return Result.ok("Follow list found !", userinfo);
     }
 
 
@@ -410,7 +418,7 @@ public class UserServiceImpl implements UserService {
             return Result.fail("NO This User Give Message !");
         }
 
-        List<Message> messages = usermapper.showGiveMessages(new_user1_id);
+        List<MessageGet> messages = usermapper.showGiveMessages(new_user1_id);
         return Result.ok("showMessage successfully !", messages);
     }
 
@@ -425,7 +433,7 @@ public class UserServiceImpl implements UserService {
             return Result.fail("NO This User Get Message !");
         }
 
-        List<Message> messages = usermapper.showGetMessages(new_user1_id);
+        List<MessageGive> messages = usermapper.showGetMessages(new_user1_id);
         return Result.ok("showMessage successfully !", messages);
     }
 

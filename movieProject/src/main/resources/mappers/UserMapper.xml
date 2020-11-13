@@ -11,11 +11,23 @@
         <result column="email" jdbcType="CHAR" property="email"/>
     </resultMap>
 
-    <resultMap id="BaseResultMapM" type="com.movieProject.entity.Message">
+    <resultMap id="BaseResultMapMV" type="com.movieProject.entity.MessageGive">
         <id column="messageboard_id" jdbcType="INTEGER" property="messageboard_id"/>
         <result column="user_give_id" jdbcType="INTEGER" property="user_give_id"/>
-        <result column="user_get_id" jdbcType="INTEGER" property="user_get_id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="message" jdbcType="VARCHAR" property="message"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMapMG" type="com.movieProject.entity.MessageGet">
+        <id column="messageboard_id" jdbcType="INTEGER" property="messageboard_id"/>
+        <result column="user_get_id" jdbcType="INTEGER" property="user_get_id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="message" jdbcType="VARCHAR" property="message"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMapU" type="com.movieProject.entity.SimpleUser">
+        <id column="user_id" jdbcType="INTEGER" property="user_id" />
+        <result column="name" jdbcType="CHAR" property="name"/>
     </resultMap>
 
     <insert id="insertUser">
@@ -41,6 +53,12 @@
 
     <select id="findUserByID" resultMap="BaseResultMap">
         SELECT *
+        FROM user
+        WHERE user_id = #{user_id}
+    </select>
+
+    <select id="givebackUserNameAndID" resultMap="BaseResultMapU">
+        SELECT user_id, name
         FROM user
         WHERE user_id = #{user_id}
     </select>
@@ -103,18 +121,18 @@
         WHERE user_give_id = #{user_give_id} AND user_get_id = #{user_get_id}
     </delete>
 
-    <select id="showGetMessages" parameterType="com.movieProject.entity.Message"
-            resultType="com.movieProject.entity.Message">
-        SELECT messageboard_id, user_give_id, message
-        FROM messageboard
-        WHERE user_get_id = #{user_get_id}
+    <select id="showGetMessages" parameterType="com.movieProject.entity.MessageGive"
+            resultType="com.movieProject.entity.MessageGive">
+        SELECT messageboard.messageboard_id, messageboard.user_give_id, user.name, messageboard.message
+        FROM messageboard, user
+        WHERE messageboard.user_get_id = #{user_get_id} AND messageboard.user_give_id = user.user_id
     </select>
 
-    <select id="showGiveMessages" parameterType="com.movieProject.entity.Message"
-            resultType="com.movieProject.entity.Message">
-        SELECT messageboard_id, user_get_id, message
-        FROM messageboard
-        WHERE user_give_id = #{user_give_id}
+    <select id="showGiveMessages" parameterType="com.movieProject.entity.MessageGet"
+            resultType="com.movieProject.entity.MessageGet">
+        SELECT messageboard.messageboard_id, messageboard.user_get_id, user.name, messageboard.message
+        FROM messageboard, user
+        WHERE user_give_id = #{user_give_id} AND messageboard.user_get_id = user.user_id
     </select>
 
 </mapper>
