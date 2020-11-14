@@ -21,16 +21,27 @@
         <side-bar> </side-bar>
         <!-- 主布局 -->
         <el-main>
+          <el-menu
+            :default-active="activeIndex2"
+            class="el-menu-demo"
+            mode="horizontal"
+            @select="handleSelect"
+            background-color="#545c64"
+            text-color="#fff"
+            active-text-color="#ffd04b"
+          
+          >
+            
+            <el-menu-item index="1">Ban list</el-menu-item>
+          </el-menu>
           <!-- 主页展示电影 -->
-           <el-row :span="20" v-for="(o, index) in banUser" :key="index">
+           <el-row :span="20" v-for="(o, index) in banlist" :key="index" style="margin-top: 20px">
           <el-card class="box-card">
               <div>
-              <el-link style="float: left; padding: 0 0; font-size: 18px" type="primary" :href="'/user/' + banlist[index]">{{ o }}</el-link>
+              <el-link style="float: left; padding: 0 0; font-size: 18px" type="primary" :href="'/user/' + o.user_id">{{ o.name }}</el-link>
               <el-button
-                type="success"
-                icon="el-icon-check"
-                @click="cancelBan(banlist[index])"
-                round
+                type="text"
+                @click="cancelBan(o.user_id)"
                 >Cancel</el-button
               >
               </div>
@@ -92,15 +103,6 @@ export default {
       axios.get(`/api/user/showBanList?user_id=${this.user_id}`).then((res) => {
         console.log(res.data.data);
         this.banlist=res.data.data;
-        for (var i = 0; i < this.banlist.length; i++){ 
-        axios
-          .get(`/api/user/searchUserById?user_id=${this.banlist[i]}`)
-          .then((res) => {
-              console.log(res.data)
-            this.banUser.push(res.data.data.name);
-          });
-        }
-        console.log(this.banUser)
       }); // API post
     },
      cancelBan(x) {

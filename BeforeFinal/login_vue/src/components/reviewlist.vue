@@ -21,26 +21,21 @@
         <side-bar> </side-bar>
         <!-- 主布局 -->
         <el-main>
-          <!-- <ul id="reviewlist1">
-            <li v-for="(item, index) of reviewlist" :key="index">
-              <img :src="item.poster" />
-              {{ `Movie: ` }}
-              <el-button @click="goTo(`/movie/${item.movie_id}`)">{{
-                item.movie_id
-              }}</el-button>
-              {{ `Review:${item.review}` }}
-            </li>
-          </ul> 
-          <el-table :data="reviewlist" stripe style="width: 80%">
-            <el-table-column prop="movie_title" label="movie_title" width="180">
-            </el-table-column>
-            <el-table-column prop="rate" label="rate" width="80">
-            </el-table-column>
-            <el-table-column prop="review" label="review"> </el-table-column>
-          </el-table>
-            -->
-          <el-row :span="4" v-for="(o, index) of reviewlist" :key="index">
-            <el-card class="box-card">
+          <el-menu
+            :default-active="activeIndex2"
+            class="el-menu-demo"
+            mode="horizontal"
+            @select="handleSelect"
+            background-color="#545c64"
+            text-color="#fff"
+            active-text-color="#ffd04b"
+          
+          >
+            
+            <el-menu-item index="1">Review List</el-menu-item>
+          </el-menu>
+          <el-row :span="10" v-for="(o, index) of reviewlist" :key="index" style="margin-top: 20px">
+            <el-card class="box-card" style="width: 1000px">
               <div slot="header" class="clearfix">
                 <span>
                     <el-link style="float: left; padding: 0 0; font-size: 18px" type="primary" :href="'/movie/' + o.movie_id">{{ `${o.movie_title}  `}}</el-link>
@@ -174,6 +169,6 @@ export default {
     clear: both
   }
   .box-card {
-    width: 800px;
+    width: 1600px;
   }
 </style>
