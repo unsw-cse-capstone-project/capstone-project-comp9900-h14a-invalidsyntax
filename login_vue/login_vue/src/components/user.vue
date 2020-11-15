@@ -109,7 +109,11 @@
                       <img :src="o.poster" class="moviePoster">
                       <div style="padding: 14px">
                         <!-- <span>{{o.title}} </span> -->
+<<<<<<< HEAD
                         <el-row>{{ o.rate}}</el-row>
+=======
+                        <span>{{ o.title }}</span>
+>>>>>>> 9c30d47e902ca80d0acd91b510974b2dd433f964
                         <el-link type="primary" :href="'/movie/' + o.movie_id">{{ o.title }}</el-link>
 
                       </div>

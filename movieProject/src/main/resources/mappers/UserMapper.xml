@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.movieProject.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.movieProject.entity.User">
+        <id column="user_id" jdbcType="INTEGER" property="user_id" />
+        <result column="name" jdbcType="CHAR" property="name"/>
+        <result column="gender" jdbcType="CHAR" property="gender"/>
+        <result column="age" jdbcType="INTEGER" property="age"/>
+        <result column="password" jdbcType="CHAR" property="password"/>
+        <result column="email" jdbcType="CHAR" property="email"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMapMV" type="com.movieProject.entity.MessageGive">
+        <id column="messageboard_id" jdbcType="INTEGER" property="messageboard_id"/>
+        <result column="user_give_id" jdbcType="INTEGER" property="user_give_id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="message" jdbcType="VARCHAR" property="message"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMapMG" type="com.movieProject.entity.MessageGet">
+        <id column="messageboard_id" jdbcType="INTEGER" property="messageboard_id"/>
+        <result column="user_get_id" jdbcType="INTEGER" property="user_get_id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="message" jdbcType="VARCHAR" property="message"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMapU" type="com.movieProject.entity.SimpleUser">
+        <id column="user_id" jdbcType="INTEGER" property="user_id" />
+        <result column="name" jdbcType="CHAR" property="name"/>
+    </resultMap>
+
+    <insert id="insertUser">
+        INSERT INTO user(name, gender, age, password, email)
+        VALUES(#{name}, #{gender}, #{age}, #{password}, #{email})
+    </insert>
+
+    <insert id="addWishlist">
+        INSERT INTO user_wishlist(user_id, wishList)
+        VALUES(#{user_id}, #{wishList})
+    </insert>
+
+    <insert id="addBanlist">
+        INSERT INTO user_banlist(user_id, user_baned_id)
+        VALUES(#{user_id}, #{user_baned_id})
+    </insert>
+
+    <select id="findUserByName" resultMap="BaseResultMap">
+        SELECT *
+        FROM user
+        WHERE name = #{name}
+    </select>
+
+    <select id="findUserByID" resultMap="BaseResultMap">
+        SELECT *
+        FROM user
+        WHERE user_id = #{user_id}
+    </select>
+
+    <select id="givebackUserNameAndID" resultMap="BaseResultMapU">
+        SELECT user_id, name
+        FROM user
+        WHERE user_id = #{user_id}
+    </select>
+
+    <select id="showWishlist" resultType="Integer">
+        SELECT wishList
+        FROM user_wishlist
+        WHERE user_id = #{user_id}
+    </select>
+
+    <select id="showBanlist" resultType="Integer">
+        SELECT user_baned_id
+        FROM user_banlist
+        WHERE user_id = #{user_id}
+    </select>
+
+    <update id="updateUser">
+        update user
+        set user.password=#{password}, user.age=#{age}, user.gender=#{gender}, user.email=#{email}
+        WHERE user_id = #{user_id}
+    </update>
+
+    <delete id="removeWishlist">
+        DELETE
+        FROM user_wishlist
+        WHERE user_id = #{user_id} AND wishList = #{wishList}
+    </delete>
+
+    <delete id="removeBanlist">
+        DELETE
+        FROM user_banlist
+        WHERE user_id = #{user_id} AND user_baned_id = #{user_baned_id}
+    </delete>
+
+    <insert id="addFollowlist">
+        INSERT INTO user_followlist(user_id, follow_id)
+        VALUES(#{user_id}, #{follow_id})
+    </insert>
+
+    <delete id="removeFollowlist">
+        DELETE
+        FROM user_followlist
+        WHERE user_id = #{user_id} AND follow_id = #{follow_id}
+    </delete>
+
+    <select id="showFollowlist" resultType="Integer">
+        SELECT follow_id
+        FROM user_followlist
+        WHERE user_id = #{user_id}
+    </select>
+
+    <insert id="giveMessage">
+        INSERT INTO messageboard(message, user_give_id, user_get_id)
+        VALUES(#{message}, #{user_give_id}, #{user_get_id})
+    </insert>
+
+    <delete id="deleteMessage">
+        DELETE
+        FROM messageboard
+        WHERE user_give_id = #{user_give_id} AND user_get_id = #{user_get_id}
+    </delete>
+
+    <select id="showGetMessages" parameterType="com.movieProject.entity.MessageGive"
+            resultType="com.movieProject.entity.MessageGive">
+        SELECT messageboard.messageboard_id, messageboard.user_give_id, user.name, messageboard.message
+        FROM messageboard, user
+        WHERE messageboard.user_get_id = #{user_get_id} AND messageboard.user_give_id = user.user_id
+    </select>
+
+    <select id="showGiveMessages" parameterType="com.movieProject.entity.MessageGet"
+            resultType="com.movieProject.entity.MessageGet">
+        SELECT messageboard.messageboard_id, messageboard.user_get_id, user.name, messageboard.message
+        FROM messageboard, user
+        WHERE user_give_id = #{user_give_id} AND messageboard.user_get_id = user.user_id
+    </select>
+
+</mapper>
