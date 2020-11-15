@@ -1,14 +1,12 @@
 <template>
   <div id="sidebar">
-  <el-aside width="250px">
+  <el-aside width="100%">
     <el-row class="tac">
       <el-col :span="24">
         <h3>Account Management</h3>
         <el-menu
           default-active="2"
           class="el-menu-vertical-demo"
-          @open="handleOpen"
-          @close="handleClose"
         >
           <el-submenu index="1">
             <template slot="title">

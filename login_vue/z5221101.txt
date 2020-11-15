@@ -1,4 +1,5 @@
-ave done:
+Week 1
+What have done:
 Discussed the specifications of each project
 Choosed the project
 
@@ -29,12 +30,3 @@ Installed the environment of the project'
 
 What will we do:
 Complete the skeleton the website
-
-
-Week 5：
-Week 6：
-Week 7：
-Week 8：
-Week 9：
-
-

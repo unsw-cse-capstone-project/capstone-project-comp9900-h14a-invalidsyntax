@@ -16,7 +16,7 @@
         <!-- 顶部导航栏 -->
         <nav-bar></nav-bar>
       </el-header>
-      <el-container style="height: 100%; padding-bottom: 60px">
+      <el-container style="max-width:1080px;padding-bottom: 60px;margin: 0 auto">
         <!-- 侧边导航栏 -->
         <side-bar> </side-bar>
         <!-- 主布局 -->
@@ -35,31 +35,28 @@
             
             <el-menu-item index="1">Wish List</el-menu-item>
           </el-menu>
+          <el-card class="info-card" shadow="hover">
           <el-row v-if="this.mList.length" style="margin-top: 20px">
             <el-col
-              :span="4"
+              :span="6"
               v-for="(o, index) in mList"
               :key="index"
-              :offset="index > 0 ? 0 : 0"
+              :offset="index > 0 ? 1 : 0"
             >
-              <el-card :body-style="{ padding: '0px' }">
-                <img :src="o.poster" class="image" />
+              <el-card :body-style="{padding:'0px'}" class="moviecard" >
+                <img :src="o.poster" class="moviePoster">
                 <div style="padding: 14px">
                   <!-- <span>{{o.title}} </span> -->
-                  <span>{{ o.title }}</span>
+                  <el-row>{{ o.rate }}</el-row>
                   <div class="bottom clearfix">
                     <!-- <time class="time">{{ currentDate }}</time> -->
-                    <el-button
-                      type="text"
-                      class="button"
-                      @click="goTo(`/movie/${o.movie_id}`)"
-                      >{{ o.title }}</el-button
-                    >
+                    <el-link type="primary" :href="'/movie/' + o.movie_id">{{ o.title }}</el-link>
                   </div>
                 </div>
               </el-card>
             </el-col>
           </el-row>
+          </el-card>
         </el-main>
       </el-container>
     </el-container>
@@ -168,6 +165,19 @@ export default {
 .clearfix:after {
   clear: both;
 }
+.moviecard{
+    padding-top: 15px;
+    width:100%;
+    height:0px;
+    margin:5px;
+    padding-bottom:180%;
+  }
+.moviePoster {
+  text-align: center;
+  margin: auto;
+  width:60%;
+  height:auto
+  }
 /* .home {
   background-color: #bcdef3;
   height: 100vh;

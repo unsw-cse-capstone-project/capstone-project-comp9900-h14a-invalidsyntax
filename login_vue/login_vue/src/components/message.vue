@@ -16,7 +16,7 @@
         <!-- 顶部导航栏 -->
         <nav-bar></nav-bar>
       </el-header>
-      <el-container style="height: 100%; padding-bottom: 60px">
+      <el-container style="min-width:500px;max-width:1080px;padding-bottom: 60px;margin: 0 auto">
         <!-- 侧边导航栏 -->
         <side-bar> </side-bar>
         <!-- 主布局 -->

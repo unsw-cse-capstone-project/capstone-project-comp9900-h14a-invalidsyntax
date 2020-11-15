@@ -1,216 +1,178 @@
 <template>
   <div>
-    <el-container
-      style="
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        overflow: hidden;
-      "
-    >
+    <el-container>
       <el-header class="d-flex align-items-center" style="background: #74b9ff">
         <!--Title -->
         <!-- <a class="h5 text-light mb-0 mr-auto">FilmFinder Home Page</a> -->
         <!-- 顶部导航栏 -->
         <nav-bar></nav-bar>
       </el-header>
-      <el-container style="height: 100%; padding-bottom: 60px">
-        <!-- 侧边布局 -->
-        <el-aside width="600px">
-          <el-menu
-            :default-active="activeIndex2"
-            class="el-menu-demo"
-            mode="horizontal"
-            @select="handleSelect"
-            background-color="#545c64"
-            text-color="#fff"
-            active-text-color="#ffd04b"
-            style="margin-top: 20px"
-          >
-            >
-            <el-menu-item index="1">User Information</el-menu-item>
-          </el-menu>
-          <el-row>
-            <el-table :data="tableData" style="width: 100%">
-              <el-table-column prop="laber" label="" width="200">
-              </el-table-column>
-              <el-table-column prop="data" label="" width="200">
-              </el-table-column>
-            </el-table>
-          </el-row>
-          <el-row style="margin-top: 20px" gutter="40">
-            <el-col :span="12">
-              <el-button
-                type="danger"
-                icon="el-icon-delete"
-                @click="Ban()"
-                round
-                >Ban This User</el-button
-              >
-            </el-col>
-            <el-col :span="12">
-              <el-button
-                type="success"
-                icon="el-icon-check"
-                @click="cancelBan()"
-                round
-                >Cancel</el-button
-              >
-            </el-col>
-          </el-row>
-
-           <el-menu
-            style="margin-top: 20px"
-            :default-active="activeIndex2"
-            class="el-menu-demo"
-            mode="horizontal"
-            @select="handleSelect"
-            background-color="#545c64"
-            text-color="#fff"
-            active-text-color="#ffd04b"
-          >
-            >
-            <el-menu-item index="1">User Reviewlist</el-menu-item>
-          </el-menu>
-          <el-table
-            :data="reviewlist"
-            stripe
-            style="width: 100% margin-top:20px"
-          >
-            <el-table-column prop="movie_title" label="movie_title" width="250">
-            </el-table-column>
-            <el-table-column prop="rate" label="rate" width="80">
-            </el-table-column>
-            <el-table-column prop="review" label="review"> </el-table-column>
-          </el-table>
-
-           <el-row style="margin-top: 20px" gutter="40">
-            <el-col :span="12">
-              <el-button
-                type="danger"
-                icon="el-icon-delete"
-                @click="follow()"
-                round
-                >Follow This User</el-button
-              >
-            </el-col>
-            <el-col :span="12">
-              <el-button
-                type="success"
-                icon="el-icon-check"
-                @click="cancelfollow()"
-                round
-                >Cancel</el-button
-              >
-            </el-col>
-          </el-row>
-        </el-aside>
+      <el-container style="max-width:1080px;padding-bottom: 60px;margin: 0 auto">
 
         <!-- 主布局 -->
         <el-main>
-          <!-- Movie Detail -->
-          <el-menu
-            :default-active="activeIndex2"
-            class="el-menu-demo"
-            mode="horizontal"
-            @select="handleSelect"
-            background-color="#545c64"
-            text-color="#fff"
-            active-text-color="#ffd04b"
-          >
-            >
-            <el-menu-item index="1">User wishlist</el-menu-item>
-          </el-menu>
-          <el-row style="margin-top: 20px">
-            <el-row v-if="this.mList.length">
-              <el-col
-                :span="4"
-                v-for="(o, index) in mList"
-                :key="index"
-                :offset="index > 0 ? 0 : 0"
-              >
-                <el-card :body-style="{ padding: '0px' }">
-                  <img :src="o.poster" class="image" />
-                  <div style="padding: 14px">
-                    <!-- <span>{{o.title}} </span> -->
-                    <span>{{ o.title }}</span>
-                    <div class="bottom clearfix">
-                      <!-- <time class="time">{{ currentDate }}</time> -->
-                      <el-button
-                        type="text"
-                        class="button"
-                        @click="goTo(`/movie/${o.movie_id}`)"
-                        >{{ o.title }}</el-button
-                      >
-                    </div>
-                  </div>
-                </el-card>
-              </el-col>
-            </el-row>
-          </el-row>
-         
-          <el-menu
-            :default-active="activeIndex2"
-            class="el-menu-demo"
-            mode="horizontal"
-            @select="handleSelect"
-            background-color="#545c64"
-            text-color="#fff"
-            active-text-color="#ffd04b"
-            style="margin-top: 20px"
-          >
-            >
-            <el-menu-item index="1">User Message</el-menu-item>
-          </el-menu>
+          <!-- User Info -->
+          <el-card class="info-card" shadow="hover" >
+            <div>
+              User Information
+            </div>
 
-          <el-row
-            :span="4"
-            v-for="(o, index) of messageList"
-            :key="index"
-            style="margin-top: 20px"
-          >
-            <el-card class="box-card">
-              <div slot="header" class="clearfix">
-                <span>
-                  <el-link
-                    style="float: left; padding: 0 0; font-size: 10px"
-                    type="primary"
-                    :href="'/user/' + o.user_give_id"
-                    >{{ `${o.name}  ` }}</el-link
+            <div>
+              <el-row>
+                <div>
+                  <el-table :data="tableData" style="width:100%;" >
+                    <el-table-column prop="laber" label="" width="300">
+                    </el-table-column>
+                    <el-table-column prop="data" label="" width="200">
+                    </el-table-column>
+                  </el-table>
+                </div>
+              </el-row>
+              <el-row style="margin-top: 20px" gutter="40">
+                <el-col :span="12">
+                  <el-button
+                    type="danger"
+                    icon="el-icon-delete"
+                    @click="Ban()"
+                    round
+                    >Ban This User</el-button
                   >
-                </span>
-           
-              </div>
-              <div class="text item">
-                {{ o.message }}
-              </div>
-            </el-card>
-          </el-row>
-          <el-row>
-            <el-input
-              class="message"
-              type="textarea"
-              autosize
-              placeholder="Please input message"
-              v-model="inputMessage"
-              style="margin-top: 20px"
-              clearable
-            >
-            </el-input>
+                </el-col>
+                <el-col :span="12">
+                  <el-button
+                    type="success"
+                    icon="el-icon-check"
+                    @click="cancelBan()"
+                    round
+                    >Cancel</el-button
+                  >
+                </el-col>
+              </el-row>
+            </div>
+          </el-card>
 
-            <el-button
-              type="primary"
-              icon="el-icon-search"
-              @click="onSubmit()"
+          <el-card class="info-card" shadow="hover">
+            <div>
+              User Review
+            </div>
+            <div>
+              <el-table
+                :data="reviewlist"
+                stripe
+                style="width: 100%;">
+                <el-table-column prop="movie_title" label="Movie Title" width="250">
+                </el-table-column>
+                <el-table-column prop="rate" label="Rate" width="80">
+                </el-table-column>
+                <el-table-column prop="review" label="Review"> </el-table-column>
+              </el-table>
+
+              <el-row style="margin-top: 20px" gutter="40">
+                <el-col :span="12">
+                  <el-button
+                    type="success"
+                    icon="el-icon-star-on"
+                    @click="follow()"
+                    round
+                    >Follow This User</el-button
+                  >
+                </el-col>
+                <el-col :span="12">
+                  <el-button
+                    type="danger"
+                    icon="el-icon-delete"
+                    @click="cancelfollow()"
+                    round
+                    >Cancel</el-button
+                  >
+                </el-col>
+              </el-row>
+            </div>
+          </el-card>
+
+
+  
+          <el-card class="info-card" shadow="hover">
+            <div>
+              User Wish List
+            </div>
+            <div>
+              <el-row style="margin-top: 20px">
+                <el-row v-if="this.mList.length">
+                  <el-col
+                    :span="6"
+                    v-for="(o, index) in mList"
+                    :key="index"
+                    :offset="index > 0 ? 1 : 0"
+                  >
+                    <el-card class="moviecard" :body-style="{ padding: '3px' }" shadow="hover">
+                      <img :src="o.poster" class="moviePoster">
+                      <div style="padding: 14px">
+                        <!-- <span>{{o.title}} </span> -->
+                        <el-row>{{ o.rate}}</el-row>
+                        <el-link type="primary" :href="'/movie/' + o.movie_id">{{ o.title }}</el-link>
+
+                      </div>
+                    </el-card>
+                  </el-col>
+                </el-row>
+              </el-row>
+            </div>
+          </el-card>
+          
+          <el-card class="info-card" shadow="hover">
+            <div>
+              User Message
+            </div>
+            <div>
+
+            <el-row
+              :span="4"
+              v-for="(o, index) of messageList"
+              :key="index"
               style="margin-top: 20px"
-              >Submit</el-button
             >
-            <el-button @click="resetFields()" style="margin-left: 40px"
-              >Reset</el-button
-            >
-          </el-row>
+              <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                  <span>
+                    <el-link
+                      style="float: left; padding: 0 0; font-size: 10px"
+                      type="primary"
+                      :href="'/user/' + o.user_give_id"
+                      >{{ `${o.name}  ` }}</el-link
+                    >
+                  </span>
+                </div>
+                <div class="text item">
+                  {{ o.message }}
+                </div>
+              </el-card>
+            </el-row>
+            <el-row>
+              <el-input
+                class="message"
+                type="textarea"
+                placeholder="Please input message"
+                v-model="inputMessage"
+                style="margin-top: 20px"
+                clearable
+                :rows="3"
+              >
+              </el-input>
+
+              <el-button
+                type="primary"
+                icon="el-icon-search"
+                @click="onSubmit()"
+                style="margin-top: 20px"
+                >Submit</el-button
+              >
+              <el-button @click="resetFields()" style="margin-left: 40px"
+                >Reset</el-button
+              >
+            </el-row>
+            </div>
+          </el-card>
         
         </el-main>
       </el-container>
@@ -462,11 +424,25 @@ export default {
 .clearfix:after {
   clear: both;
 }
-/* .home {
-  background-color: #bcdef3;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
+.info-card{
+  padding: 10px;
+  width:93%;
+  height: auto;
+  margin: 20px;
+  /* padding-bottom:130%; */
+  /* border: 5px; */
+}
+.moviecard{
+    padding-top: 15px;
+    width:100%;
+    height:0px;
+    margin:5px;
+    padding-bottom:150%;
+  }
+.moviePoster {
+  text-align: center;
+  margin: auto;
+  width:60%;
+  height:auto
+}
 </style>

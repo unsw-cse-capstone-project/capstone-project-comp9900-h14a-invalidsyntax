@@ -4,6 +4,7 @@
 ```
 npm install
 npm install axios
+npm install vue-cookies
 ```
 
 ### Compiles and hot-reloads for development
