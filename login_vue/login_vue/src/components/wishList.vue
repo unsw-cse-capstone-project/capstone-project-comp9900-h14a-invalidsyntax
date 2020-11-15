@@ -22,7 +22,20 @@
         <!-- 主布局 -->
         <el-main>
           <!-- 主页展示电影 -->
-          <el-row v-if="this.mList.length">
+          <el-menu
+            :default-active="activeIndex2"
+            class="el-menu-demo"
+            mode="horizontal"
+            @select="handleSelect"
+            background-color="#545c64"
+            text-color="#fff"
+            active-text-color="#ffd04b"
+       
+          >
+            
+            <el-menu-item index="1">Wish List</el-menu-item>
+          </el-menu>
+          <el-row v-if="this.mList.length" style="margin-top: 20px">
             <el-col
               :span="4"
               v-for="(o, index) in mList"

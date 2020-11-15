@@ -21,7 +21,7 @@
         <side-bar> </side-bar>
         <!-- 主布局 -->
         <el-main>
-          <el-menu
+        <el-menu
             :default-active="activeIndex2"
             class="el-menu-demo"
             mode="horizontal"
@@ -29,27 +29,36 @@
             background-color="#545c64"
             text-color="#fff"
             active-text-color="#ffd04b"
-          
+            style="margin-top: 20px"
           >
             
-            <el-menu-item index="1">Review List</el-menu-item>
+            <el-menu-item index="1">User Message</el-menu-item>
           </el-menu>
-          <el-row :span="10" v-for="(o, index) of reviewlist" :key="index" style="margin-top: 20px">
-            <el-card class="box-card" style="width: 1000px">
+
+          <el-row
+            :span="4"
+            v-for="(o, index) of messageList"
+            :key="index"
+            style="margin-top: 20px"
+          >
+            <el-card class="box-card">
               <div slot="header" class="clearfix">
                 <span>
-                    <el-link style="float: left; padding: 0 0; font-size: 18px" type="primary" :href="'/movie/' + o.movie_id">{{ `${o.movie_title}  `}}</el-link>
-                    <div style="float: left; padding: 0 100px; font-size: 18px "> Rated: {{ o.rate}}/10 </div>
+                  <el-link
+                    style="float: left; padding: 0 0; font-size: 16px"
+                    type="primary"
+                    :href="'/user/' + o.user_give_id"
+                    >{{ `${o.name}  ` }}</el-link
+                  >
                 </span>
-                <el-button style="float: right; padding: 3px 0 font-size: 8px" type="text" @click="DeleteReview(o.review_id)"
-                  >Delete Review</el-button
-                >
+                <el-button style="float: right; padding: 0 0 font-size: 10px" type="text" @click="Delete(o.user_give_id)"
+                  >Delete Message</el-button
+                > 
               </div>
-              <div  class="text item"> 
-                {{  o.review }}
+              <div class="text item">
+                {{ o.message }}
               </div>
             </el-card>
-            
           </el-row>
         </el-main>
       </el-container>
@@ -64,15 +73,13 @@ export default {
   data() {
     return {
       navBarIndex: "1",
-      currentDate: new Date(),
-      reviewlist: [],
-      moviedata: [],
+      messageList: [],
     };
   },
   created: function () {
     // called when loading the home page
     this.checkIfLogon();
-    this.getReviewList();
+    this.getMessageList();
   },
   watch: {
     // 如果路由有变化，会再次执行该方法
@@ -102,40 +109,22 @@ export default {
         this.$router.push("/login");
       }
     },
-    getReviewList() {
+    getMessageList() {
       axios
-        .get(`/api/review/List_user_review?user_id=${this.user_id}`)
+        .get(`/api/user/showGetMessage?user_get_id=${this.user_id}`)
         .then((res) => {
           console.log(res.data.data);
-          this.reviewlist = res.data.data;
-          console.log(this.reviewlist);
-          for (let i = 0; i < this.reviewlist.length; i++) {
-            axios
-              .get(
-                `/api/movie/searchMovieByID?movie_id=${this.reviewlist[i].movie_id}`
-              )
-              .then((res) => {
-                console.log(res);
-                console.log(res.data.data.title);
-                console.log(this.reviewlist[0].rate);
-                this.moviedata[i] = {};
-                this.moviedata[i].Movie = res.data.data.title;
-                console.log(this.moviedata[i].Movie);
-                this.moviedata[i].Rate = this.reviewlist[i].rate;
-                this.moviedata[i].Review = this.reviewlist[i].review;
-                console.log(this.moviedata);
-              });
-          }
+          this.messageList = res.data.data;
         });
     },
-    DeleteReview(x) {
+    Delete(x) {
       axios
         .get(
-          `/api/review/Delete_review?review_id=${x}`
+          `/api/user/delete_message?user_give_id=${x}&user_get_id=${this.user_id}`
         )
         .then((res) => {
           if (res.status == 200) {
-            this.$alert(`Cancel successful!`, "Message:", {
+            this.$alert(`Delete Message Successfully !`, "Message:", {
                     confirmButtonText: "ok",
               });
             location.reload();
@@ -169,6 +158,6 @@ export default {
     clear: both
   }
   .box-card {
-    width: 1600px;
+    width: 800px;
   }
 </style>

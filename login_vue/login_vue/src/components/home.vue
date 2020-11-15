@@ -8,7 +8,7 @@
         <nav-bar></nav-bar>
       </el-header>
 
-      <el-container style="width:100%;padding-bottom: 60px;margin: 0 auto">
+      <el-container style="width:1080px;padding-bottom: 60px;margin: 0 auto">
       <!-- 侧边导航栏 -->
       <side-bar> </side-bar>
       <!-- 主布局 -->

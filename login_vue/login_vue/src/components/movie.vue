@@ -8,7 +8,7 @@
         <nav-bar></nav-bar>
       </el-header>
 
-      <el-container class="movie-page" style="height:100%;padding-bottom: 60px;margin: 0 auto">
+      <el-container class="movie-page" style="width:1080px;padding-bottom: 60px;margin: 0 auto">
 
         <!-- 侧边布局 -->
         <!-- <el-aside width="200px">
@@ -144,7 +144,7 @@
             </el-col>
 
             <!-- Movie Recommend -->
-            <el-col :span= "6">
+            <el-col v-if="this.isLogon === 'true'" :span= "6">
               <span> Recommend For You:</span>
               <el-row v-for="(o, index) in this.recMovieList" :key="index" :offset="index > 0 ? 0 : 0">
                 <el-card class="rec-movie-card" :body-style="{ padding: '5px' }" shadow="hover" >

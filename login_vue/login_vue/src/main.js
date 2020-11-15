@@ -44,7 +44,9 @@ const router = new VueRouter({
     { path: "/changePassword", component: () => import("@/components/changePassword.vue")},
     { path: "/wishList", component: () => import("@/components/wishList.vue") },
     { path: "/banList", component: () => import("@/components/banList.vue") },
+    { path: "/message", component: () => import("@/components/message.vue") },
     { path: "/reviewlist", component: () => import("@/components/reviewlist.vue") },
+    { path: "/followList", component: () => import("@/components/followList.vue") },
     // { path: "/acc", component: () => import("@/components/acc.vue") },
 
     { path: "/search", component: () => import("@/components/search.vue") },

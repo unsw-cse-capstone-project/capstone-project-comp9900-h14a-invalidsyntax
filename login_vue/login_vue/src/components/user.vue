@@ -18,7 +18,20 @@
       </el-header>
       <el-container style="height: 100%; padding-bottom: 60px">
         <!-- 侧边布局 -->
-        <el-aside width="400px">
+        <el-aside width="600px">
+          <el-menu
+            :default-active="activeIndex2"
+            class="el-menu-demo"
+            mode="horizontal"
+            @select="handleSelect"
+            background-color="#545c64"
+            text-color="#fff"
+            active-text-color="#ffd04b"
+            style="margin-top: 20px"
+          >
+            >
+            <el-menu-item index="1">User Information</el-menu-item>
+          </el-menu>
           <el-row>
             <el-table :data="tableData" style="width: 100%">
               <el-table-column prop="laber" label="" width="200">
@@ -27,9 +40,13 @@
               </el-table-column>
             </el-table>
           </el-row>
-          <el-row gutter="40">
+          <el-row style="margin-top: 20px" gutter="40">
             <el-col :span="12">
-              <el-button type="danger" icon="el-icon-delete" @click="Ban" round
+              <el-button
+                type="danger"
+                icon="el-icon-delete"
+                @click="Ban()"
+                round
                 >Ban This User</el-button
               >
             </el-col>
@@ -37,7 +54,53 @@
               <el-button
                 type="success"
                 icon="el-icon-check"
-                @click="cancelBan"
+                @click="cancelBan()"
+                round
+                >Cancel</el-button
+              >
+            </el-col>
+          </el-row>
+
+           <el-menu
+            style="margin-top: 20px"
+            :default-active="activeIndex2"
+            class="el-menu-demo"
+            mode="horizontal"
+            @select="handleSelect"
+            background-color="#545c64"
+            text-color="#fff"
+            active-text-color="#ffd04b"
+          >
+            >
+            <el-menu-item index="1">User Reviewlist</el-menu-item>
+          </el-menu>
+          <el-table
+            :data="reviewlist"
+            stripe
+            style="width: 100% margin-top:20px"
+          >
+            <el-table-column prop="movie_title" label="movie_title" width="250">
+            </el-table-column>
+            <el-table-column prop="rate" label="rate" width="80">
+            </el-table-column>
+            <el-table-column prop="review" label="review"> </el-table-column>
+          </el-table>
+
+           <el-row style="margin-top: 20px" gutter="40">
+            <el-col :span="12">
+              <el-button
+                type="danger"
+                icon="el-icon-delete"
+                @click="follow()"
+                round
+                >Follow This User</el-button
+              >
+            </el-col>
+            <el-col :span="12">
+              <el-button
+                type="success"
+                icon="el-icon-check"
+                @click="cancelfollow()"
                 round
                 >Cancel</el-button
               >
@@ -60,7 +123,7 @@
             >
             <el-menu-item index="1">User wishlist</el-menu-item>
           </el-menu>
-          <el-row>
+          <el-row style="margin-top: 20px">
             <el-row v-if="this.mList.length">
               <el-col
                 :span="4"
@@ -87,6 +150,7 @@
               </el-col>
             </el-row>
           </el-row>
+         
           <el-menu
             :default-active="activeIndex2"
             class="el-menu-demo"
@@ -95,17 +159,59 @@
             background-color="#545c64"
             text-color="#fff"
             active-text-color="#ffd04b"
+            style="margin-top: 20px"
           >
             >
-            <el-menu-item index="1">User Reviewlist</el-menu-item>
+            <el-menu-item index="1">User Message</el-menu-item>
           </el-menu>
-          <el-table :data="reviewlist" stripe style="width: 100%">
-            <el-table-column prop="movie_title" label="movie_title" width="180">
-            </el-table-column>
-            <el-table-column prop="rate" label="rate" width="80">
-            </el-table-column>
-            <el-table-column prop="review" label="review"> </el-table-column>
-          </el-table>
+
+          <el-row
+            :span="4"
+            v-for="(o, index) of messageList"
+            :key="index"
+            style="margin-top: 20px"
+          >
+            <el-card class="box-card">
+              <div slot="header" class="clearfix">
+                <span>
+                  <el-link
+                    style="float: left; padding: 0 0; font-size: 10px"
+                    type="primary"
+                    :href="'/user/' + o.user_give_id"
+                    >{{ `${o.name}  ` }}</el-link
+                  >
+                </span>
+           
+              </div>
+              <div class="text item">
+                {{ o.message }}
+              </div>
+            </el-card>
+          </el-row>
+          <el-row>
+            <el-input
+              class="message"
+              type="textarea"
+              autosize
+              placeholder="Please input message"
+              v-model="inputMessage"
+              style="margin-top: 20px"
+              clearable
+            >
+            </el-input>
+
+            <el-button
+              type="primary"
+              icon="el-icon-search"
+              @click="onSubmit()"
+              style="margin-top: 20px"
+              >Submit</el-button
+            >
+            <el-button @click="resetFields()" style="margin-left: 40px"
+              >Reset</el-button
+            >
+          </el-row>
+        
         </el-main>
       </el-container>
     </el-container>
@@ -119,9 +225,11 @@ export default {
   data() {
     return {
       userID: -1,
+      inputMessage: "",
       userData: {},
       mList: [],
       wishlist: [],
+      messageList: [],
       tableData: [
         {
           laber: "Username",
@@ -148,6 +256,7 @@ export default {
     this.checkLogon();
     this.getwishList();
     this.getReviewList();
+    this.getMessageList();
   },
   methods: {
     handleSelect(key, keyPath) {
@@ -202,9 +311,9 @@ export default {
         )
         .then((res) => {
           if (res.status == 200) {
-             this.$alert(`Ban successful!`, "Message:", {
-                    confirmButtonText: "ok",
-              });
+            this.$alert(`Ban successful!`, "Message:", {
+              confirmButtonText: "ok",
+            });
           }
         });
     },
@@ -216,9 +325,43 @@ export default {
         .then((res) => {
           if (res.status == 200) {
             this.$alert(`Cancel successful!`, "Message:", {
-                    confirmButtonText: "ok",
-              });
+              confirmButtonText: "ok",
+            });
           }
+        });
+    },
+    follow() {
+      axios
+        .get(
+          `../api//user/follow_someone?user_id=${this.user_id}&follow_id=${this.userID}`
+        )
+        .then((res) => {
+          if (res.status == 200) {
+            this.$alert(`Follow successful!`, "Message:", {
+              confirmButtonText: "ok",
+            });
+          }
+        });
+    },
+    cancelfollow() {
+      axios
+        .get(
+          `../api//user/cancel_follow_someone?user_id=${this.user_id}&follow_id=${this.userID}`
+        )
+        .then((res) => {
+          if (res.status == 200) {
+            this.$alert(`Cancel successful!`, "Message:", {
+              confirmButtonText: "ok",
+            });
+          }
+        });
+    },
+    getMessageList() {
+      axios
+        .get(`/api/user/showGetMessage?user_get_id=${this.userID}`)
+        .then((res) => {
+          console.log(res.data.data);
+          this.messageList = res.data.data;
         });
     },
     getwishList() {
@@ -253,25 +396,42 @@ export default {
         .then((res) => {
           console.log(res.data.data);
           this.reviewlist = res.data.data;
-          console.log(this.reviewlist)
+          console.log(this.reviewlist);
           for (let i = 0; i < this.reviewlist.length; i++) {
             axios
               .get(
                 `/api/movie/searchMovieByID?movie_id=${this.reviewlist[i].movie_id}`
               )
               .then((res) => {
-                  console.log(res)
-                  console.log(res.data.data.title)
-                  console.log(this.reviewlist[0].rate)
-                  this.moviedata[i]={}
-                  this.moviedata[i].Movie = res.data.data.title
-                  console.log(this.moviedata[i].Movie)
-                  this.moviedata[i].Rate = this.reviewlist[i].rate
-                  this.moviedata[i].Review = this.reviewlist[i].review
-                  console.log(this.moviedata)
-              })
+                console.log(res);
+                console.log(res.data.data.title);
+                console.log(this.reviewlist[0].rate);
+                this.moviedata[i] = {};
+                this.moviedata[i].Movie = res.data.data.title;
+                console.log(this.moviedata[i].Movie);
+                this.moviedata[i].Rate = this.reviewlist[i].rate;
+                this.moviedata[i].Review = this.reviewlist[i].review;
+                console.log(this.moviedata);
+              });
           }
         });
+    },
+    onSubmit() {
+      axios
+        .get(
+          `/api/user/add_message?message=${this.inputMessage}&user_give_id=${this.user_id}&user_get_id=${this.userID}`
+        )
+        .then((res) => {
+          console.log(this.inputData);
+          if (res.status == 200) {
+            console.log(res.data);
+
+            this.$alert(`${res.data.message}`, "Message:", {
+              confirmButtonText: "ok",
+            });
+          }
+        });
+      window.location.reload();
     },
     goTo(path) {
       this.$router.replace(path);
