@@ -34,8 +34,8 @@ public class MovieController {
 
     @ApiOperation("Search movie API, return movie data")
     @GetMapping("searchMovieByGenre")
-    public Result searchMovieByGenre(Integer user_id, Integer type_id){
-        return movieService.findMovieByUserGenre(user_id, type_id);
+    public Result searchMovieByGenre(Integer user_id, String type_name){
+        return movieService.findMovieByUserGenre(user_id, type_name);
     }
 
     @ApiOperation("Search movie API, return movie data")

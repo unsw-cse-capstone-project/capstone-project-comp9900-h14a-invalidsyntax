@@ -101,8 +101,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Result findMovieByUserGenre(Integer user_id, Integer type_id) {
-        if (type_id == 0) {
+    public Result findMovieByUserGenre(Integer user_id, String type_name) {
+        if (StringUtils.isEmpty(type_name)) {
             return Result.fail("Genre can not be null !");
         }
 
@@ -112,6 +112,7 @@ public class MovieServiceImpl implements MovieService {
                 return Result.fail("User not find !");
             }
         }
+        Integer type_id = movieMapper.findMovieIDByName(type_name);
 
         List<Integer> movies_id = movieMapper.findMovieByGenre(type_id);
 
