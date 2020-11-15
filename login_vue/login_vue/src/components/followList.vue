@@ -21,6 +21,7 @@
         <side-bar> </side-bar>
         <!-- 主布局 -->
         <el-main>
+          <!-- 主页展示电影 -->
           <el-menu
             :default-active="activeIndex2"
             class="el-menu-demo"
@@ -32,16 +33,16 @@
           
           >
             
-            <el-menu-item index="1">Ban list</el-menu-item>
+            <el-menu-item index="1">Follow List</el-menu-item>
           </el-menu>
-          <!-- 主页展示电影 -->
-           <el-row :span="20" v-for="(o, index) in banlist" :key="index" style="margin-top: 20px">
+           <el-row :span="20" v-for="(o, index) in followlist" :key="index" style="margin-top: 20px">
           <el-card class="box-card">
               <div>
               <el-link style="float: left; padding: 0 0; font-size: 18px" type="primary" :href="'/user/' + o.user_id">{{ o.name }}</el-link>
               <el-button
                 type="text"
-                @click="cancelBan(o.user_id)"
+                @click="cancelFollow(o.user_id)"
+
                 >Cancel</el-button
               >
               </div>
@@ -59,20 +60,17 @@ import axios from "axios";
 export default {
   data() {
     return {
-      navBarIndex: "1",
-      currentDate: new Date(),
-      banlist: [],
-      banUser: [],
+      followUser: [],
+      followlist: [],
     };
   },
   created: function () {
     // called when loading the home page
     this.checkIfLogon();
-    this.getBanList();
+    this.getFollowList();
   },
   watch: {
-    // 如果路由有变化，会再次执行该方法
-    $route: "getBanList()",
+    $route: "getFollowList()",
   },
   methods: {
     handleSelect(key, keyPath) {
@@ -98,17 +96,17 @@ export default {
         this.$router.push("/login");
       }
     },
-    getBanList() {
+    getFollowList() {
       // get ban list
-      axios.get(`/api/user/showBanList?user_id=${this.user_id}`).then((res) => {
+      axios.get(`/api/user/showFollowList?user_id=${this.user_id}`).then((res) => {
         console.log(res.data.data);
-        this.banlist=res.data.data;
+        this.followlist=res.data.data;
       }); // API post
     },
-     cancelBan(x) {
+     cancelFollow(x) {
       axios
         .get(
-          `../api//user/cancel_ban_someone?user_id=${this.user_id}&ban_id=${x}`
+          `../api//user/cancel_follow_someone?user_id=${this.user_id}&follow_id=${x}`
         )
         .then((res) => {
           if (res.status == 200) {
