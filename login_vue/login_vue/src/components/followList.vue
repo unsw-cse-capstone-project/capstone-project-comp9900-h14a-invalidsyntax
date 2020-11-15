@@ -16,7 +16,7 @@
         <!-- 顶部导航栏 -->
         <nav-bar></nav-bar>
       </el-header>
-      <el-container style="height: 100%; padding-bottom: 60px">
+      <el-container style="max-width:1080px;padding-bottom: 60px;margin: 0 auto">
         <!-- 侧边导航栏 -->
         <side-bar> </side-bar>
         <!-- 主布局 -->
@@ -35,7 +35,7 @@
             
             <el-menu-item index="1">Follow List</el-menu-item>
           </el-menu>
-           <el-row :span="20" v-for="(o, index) in followlist" :key="index" style="margin-top: 20px">
+            <el-row :span="20" v-for="(o, index) in followlist" :key="index" style="margin-top: 20px">
           <el-card class="box-card">
               <div>
               <el-link style="float: left; padding: 0 0; font-size: 18px" type="primary" :href="'/user/' + o.user_id">{{ o.name }}</el-link>
@@ -47,7 +47,7 @@
               >
               </div>
           </el-card>
-           </el-row>
+          </el-row>
         </el-main>
       </el-container>
     </el-container>

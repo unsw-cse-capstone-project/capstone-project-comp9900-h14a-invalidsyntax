@@ -1,6 +1,6 @@
 <template>
   <div id="sidebar">
-  <el-aside width="250px">
+  <el-aside width="100%">
     <el-row class="tac">
       <el-col :span="24">
         <h3>Account Management</h3>

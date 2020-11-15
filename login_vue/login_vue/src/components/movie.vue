@@ -8,7 +8,7 @@
         <nav-bar></nav-bar>
       </el-header>
 
-      <el-container class="movie-page" style="width:1080px;padding-bottom: 60px;margin: 0 auto">
+      <el-container class="movie-page" style="max-width:1080px;padding-bottom: 60px;margin: 0 auto">
 
         <!-- 侧边布局 -->
         <!-- <el-aside width="200px">
@@ -44,8 +44,8 @@
                   </el-row>
                   <!-- <span> Movie Rating {{ movieData.rate }}/10 </span> -->
                   <el-row>
-                    <el-button v-if="!addedWish" type="primary"  @click="addToWishList()">Add to Wishlist</el-button>
-                    <el-button v-if="addedWish" type="success" @click="deleteFromWishList()">Added to Wish List!</el-button>
+                    <el-button v-if="!addedWish" type="primary" icon="el-icon-circle-plus-outline" @click="addToWishList()">Add to Wishlist</el-button>
+                    <el-button v-if="addedWish" type="danger" icon="el-icon-remove-outline" @click="deleteFromWishList()">Added to Wish List!</el-button>
                   </el-row>
                 </el-col>
 
@@ -76,6 +76,23 @@
               <el-row>
                 <div style="text-align: left; font-size:20px; padding: 6px 5px"> Movie overview</div>
                 <div class="movieOverview" style="text-align:left;padding: 6px 5px"> {{ movieData.overview }} </div>
+              </el-row>
+
+              <!-- Where to Watch -->
+              <el-divider></el-divider>
+              <el-row v-if="toWatchList">
+                <div style="text-align: left; font-size:20px; padding: 6px 5px"> Where to watch</div>
+                <el-col :span="4" v-for="(o, index) in toWatchList" :key = "o" :offset="index > 0 ? 1 : 0">
+                  <el-card class="watchPortal">
+                    <el-row>
+                      <img :src="o.Company.LogoUrl" style="margin: 0 auto;width:90%;">
+                    </el-row>
+
+                    <el-row style="padding: 10px;">
+                      <el-link type="primary" :href="o.WatchUrl">{{o.Watch}} </el-link>
+                    </el-row>
+                  </el-card>
+                </el-col>
               </el-row>
 
               <el-divider></el-divider>
@@ -175,11 +192,8 @@ export default {
     return {
       // movie info
       movieID: -1,
+      toWatchList: {},
       movieData: {},
-      // let movieData = res.data.data;
-      // this.movieTitle = movieData.title;
-      // this.movieOverview = movieData.overview;
-      // this.moviePoster = movieData.poster;
       // wishlist info
       addedWish: false,
       // review posting info
@@ -191,15 +205,16 @@ export default {
       user_name: '',
       user_id: 0, // default user id
       recMovieList: {},
+      bFetchMovie: false,
     };
   },
   created: function () {
     // called when loading the page
-    this.checkLogon();
-    this.getMovieDetail();
-    this.getReviewList();
-    this.checkAddedWishlist();
-    this.getRecommendMovie();
+      this.checkLogon();
+      this.getMovieDetail();
+      this.getReviewList();
+      this.checkAddedWishlist();
+      this.getRecommendMovie();
   },
   methods: {
     handleSelect(key, keyPath) {
@@ -237,6 +252,8 @@ export default {
             console.log("Response:");
             console.log(res.data.data);
             this.movieData = res.data.data;
+            // this.movieTitle = res.data.data.title;
+            this.getWhereToWatch(res.data.data.title);
           }
         }); // API post
     },
@@ -374,7 +391,28 @@ export default {
                 }
         )
       }
-    }
+    },
+    getWhereToWatch(movieTitle){
+      const options = {
+        method: 'POST',
+        url: 'https://watch-here.p.rapidapi.com/wheretowatch',
+        headers: {
+          'content-type': 'application/json',
+          'x-rapidapi-key': 'c1dff02b90msh3689238935371c8p1dca4bjsncb918e7d6c95',
+          'x-rapidapi-host': 'watch-here.p.rapidapi.com'
+        },
+          data: {mediaType: 'movie', title: movieTitle}
+        };
+
+      axios.request(options).then((response) => {
+        console.log("where to watch");
+        console.log(response.data);
+        this.toWatchList = response.data.slice(0, 5).filter(item => item.Watch != "Iglesia Fuente De Agua Viva");
+      }).catch(function (error) {
+        console.error(error);
+        }
+      )
+    },
   },
 };
 </script>
@@ -425,6 +463,14 @@ export default {
 }
 .detail-text{
   text-align: left;
+}
+.watchPortal{
+  padding-top: 0px;
+  width:100%;
+  height:0px;
+  margin:5px;
+  padding-bottom:130%;
+  border: 3px;
 }
 /* .movie-page {
     margin: 0 auto;
