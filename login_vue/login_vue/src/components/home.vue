@@ -1,13 +1,14 @@
 <template>
   <div>
-    <el-container style="position: absolute;left: 0;top: 0;bottom: 0;right: 0;overflow: hidden;">
+    <el-container>
       <el-header class="d-flex align-items-center" style="background: #74b9ff;">
         <!--Title -->
         <!-- <a class="h5 text-light mb-0 mr-auto">FilmFinder Home Page</a> -->
         <!-- 顶部导航栏 -->
         <nav-bar></nav-bar>
       </el-header>
-      <el-container style="height: 100%;padding-bottom: 60px;">
+
+      <el-container style="width:1080px;padding-bottom: 60px;margin: 0 auto">
       <!-- 侧边导航栏 -->
       <side-bar> </side-bar>
       <!-- 主布局 -->
@@ -16,9 +17,9 @@
         <el-row v-if="this.mList.length">
           <el-row v-for="(l, i) in mList" :key="i">
             <el-col :span="5" v-for="(o, index) in l" :key="index" :offset="index > 0 ? 1 : 0">
-              <el-card class="moviecard" :body-style="{ padding: '5px' }" shadow="hover" style="width:250px;height:300px">
+              <el-card class="moviecard" :body-style="{ padding: '3px' }" shadow="hover">
                 <el-row>
-                  <img :src="o.poster" class="moviePoster" style="float: left">
+                  <img :src="o.poster" class="moviePoster" >
 
                 </el-row>
                 <el-row style="padding: 14px;">
@@ -104,16 +105,22 @@ export default {
   }
   .moviecard{
     padding-top: 15px;
-    padding-right: 10px;
+    /* padding-right: 10px; */
     padding-bottom: 15px;
-    padding-left: 10px;
-    margin-top: 15px;
-    margin-bottom: 15px;
+    /* padding-left: 10px; */
+    width:100%;
+    height:0px;
+    margin:5px;
+    padding-bottom:130%;
+    border: 0px;
   }
   .moviePoster {
-    width: 160px;
-    height: 230px;
+    /* width: 160px;
+    height: 230px; */
     text-align: center;
+    margin: auto;
+    width:60%;
+    height:auto
   }
   .time {
       font-size: 13px;
