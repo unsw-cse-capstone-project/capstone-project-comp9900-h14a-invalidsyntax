@@ -8,7 +8,7 @@
         <nav-bar></nav-bar>
       </el-header>
 
-      <el-container style="width:1080px;padding-bottom: 60px;margin: 0 auto">
+      <el-container style="max-width:1080px;padding-bottom: 60px;margin: 0 auto">
       <!-- 侧边导航栏 -->
       <side-bar> </side-bar>
       <!-- 主布局 -->
@@ -105,13 +105,10 @@ export default {
   }
   .moviecard{
     padding-top: 15px;
-    /* padding-right: 10px; */
-    padding-bottom: 15px;
-    /* padding-left: 10px; */
     width:100%;
     height:0px;
     margin:5px;
-    padding-bottom:130%;
+    padding-bottom:150%;
     border: 0px;
   }
   .moviePoster {
