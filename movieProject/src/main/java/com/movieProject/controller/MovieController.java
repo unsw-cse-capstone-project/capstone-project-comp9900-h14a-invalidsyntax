@@ -38,6 +38,12 @@ public class MovieController {
         return movieService.findMovieByUserGenre(user_id, type_id);
     }
 
+    @ApiOperation("Search movie API, return movie data")
+    @GetMapping("searchMovieByDescription")
+    public Result searchMovieByDescription(Integer user_id, String des){
+        return movieService.findMovieByUserDescription(user_id, des);
+    }
+
     @ApiOperation("List movie API, return movie data")
     @GetMapping("list_top_movie")
     public Result listTopMoive(){

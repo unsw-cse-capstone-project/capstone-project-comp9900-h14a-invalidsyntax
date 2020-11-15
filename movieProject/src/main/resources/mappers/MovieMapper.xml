@@ -98,5 +98,14 @@
         FROM movie_type
         WHERE type_id = #{type_id}
     </select>
+    <select id="findMovieByDes" resultType="java.lang.Integer">
+        SELECT movie_id
+        FROM movie
+        <where>
+            <if test="des != null and des != ''">
+                and overview like concat('%', #{des}, '%')
+            </if>
+        </where>
+    </select>
 
 </mapper>

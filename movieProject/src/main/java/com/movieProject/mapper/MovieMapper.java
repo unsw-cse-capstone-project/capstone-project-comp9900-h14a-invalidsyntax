@@ -4,6 +4,7 @@ import com.movieProject.entity.Actor;
 import com.movieProject.entity.Genre;
 import com.movieProject.entity.Movie;
 import com.movieProject.utils.MyMapper;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -23,4 +24,5 @@ public interface MovieMapper extends MyMapper<Movie> {
     List<Integer> findMovieGenreUserReview(Integer user_id);
     List<Integer> findGenreMovieReviewed(Integer user_id,Integer type_id);
     List<Integer> findMovieByGenre(Integer type_id);
+    List<Integer> findMovieByDes(String des);
 }
