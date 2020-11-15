@@ -23,4 +23,5 @@ public interface MovieMapper extends MyMapper<Movie> {
     List<Integer> findMovieGenreUserReview(Integer user_id);
     List<Integer> findGenreMovieReviewed(Integer user_id,Integer type_id);
     List<Integer> findMovieByGenre(Integer type_id);
+    Integer findMovieIDByName(String type_name);
 }
