@@ -47,7 +47,7 @@
                   <el-link
                     style="float: left; padding: 0 0; font-size: 16px"
                     type="primary"
-                    :href="'/user/' + o.user_give_id"
+                    :href="'/#/user/' + o.user_give_id"
                     >{{ `${o.name}  ` }}</el-link
                   >
                 </span>
@@ -111,7 +111,7 @@ export default {
     },
     getMessageList() {
       axios
-        .get(`/api/user/showGetMessage?user_get_id=${this.user_id}`)
+        .get(`http://localhost:8080/user/showGetMessage?user_get_id=${this.user_id}`)
         .then((res) => {
           console.log(res.data.data);
           this.messageList = res.data.data;
@@ -120,7 +120,7 @@ export default {
     Delete(x) {
       axios
         .get(
-          `/api/user/delete_message?user_give_id=${x}&user_get_id=${this.user_id}`
+          `http://localhost:8080/user/delete_message?user_give_id=${x}&user_get_id=${this.user_id}`
         )
         .then((res) => {
           if (res.status == 200) {

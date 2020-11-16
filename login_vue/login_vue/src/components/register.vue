@@ -72,7 +72,7 @@ export default {
       console.log(this.form)
       this.$refs["form"].validate(valid => {
         if (valid) {
-          axios.get("api/user/register",{
+          axios.get("http://localhost:8080/user/register",{
                       params: this.form
                     }
                       )

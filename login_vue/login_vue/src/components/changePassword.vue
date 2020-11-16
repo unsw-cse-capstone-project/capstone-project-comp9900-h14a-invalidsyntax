@@ -64,7 +64,7 @@ export default {
     },
     getInfo() {
       axios
-        .get(`../api/user/searchUserById?user_id=${this.user_id}`)
+        .get(`http://localhost:8080/user/searchUserById?user_id=${this.user_id}`)
         .then((res) => {
             this.form.password = res.data.data.password
             this.form.gender = res.data.data.gender
@@ -74,7 +74,7 @@ export default {
 
     },
     onSubmit() {
-          axios.get(`api/user/update?user_id=${this.user_id}&password=${this.form.password}&gender=${this.form.gender}&age=${this.form.age}&email=${this.form.email}`)
+          axios.get(`http://localhost:8080/user/update?user_id=${this.user_id}&password=${this.form.password}&gender=${this.form.gender}&age=${this.form.age}&email=${this.form.email}`)
           .then(res => {
             if(res.status == 404){
               alert('Internel Error')

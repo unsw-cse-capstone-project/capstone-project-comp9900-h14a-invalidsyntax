@@ -25,7 +25,7 @@
                 <el-row style="padding: 14px;">
                   <span> Rate: {{o.rate}} </span><br>
                   <!-- <time class="time">{{ currentDate }}</time> -->
-                  <el-link type="primary" :href="'/movie/' + o.movie_id">{{ o.title }}</el-link>
+                  <el-link type="primary" :href="'/#/movie/' + o.movie_id">{{ o.title }}</el-link>
                 </el-row>
               </el-card>
             </el-col>
@@ -69,7 +69,7 @@ export default {
       },
       getMovieList(){ // 获得n个电影详情
         axios.get(
-          "./api/movie/list_top_movie"
+          "http://localhost:8080/movie/list_top_movie"
         )
         .then((res) => {
           if (res.status == 404) {

@@ -38,7 +38,7 @@
           <el-row :span="20" v-for="(o, index) in banlist" :key="index" style="margin-top: 20px">
           <el-card class="box-card">
               <div>
-              <el-link style="float: left; padding: 0 0; font-size: 18px" type="primary" :href="'/user/' + o.user_id">{{ o.name }}</el-link>
+              <el-link style="float: left; padding: 0 0; font-size: 18px" type="primary" :href="'/#/user/' + o.user_id">{{ o.name }}</el-link>
               <el-button
                 type="text"
                 @click="cancelBan(o.user_id)"
@@ -99,7 +99,7 @@ export default {
     },
     getBanList() {
       // get ban list
-      axios.get(`/api/user/showBanList?user_id=${this.user_id}`).then((res) => {
+      axios.get(`http://localhost:8080/user/showBanList?user_id=${this.user_id}`).then((res) => {
         console.log(res.data.data);
         this.banlist=res.data.data;
       }); // API post
@@ -107,7 +107,7 @@ export default {
      cancelBan(x) {
       axios
         .get(
-          `../api//user/cancel_ban_someone?user_id=${this.user_id}&ban_id=${x}`
+          `http://localhost:8080//user/cancel_ban_someone?user_id=${this.user_id}&ban_id=${x}`
         )
         .then((res) => {
           if (res.status == 200) {

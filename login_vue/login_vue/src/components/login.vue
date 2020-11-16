@@ -52,7 +52,7 @@ export default {
         if (valid) {
           console.log(this.form);
           axios
-            .get("api/user/login", {
+            .get("http://localhost:8080/user/login", {
               params: this.form,
             })
             .then((res) => {

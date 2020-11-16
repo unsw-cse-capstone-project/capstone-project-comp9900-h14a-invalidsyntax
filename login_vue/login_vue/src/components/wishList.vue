@@ -49,7 +49,7 @@
                   <el-row>{{ o.rate }}</el-row>
                   <div class="bottom clearfix">
                     <!-- <time class="time">{{ currentDate }}</time> -->
-                    <el-link type="primary" :href="'/movie/' + o.movie_id">{{ o.title }}</el-link>
+                    <el-link type="primary" :href="'/#/movie/' + o.movie_id">{{ o.title }}</el-link>
                   </div>
                 </div>
               </el-card>
@@ -110,7 +110,7 @@ export default {
     getwishList() {
       // 获得n个电影详情
       axios
-        .get(`/api/user/showWishList?user_id=${this.user_id}`)
+        .get(`http://localhost:8080/user/showWishList?user_id=${this.user_id}`)
         .then((res) => {
           console.log(res.data.data);
           this.wishlist = res.data.data;
@@ -120,7 +120,7 @@ export default {
             console.log(this.wishlist[i]);
             axios
               .get(
-                `/api/movie/searchMovieByID?movie_id=${this.wishlist[i]}&user_id=0`
+                `http://localhost:8080/movie/searchMovieByID?movie_id=${this.wishlist[i]}&user_id=0`
               )
               .then((res) => {
                 if (res.status == 404) {

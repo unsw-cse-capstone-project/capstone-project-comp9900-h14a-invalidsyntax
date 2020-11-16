@@ -38,7 +38,7 @@
             <el-card class="box-card" style="width: 100%">
               <div slot="header" class="clearfix">
                 <span>
-                    <el-link style="float: left; padding: 0 0; font-size: 18px" type="primary" :href="'/movie/' + o.movie_id">{{ `${o.movie_title}  `}}</el-link>
+                    <el-link style="float: left; padding: 0 0; font-size: 18px" type="primary" :href="'/#/movie/' + o.movie_id">{{ `${o.movie_title}  `}}</el-link>
                     <div style="float: left; padding: 0 100px; font-size: 18px "> Rated: {{ o.rate}}/10 </div>
                 </span>
                 <el-button style="float: right; padding: 3px 0 font-size: 8px" type="text" @click="DeleteReview(o.review_id)"
@@ -104,7 +104,7 @@ export default {
     },
     getReviewList() {
       axios
-        .get(`/api/review/List_user_review?user_id=${this.user_id}`)
+        .get(`http://localhost:8080/review/List_user_review?user_id=${this.user_id}`)
         .then((res) => {
           console.log(res.data.data);
           this.reviewlist = res.data.data;
@@ -112,7 +112,7 @@ export default {
           for (let i = 0; i < this.reviewlist.length; i++) {
             axios
               .get(
-                `/api/movie/searchMovieByID?movie_id=${this.reviewlist[i].movie_id}`
+                `http://localhost:8080/movie/searchMovieByID?movie_id=${this.reviewlist[i].movie_id}`
               )
               .then((res) => {
                 console.log(res);
@@ -131,7 +131,7 @@ export default {
     DeleteReview(x) {
       axios
         .get(
-          `/api/review/Delete_review?review_id=${x}`
+          `http://localhost:8080/review/Delete_review?review_id=${x}`
         )
         .then((res) => {
           if (res.status == 200) {

@@ -24,7 +24,7 @@ import sidebar from '@/components/sidebar.vue'; // sidebar
 Vue.component('side-bar', sidebar);
 
 const router = new VueRouter({
-  mode: "history",
+  // mode: "history",
   routes: [
     { path: "/", redirect: "/home" },
     { path: "/register", component: () => import("@/components/register.vue") },

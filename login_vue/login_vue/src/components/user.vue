@@ -110,7 +110,7 @@
                       <div style="padding: 14px">
                         <!-- <span>{{o.title}} </span> -->
                         <span>{{ o.title }}</span>
-                        <el-link type="primary" :href="'/movie/' + o.movie_id">{{ o.title }}</el-link>
+                        <el-link type="primary" :href="'/#/movie/' + o.movie_id">{{ o.title }}</el-link>
 
                       </div>
                     </el-card>
@@ -138,7 +138,7 @@
                     <el-link
                       style="float: left; padding: 0 0; font-size: 10px"
                       type="primary"
-                      :href="'/user/' + o.user_give_id"
+                      :href="'/#/user/' + o.user_give_id"
                       >{{ `${o.name}  ` }}</el-link
                     >
                   </span>
@@ -246,7 +246,7 @@ export default {
       console.log("userid:", this.userID);
 
       axios
-        .get(`../api/user/searchUserById?user_id=${this.userID}`)
+        .get(`http://localhost:8080/user/searchUserById?user_id=${this.userID}`)
         .then((res) => {
           if (res.status == 404) {
             alert("Internel Error");
@@ -269,7 +269,7 @@ export default {
     Ban() {
       axios
         .get(
-          `../api//user/ban_someone?user_id=${this.user_id}&ban_id=${this.userID}`
+          `http://localhost:8080//user/ban_someone?user_id=${this.user_id}&ban_id=${this.userID}`
         )
         .then((res) => {
           if (res.status == 200) {
@@ -282,7 +282,7 @@ export default {
     cancelBan() {
       axios
         .get(
-          `../api//user/cancel_ban_someone?user_id=${this.user_id}&ban_id=${this.userID}`
+          `http://localhost:8080//user/cancel_ban_someone?user_id=${this.user_id}&ban_id=${this.userID}`
         )
         .then((res) => {
           if (res.status == 200) {
@@ -295,7 +295,7 @@ export default {
     follow() {
       axios
         .get(
-          `../api//user/follow_someone?user_id=${this.user_id}&follow_id=${this.userID}`
+          `http://localhost:8080//user/follow_someone?user_id=${this.user_id}&follow_id=${this.userID}`
         )
         .then((res) => {
           if (res.status == 200) {
@@ -308,7 +308,7 @@ export default {
     cancelfollow() {
       axios
         .get(
-          `../api//user/cancel_follow_someone?user_id=${this.user_id}&follow_id=${this.userID}`
+          `http://localhost:8080//user/cancel_follow_someone?user_id=${this.user_id}&follow_id=${this.userID}`
         )
         .then((res) => {
           if (res.status == 200) {
@@ -320,7 +320,7 @@ export default {
     },
     getMessageList() {
       axios
-        .get(`/api/user/showGetMessage?user_get_id=${this.userID}`)
+        .get(`http://localhost:8080/user/showGetMessage?user_get_id=${this.userID}`)
         .then((res) => {
           console.log(res.data.data);
           this.messageList = res.data.data;
@@ -328,7 +328,7 @@ export default {
     },
     getwishList() {
       // 获得n个电影详情
-      axios.get(`/api/user/showWishList?user_id=${this.userID}`).then((res) => {
+      axios.get(`http://localhost:8080/user/showWishList?user_id=${this.userID}`).then((res) => {
         console.log(res.data.data);
         this.wishlist = res.data.data;
         console.log(this.wishlist.length);
@@ -337,7 +337,7 @@ export default {
           console.log(this.wishlist[i]);
           axios
             .get(
-              `/api/movie/searchMovieByID?movie_id=${this.wishlist[i]}&user_id=0`
+              `http://localhost:8080/movie/searchMovieByID?movie_id=${this.wishlist[i]}&user_id=0`
             )
             .then((res) => {
               if (res.status == 404) {
@@ -354,7 +354,7 @@ export default {
     },
     getReviewList() {
       axios
-        .get(`/api/review/List_user_review?user_id=${this.userID}`)
+        .get(`http://localhost:8080/review/List_user_review?user_id=${this.userID}`)
         .then((res) => {
           console.log(res.data.data);
           this.reviewlist = res.data.data;
@@ -362,7 +362,7 @@ export default {
           for (let i = 0; i < this.reviewlist.length; i++) {
             axios
               .get(
-                `/api/movie/searchMovieByID?movie_id=${this.reviewlist[i].movie_id}`
+                `http://localhost:8080/movie/searchMovieByID?movie_id=${this.reviewlist[i].movie_id}`
               )
               .then((res) => {
                 console.log(res);
@@ -381,7 +381,7 @@ export default {
     onSubmit() {
       axios
         .get(
-          `/api/user/add_message?message=${this.inputMessage}&user_give_id=${this.user_id}&user_get_id=${this.userID}`
+          `http://localhost:8080/user/add_message?message=${this.inputMessage}&user_give_id=${this.user_id}&user_get_id=${this.userID}`
         )
         .then((res) => {
           console.log(this.inputData);

@@ -76,7 +76,7 @@
               <!-- <span>{{o.title}} </span> -->
                 <!-- <time class="time">{{ currentDate }}</time> -->
                 <el-link
-                  type="primary" :href="'/movie/' + item.movie_id">{{ item.title }}
+                  type="primary" :href="'/#/movie/' + item.movie_id">{{ item.title }}
                 </el-link>
             </el-row>
           </el-card>
@@ -126,7 +126,7 @@ export default {
     onSubmitDes() {
       axios
         .get(
-          `api/movie/searchMovieByDescription?user_id=${this.user_id}&des=${this.inputData}`
+          `http://localhost:8080/movie/searchMovieByDescription?user_id=${this.user_id}&des=${this.inputData}`
         )
         .then((res) => {
           console.log(this.inputData);
@@ -148,7 +148,7 @@ export default {
     },
     onSubmitTitle() {
       axios
-        .get(`api/movie/searchMovieByTitle/?title=${this.inputData}`)
+        .get(`http://localhost:8080/movie/searchMovieByTitle/?title=${this.inputData}`)
         .then((res) => {
           console.log(this.inputData);
           if (res.status == 200) {
@@ -172,7 +172,7 @@ export default {
     onSubmitGenre() {
       axios
         .get(
-          `api/movie/searchMovieByGenre?user_id=${this.user_id}&type_name=${this.genre}`
+          `http://localhost:8080/movie/searchMovieByGenre?user_id=${this.user_id}&type_name=${this.genre}`
         )
         .then((res) => {
           console.log(this.genre);

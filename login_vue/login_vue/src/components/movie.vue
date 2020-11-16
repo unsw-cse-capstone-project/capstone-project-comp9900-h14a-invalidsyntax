@@ -104,7 +104,7 @@
 
                     <el-col :span = "18">
                       <div style="float: left; padding: 0px 5px; text-align: left;">
-                        <el-link type="primary" :href="'/user/' + o.user_id">{{ o.user_name }}</el-link>
+                        <el-link type="primary" :href="'/#/user/' + o.user_id">{{ o.user_name }}</el-link>
                       
                         <el-rate 
                           v-model="o.rate"
@@ -171,7 +171,7 @@
                   </el-row>
                   <el-row style="padding: 14px;">
                     <span> Rate: {{o.rate}} </span><br>
-                    <el-link type="primary" :href="'/movie/' + o.movie_id">{{ o.title }}</el-link>
+                    <el-link type="primary" :href="'/#/movie/' + o.movie_id">{{ o.title }}</el-link>
                   </el-row>
                 </el-card>
               </el-row>
@@ -240,7 +240,7 @@ export default {
       // console.log("movieID", this.movieID);
       axios
         .get(
-          "../api/movie/searchMovieByID", 
+          "http://localhost:8080/movie/searchMovieByID", 
           { params: { movie_id: this.movieID, user_id: this.user_id } }
         )
         .then((res) => {
@@ -261,7 +261,7 @@ export default {
       if (this.isLogon){
         this.addedWish = !this.addedWish;
         axios.get(
-            "../api/user/add_to_wishlist",
+            "http://localhost:8080/user/add_to_wishlist",
             { params: { user_id: this.user_id, movie_id: this.movieID } }
           )
           .then((res) => {
@@ -288,7 +288,7 @@ export default {
     },
     deleteFromWishList(){
       this.addedWish = !this.addedWish;
-      axios.get('../api/user/remove_from_wishlist', 
+      axios.get('http://localhost:8080/user/remove_from_wishlist', 
                   {params: { user_id: this.user_id, movie_id: this.movieID}})
                 .then((res) => {
                   if (res.status == 404) {
@@ -304,7 +304,7 @@ export default {
       )
     },
     getReviewList(){
-      axios.get('../api/review/List_movie_review', 
+      axios.get('http://localhost:8080/review/List_movie_review', 
                   {params: { user_id: this.user_id, movie_id: this.movieID}})
                 .then((res) => {
                   if (res.status == 404) {
@@ -319,7 +319,7 @@ export default {
       )
     },
     postReview(){
-      axios.get('../api/review/add_review', 
+      axios.get('http://localhost:8080/review/add_review', 
                   {params: { user_id: this.user_id, movie_id: this.movieID, rate: this.reviewRating, review: this.reviewInput }})
                 .then((res) => {
                   if (res.status == 404) {
@@ -339,7 +339,7 @@ export default {
     deleteReview(reviewID){
       axios
         .get(
-          `/api/review/Delete_review?review_id=${reviewID}`
+          `http://localhost:8080/review/Delete_review?review_id=${reviewID}`
         )
         .then((res) => {
           if (res.status == 200) {
@@ -356,12 +356,12 @@ export default {
       document.getElementById(`review_id_${review.review_id}`).style.display="none";
       document.getElementsByClassName("post-review")[0].scrollIntoView({block: "start", behavior: "smooth"}); //scroll to review
       axios.get(
-          `/api/review/Delete_review?review_id=${review.review_id}`
+          `http://localhost:8080/review/Delete_review?review_id=${review.review_id}`
       );
       
     },
     checkAddedWishlist(){
-      axios.get('../api/user/showWishList', 
+      axios.get('http://localhost:8080/user/showWishList', 
                   {params: { user_id: this.user_id}})
                 .then((res) => {
                   if (res.status == 404) {
@@ -378,7 +378,7 @@ export default {
     },
     getRecommendMovie(){
       if (this.isLogon === 'true'){
-        axios.get('../api/movie/recommend_movie', 
+        axios.get('http://localhost:8080/movie/recommend_movie', 
                   {params: { user_id: this.user_id}})
                 .then((res) => {
                   if (res.status == 404) {
