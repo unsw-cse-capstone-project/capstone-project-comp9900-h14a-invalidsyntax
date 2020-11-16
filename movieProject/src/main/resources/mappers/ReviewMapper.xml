@@ -18,23 +18,23 @@
 
     <insert id="addUserReview">
         INSERT INTO user_review(user_id, review_id)
-        VALUES (#{user_id}, #{review_id})
+        VALUES (#{arg0}, #{arg1})
     </insert>
 
     <insert id="addMovieReview">
         INSERT INTO movie_review(movie_id, review_id)
-        VALUES (#{movie_id}, #{review_id})
+        VALUES (#{arg0}, #{arg1})
     </insert>
     <delete id="deleteReview">
         DELETE
         FROM review
-        WHERE review_id = #{review_id}
+        WHERE review_id = #{arg0}
     </delete>
 
     <select id="listUserReview" resultType="com.movieProject.entity.Review">
         SELECT review_id
         FROM user_review
-        WHERE user_id = #{user_id}
+        WHERE user_id = #{arg0}
     </select>
 
     <select id="searchReviewByID" parameterType="com.movieProject.entity.Review"
@@ -47,19 +47,19 @@
     <select id="searchMovieID" resultType="java.lang.Integer">
         SELECT movie_id
         FROM movie_review
-        WHERE review_id = #{review_id}
+        WHERE review_id = #{arg0}
     </select>
 
     <select id="searchReviewByMovie" resultType="java.lang.Integer">
         SELECT review_id
         FROM movie_review
-        WHERE movie_id = #{movie_id}
+        WHERE movie_id = #{arg0}
     </select>
 
     <select id="searchUserByReview" resultType="java.lang.Integer">
         SELECT user_id
         FROM user_review
-        WHERE review_id = #{review_id}
+        WHERE review_id = #{arg0}
     </select>
 
 </mapper>

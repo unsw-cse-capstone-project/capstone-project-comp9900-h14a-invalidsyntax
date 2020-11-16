@@ -29,7 +29,7 @@
         FROM movie
         <where>
             <if test="title != null and title != ''">
-                and title like concat('%', #{title}, '%')
+                and title like concat('%', #{arg0}, '%')
             </if>
         </where>
     </select>
@@ -39,20 +39,20 @@
     <select id="findMovieByID" resultMap="BaseResultMap">
         SELECT *
         FROM movie
-        WHERE movie_id = #{movie_id}
+        WHERE movie_id = #{arg0}
     </select>
 
     <select id="findMovieIDByName" resultType="java.lang.Integer">
         SELECT type_id
         FROM type
-        WHERE type = #{type_name}
+        WHERE type = #{arg0}
     </select>
 
     <select id="findRateByUser" resultType="java.lang.Float">
         SELECT rate
         FROM review r, user_review ur, movie_review mr
-        WHERE ur.user_id = #{user_id} AND ur.review_id = r.review_id
-            AND ur.review_id = mr.review_id AND mr.movie_id = #{movie_id}
+        WHERE ur.user_id = #{arg1} AND ur.review_id = r.review_id
+            AND ur.review_id = mr.review_id AND mr.movie_id = #{arg0}
     </select>
 
     <select id="listMovie" resultType="com.movieProject.entity.Movie">
@@ -63,19 +63,19 @@
     <select id="findMovieDirector" resultType="com.movieProject.entity.Actor">
         SELECT actor.actor_id, actor.name, actor.gender
         FROM movie_director md, actor
-        WHERE md.movie_id = #{movie_id} and md.director_id = actor.actor_id
+        WHERE md.movie_id = #{arg0} and md.director_id = actor.actor_id
     </select>
 
     <select id="findMovieGenre" resultType="com.movieProject.entity.Genre">
         SELECT type.type_id, type.type
         FROM movie_type mt, type
-        WHERE mt.movie_id = #{movie_id} AND type.type_id = mt.type_id
+        WHERE mt.movie_id = #{arg0} AND type.type_id = mt.type_id
     </select>
 
     <select id="findMovieActor" resultType="com.movieProject.entity.Actor">
         SELECT actor.actor_id, actor.name, actor.gender
         FROM movie_actor ma, actor
-        WHERE ma.movie_id = #{movie_id} and ma.actor_id = actor.actor_id
+        WHERE ma.movie_id = #{arg0} and ma.actor_id = actor.actor_id
     </select>
 
     <update id="updateMovieRate" parameterType="com.movieProject.entity.Movie">
@@ -88,7 +88,7 @@
     <select id="findMovieGenreUserReview" resultType="java.lang.Integer">
         SELECT distinct mt.type_id
         FROM user_review ur, movie_review mr, movie_type mt
-        WHERE ur.user_id = #{user_id} and ur.review_id = mr.review_id and mr.movie_id = mt.movie_id
+        WHERE ur.user_id = #{arg0} and ur.review_id = mr.review_id and mr.movie_id = mt.movie_id
     </select>
 
     <select id="findGenreMovieReviewed" resultType="java.lang.Integer">
@@ -96,20 +96,20 @@
         FROM	user_review
         LEFT JOIN movie_review ON user_review.review_id = movie_review.review_id
         LEFT JOIN movie_type ON movie_review.movie_id = movie_type.movie_id
-        WHERE user_id = #{user_id} AND type_id = #{type_id}
+        WHERE user_id = #{arg0} AND type_id = #{arg1}
     </select>
 
     <select id="findMovieByGenre" resultType="java.lang.Integer">
         SELECT movie_id
         FROM movie_type
-        WHERE type_id = #{type_id}
+        WHERE type_id = #{arg0}
     </select>
     <select id="findMovieByDes" resultType="java.lang.Integer">
         SELECT movie_id
         FROM movie
         <where>
             <if test="des != null and des != ''">
-                and overview like concat('%', #{des}, '%')
+                and overview like concat('%', #{arg0}, '%')
             </if>
         </where>
     </select>
