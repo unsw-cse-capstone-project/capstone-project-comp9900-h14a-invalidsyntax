@@ -16,11 +16,11 @@ Vue.use(ElementUI);
 import * as VueCookies from 'vue-cookies';
 Vue.use(VueCookies);
 
-// 导航条组件
-import navigationbar from '@/components/navigationbar.vue'; // 顶部导航栏
+// Navi bar
+import navigationbar from '@/components/navigationbar.vue';
 Vue.component('nav-bar', navigationbar);
 
-import sidebar from '@/components/sidebar.vue'; // 侧边导航栏
+import sidebar from '@/components/sidebar.vue'; // sidebar
 Vue.component('side-bar', sidebar);
 
 const router = new VueRouter({

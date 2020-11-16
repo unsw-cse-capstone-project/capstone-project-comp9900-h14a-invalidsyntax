@@ -13,13 +13,13 @@
       <el-header class="d-flex align-items-center" style="background: #74b9ff">
         <!--Title -->
         <!-- <a class="h5 text-light mb-0 mr-auto">FilmFinder Home Page</a> -->
-        <!-- 顶部导航栏 -->
+        <!-- Top-Nav-Bar -->
         <nav-bar></nav-bar>
       </el-header>
       <el-container style="max-width:1080px;padding-bottom: 60px;margin: 0 auto">
-        <!-- 侧边导航栏 -->
+        <!-- Side-Nav-Bar -->
         <side-bar> </side-bar>
-        <!-- 主布局 -->
+        <!-- Main layout -->
         <el-main>
           <el-menu
             :default-active="activeIndex2"
@@ -34,8 +34,8 @@
             
             <el-menu-item index="1">Ban list</el-menu-item>
           </el-menu>
-          <!-- 主页展示电影 -->
-           <el-row :span="20" v-for="(o, index) in banlist" :key="index" style="margin-top: 20px">
+          <!--  -->
+          <el-row :span="20" v-for="(o, index) in banlist" :key="index" style="margin-top: 20px">
           <el-card class="box-card">
               <div>
               <el-link style="float: left; padding: 0 0; font-size: 18px" type="primary" :href="'/user/' + o.user_id">{{ o.name }}</el-link>
@@ -46,7 +46,7 @@
               >
               </div>
           </el-card>
-           </el-row>
+          </el-row>
         </el-main>
       </el-container>
     </el-container>
@@ -71,7 +71,6 @@ export default {
     this.getBanList();
   },
   watch: {
-    // 如果路由有变化，会再次执行该方法
     $route: "getBanList()",
   },
   methods: {
@@ -84,9 +83,9 @@ export default {
     checkIfLogon() {
       this.isLogon = false;
       if (this.$cookies.isKey("isLogon")) {
-        // 检查是否有Logon的coockie
+        // check cookies
         if (this.$cookies.get("isLogon") == "true") {
-          // 如果已登录
+          // If login
           this.isLogon = "true";
           this.user_name = this.$cookies.get("user_name");
           this.user_id = this.$cookies.get("user_id");

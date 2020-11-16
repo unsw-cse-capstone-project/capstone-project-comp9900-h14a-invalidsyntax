@@ -4,12 +4,12 @@
       <el-header class="d-flex align-items-center" style="background: #74b9ff">
         <!--Title -->
         <!-- <a class="h5 text-light mb-0 mr-auto">FilmFinder Home Page</a> -->
-        <!-- 顶部导航栏 -->
+        <!-- Top-Nav-Bar -->
         <nav-bar></nav-bar>
       </el-header>
       <el-container style="max-width:1080px;padding-bottom: 60px;margin: 0 auto">
 
-        <!-- 主布局 -->
+        <!-- Main layout -->
         <el-main>
           <!-- User Info -->
           <el-card class="info-card" shadow="hover" >
@@ -109,11 +109,7 @@
                       <img :src="o.poster" class="moviePoster">
                       <div style="padding: 14px">
                         <!-- <span>{{o.title}} </span> -->
-<<<<<<< HEAD
-                        <el-row>{{ o.rate}}</el-row>
-=======
                         <span>{{ o.title }}</span>
->>>>>>> 9c30d47e902ca80d0acd91b510974b2dd433f964
                         <el-link type="primary" :href="'/movie/' + o.movie_id">{{ o.title }}</el-link>
 
                       </div>

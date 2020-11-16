@@ -4,16 +4,16 @@
       <el-header class="d-flex align-items-center" style="background: #74b9ff;">
         <!--Title -->
         <!-- <a class="h5 text-light mb-0 mr-auto">FilmFinder Home Page</a> -->
-        <!-- 顶部导航栏 -->
+        <!-- Top-Nav-Bar -->
         <nav-bar></nav-bar>
       </el-header>
 
       <el-container style="max-width:1080px;padding-bottom: 60px;margin: 0 auto">
-      <!-- 侧边导航栏 -->
+      <!-- Side-Nav-Bar -->
       <side-bar> </side-bar>
-      <!-- 主布局 -->
+      <!-- Main layout -->
       <el-main>
-        <!-- 主页展示电影 -->
+        <!--  -->
         <el-row v-if="this.mList.length">
           <el-row v-for="(l, i) in mList" :key="i">
             <el-col :span="5" v-for="(o, index) in l" :key="index" :offset="index > 0 ? 1 : 0">
@@ -55,7 +55,7 @@ export default {
       this.getMovieList();
     },
     watch: {
-    // 如果路由有变化，会再次执行该方法
+    // Detect router change
     '$route': 'getMovieList()'
     },
     methods: {

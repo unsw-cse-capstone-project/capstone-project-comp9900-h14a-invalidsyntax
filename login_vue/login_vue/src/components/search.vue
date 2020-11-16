@@ -1,6 +1,7 @@
 <template>
   <div>
     <nav-bar></nav-bar>
+    <div style="max-width:1080px;padding-bottom: 60px;margin: 0 auto">
     <el-card class="info-card" shadow="hover">
       <el-input
         class="search"
@@ -21,7 +22,7 @@
       </el-row>
     </el-card>
     <el-card class="info-card" shadow="hover">
-      <el-form ref="form" :model="form" label-width="80px">
+      <el-form :model="form" label-width="80px">
         <el-form-item label="Genre:">
           <el-radio-group v-model="genre">
             <el-row style="margin-top: 20px">
@@ -59,29 +60,30 @@
 
 
 
-    <el-card class="info-card" shadow="hover">
-       
-
-      <el-row style="margin-top: 20px">
+    <el-card v-if="moiveData.length" class="info-card" shadow="hover">
+      
+      <el-row v-for="irow in Array(Math.ceil(moiveData.length/5)).keys()" :key="irow" style="margin-top: 20px">
         <el-col
-          :span="5"
-          v-for="(item, index) of moiveData"
+          :span="4"
+          v-for="(item, index) of moiveData.slice(irow*5, (irow+1)*5)"
           :key="index"
           :offset="index > 0 ? 1 : 0"
         >
           <el-card class="moviecard" :body-style="{ padding: '3px' }" shadow="hover">
-            <el-row> <img :src="item.poster" class="image" /> </el-row>
+            <el-row> <img :src="item.poster" class="moviePoster"> </el-row>
             <el-row style="padding: 14px">
               <span> Rate: {{item.rate}} </span><br>
               <!-- <span>{{o.title}} </span> -->
                 <!-- <time class="time">{{ currentDate }}</time> -->
                 <el-link
-                  type="primary" ::href="'/movie/' + item.movie_id">{{ item.title }}</el-link>
+                  type="primary" :href="'/movie/' + item.movie_id">{{ item.title }}
+                </el-link>
             </el-row>
           </el-card>
         </el-col>
       </el-row>
     </el-card>
+    </div>
   </div>
 </template>
 
@@ -94,6 +96,7 @@ export default {
       inputData: "",
       moiveData: [],
       genre: "",
+      form: {},
     };
   },
   created: function () {
@@ -201,5 +204,13 @@ export default {
   margin: 20px;
   /* padding-bottom:130%; */
   /* border: 5px; */
+}
+.moviePoster {
+  /* width: 160px;
+  height: 230px; */
+  text-align: center;
+  margin: auto;
+  width:60%;
+  height:auto
 }
 </style>

@@ -50,9 +50,7 @@ export default {
       checkIfLogon() {
       this.isLogon = false;
       if (this.$cookies.isKey("isLogon")) {
-        // 检查是否有Logon的coockie
         if (this.$cookies.get("isLogon") == "true") {
-          // 如果已登录
           this.isLogon = "true";
           this.user_name = this.$cookies.get("user_name");
           this.user_id = this.$cookies.get("user_id");
