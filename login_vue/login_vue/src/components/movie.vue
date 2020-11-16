@@ -4,17 +4,17 @@
       <el-header class="d-flex align-items-center" style="background: #74b9ff">
         <!--Title -->
         <!-- <a class="h5 text-light mb-0 mr-auto">FilmFinder Home Page</a> -->
-        <!-- 顶部导航栏 -->
+        <!-- Top-Nav-Bar -->
         <nav-bar></nav-bar>
       </el-header>
 
       <el-container class="movie-page" style="max-width:1080px;padding-bottom: 60px;margin: 0 auto">
 
-        <!-- 侧边布局 -->
+        <!-- Side Layout -->
         <!-- <el-aside width="200px">
         </el-aside> -->
 
-        <!-- 主布局 -->
+        <!-- Main layout -->
         <el-main>
 
           <!-- Movie poster, rate and Movie Detail  -->
@@ -28,7 +28,7 @@
               <el-row style="margin-top: 15px;margin-bottom: 15px;">
                 <el-col :span="8">
                   <img :src="movieData.poster" class="image" />
-                  <!-- 评分和add wishlist区域 -->
+                  <!-- Rate and add wishlist -->
                   <el-row style = "padding-top: 15px;font-size: 125%;color: #FF9900">
                     FilmFinder Rating:
                     <el-rate
@@ -74,7 +74,7 @@
 
               <el-divider></el-divider>
               <el-row>
-                <div style="text-align: left; font-size:20px; padding: 6px 5px"> Movie overview</div>
+                <div style="text-align: left; font-size:20px; padding: 6px 5px"> Movie Description</div>
                 <div class="movieOverview" style="text-align:left;padding: 6px 5px"> {{ movieData.overview }} </div>
               </el-row>
 
@@ -82,7 +82,7 @@
               <el-divider></el-divider>
               <el-row v-if="toWatchList">
                 <div style="text-align: left; font-size:20px; padding: 6px 5px"> Where to watch</div>
-                <el-col :span="4" v-for="(o, index) in toWatchList" :key = "o" :offset="index > 0 ? 1 : 0">
+                <el-col :span="4" v-for="(o, index) in toWatchList" :key = "o.Watch" :offset="index > 0 ? 1 : 0">
                   <el-card class="watchPortal">
                     <el-row>
                       <img :src="o.Company.LogoUrl" style="margin: 0 auto;width:90%;">
@@ -225,8 +225,8 @@ export default {
     },
     checkLogon(){
       this.isLogon = false;
-      if (this.$cookies.isKey('isLogon')){ // 检查是否有Logon的coockie
-        if (this.$cookies.get('isLogon') == 'true'){ // 如果已登录
+      if (this.$cookies.isKey('isLogon')){ 
+        if (this.$cookies.get('isLogon') == 'true'){ 
           this.isLogon = 'true';
           this.user_name = this.$cookies.get('user_name');
           this.user_id = parseInt(this.$cookies.get('user_id'));
@@ -236,11 +236,11 @@ export default {
     },
     getMovieDetail() {
       // Obtain details of requested movie ID
-      this.movieID = parseInt(this.$route.params.id); //qeury he params 区别
+      this.movieID = parseInt(this.$route.params.id); 
       // console.log("movieID", this.movieID);
       axios
         .get(
-          "../api/movie/searchMovieByID", // 关键：..表示请求上一级
+          "../api/movie/searchMovieByID", 
           { params: { movie_id: this.movieID, user_id: this.user_id } }
         )
         .then((res) => {
@@ -261,7 +261,7 @@ export default {
       if (this.isLogon){
         this.addedWish = !this.addedWish;
         axios.get(
-            "../api/user/add_to_wishlist", // 关键：..表示请求上一级
+            "../api/user/add_to_wishlist",
             { params: { user_id: this.user_id, movie_id: this.movieID } }
           )
           .then((res) => {
@@ -407,7 +407,7 @@ export default {
       axios.request(options).then((response) => {
         console.log("where to watch");
         console.log(response.data);
-        this.toWatchList = response.data.slice(0, 5).filter(item => item.Watch != "Iglesia Fuente De Agua Viva");
+        this.toWatchList = response.data.filter(item => Array('Amazon', 'Justwatch', 'Netflix').includes(item.Watch) );
       }).catch(function (error) {
         console.error(error);
         }

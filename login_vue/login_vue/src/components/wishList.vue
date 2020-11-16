@@ -13,15 +13,15 @@
       <el-header class="d-flex align-items-center" style="background: #74b9ff">
         <!--Title -->
         <!-- <a class="h5 text-light mb-0 mr-auto">FilmFinder Home Page</a> -->
-        <!-- 顶部导航栏 -->
+        <!-- Top-Nav-Bar -->
         <nav-bar></nav-bar>
       </el-header>
       <el-container style="max-width:1080px;padding-bottom: 60px;margin: 0 auto">
-        <!-- 侧边导航栏 -->
+        <!-- Side-Nav-Bar -->
         <side-bar> </side-bar>
-        <!-- 主布局 -->
+        <!-- Main layout -->
         <el-main>
-          <!-- 主页展示电影 -->
+          <!--  -->
           <el-menu
             :default-active="activeIndex2"
             class="el-menu-demo"
@@ -30,7 +30,6 @@
             background-color="#545c64"
             text-color="#fff"
             active-text-color="#ffd04b"
-       
           >
             
             <el-menu-item index="1">Wish List</el-menu-item>
@@ -81,7 +80,7 @@ export default {
     this.getwishList();
   },
   watch: {
-    // 如果路由有变化，会再次执行该方法
+    // Detect router change
     $route: "getwishList()",
   },
   methods: {

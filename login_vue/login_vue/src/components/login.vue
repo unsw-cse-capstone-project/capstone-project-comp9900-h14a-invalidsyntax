@@ -62,7 +62,7 @@ export default {
                 console.log(res);
               } else if (res.status == 200) {
                 if (res.data.code == 200) {
-                  // 如果成功登录
+                  // If login success
                   this.$alert("Login Successful!", "Message:", {
                     confirmButtonText: "ok",
                   });
@@ -70,7 +70,7 @@ export default {
                   console.log(res);
                   this.$router.push("/home");
 
-                  //记录Cookie
+                  //Record Cookie
                   this.$cookies.set("user_id", res.data.data.user_id);
                   this.$cookies.set("user_name", res.data.data.name);
                   this.$cookies.set("isLogon", "true");

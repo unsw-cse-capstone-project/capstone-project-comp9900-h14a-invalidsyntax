@@ -1,7 +1,7 @@
 
 
 <template>
-  <!-- 顶部导航栏组件 -->
+  <!-- Top-Nav-Bar Component -->
   <div id="navigationbar">
   <el-menu
     :default-active="navBarIndex"
@@ -17,7 +17,7 @@
     <el-menu-item index="3">My center</el-menu-item>
     <!-- <el-menu-item index="4">b4</el-menu-item>
     <el-menu-item index="5">b5</el-menu-item> --> 
-    <!-- 如果已经登录 -->
+    <!-- If login -->
     <el-submenu v-if = "isLogon === 'true'" index="100">
       <template slot="title">
       <!-- <el-avatar :size="small" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"></el-avatar> -->
@@ -26,7 +26,7 @@
       <!-- <el-menu-item index="100-1">User Center</el-menu-item> -->
       <el-menu-item index="100-2">Log out</el-menu-item>
     </el-submenu>
-    <!-- 如果未登录 -->
+    <!-- If not login -->
     <template v-else> 
       <el-menu-item  index="6">Login</el-menu-item>
       <el-menu-item  index="7">Register</el-menu-item>
@@ -54,8 +54,8 @@ export default {
     methods: {
       checkIfLogon(){   
         this.isLogon = false;
-        if (this.$cookies.isKey('isLogon')){ // 检查是否有Logon的coockie
-          if (this.$cookies.get('isLogon') == 'true'){ // 如果已登录
+        if (this.$cookies.isKey('isLogon')){ 
+          if (this.$cookies.get('isLogon') == 'true'){ 
             this.isLogon = 'true';
             this.user_name = this.$cookies.get('user_name');
             this.user_id = this.$cookies.get('user_id');
