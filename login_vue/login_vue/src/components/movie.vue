@@ -435,7 +435,7 @@ export default {
         url: 'https://watch-here.p.rapidapi.com/wheretowatch',
         headers: {
           'content-type': 'application/json',
-          'x-rapidapi-key': 'c1dff02b90msh3689238935371c8p1dca4bjsncb918e7d6c95',
+          'x-rapidapi-key': '***secret***',
           'x-rapidapi-host': 'watch-here.p.rapidapi.com'
         },
           data: {mediaType: 'movie', title: movieTitle}
