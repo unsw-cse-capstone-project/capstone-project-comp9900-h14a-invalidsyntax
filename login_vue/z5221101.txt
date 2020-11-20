@@ -30,3 +30,55 @@ Installed the environment of the project'
 
 What will we do:
 Complete the skeleton the website
+
+Week5:
+What have done:
+Compelete the Login/Register Page
+Finished home page skeleton
+Added navigation bar in homepage
+
+What will we do:
+Refine the home page and login/register page
+
+Week 6:
+What have done:
+Added cookie function to login so that user can stay logged in one session
+Added change information function
+The home page can show top 20 movie now
+
+What will we do:
+Refine the home page
+Add movie detail page
+
+Week7:
+What have done:
+Added movie detail page
+Now the movie edtail can be displayed in the movie page, including title, description and poster
+
+What will we do:
+Refine the movie page
+Add review and rate function
+
+Week 8:
+What have done:
+Now user can post rate and review in the movie page
+Now user can add a movie to wishlist and remove a movie from it
+
+What will we do:
+Add novel functions and refine the whole website
+
+Week 9:
+What have done:
+Now user can edit and delete his review
+Now user can follow other users
+Now user can send message to other users
+Now user can ban other users
+Add movie recommendations in the movie page
+Add search by genres and descriptions
+Add where to watch page, so that users can go to watch the movie very conveniently
+A lot of beautifying work, now the website has a proper UI and style
+Build the project so that vLab can run it
+Write the report
+
+What will we do:
+Finish the project and prepare the final demo
