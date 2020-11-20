@@ -428,7 +428,7 @@ export default {
         }); // API post
         // console.log(this.mList);
       },
-    // 'x-rapidapi-key': 'c1dff02b90msh3689238935371c8p1dca4bjsncb918e7d6c95',
+    // 'x-rapidapi-key': '***secret***',
     getWhereToWatch(movieTitle){
       const options = {
         method: 'POST',
