@@ -28,7 +28,7 @@
                   </el-table>
                 </div>
               </el-row>
-              <el-row style="margin-top: 20px" gutter="40">
+              <el-row v-if="user_id != userID" style="margin-top: 20px" gutter="40">
                 <el-col :span="12">
                   <el-button
                     type="danger"
@@ -67,7 +67,7 @@
                 <el-table-column prop="review" label="Review"> </el-table-column>
               </el-table>
 
-              <el-row style="margin-top: 20px" gutter="40">
+              <el-row v-if="user_id != userID" style="margin-top: 20px" gutter="40">
                 <el-col :span="12">
                   <el-button
                     type="success"
@@ -187,11 +187,13 @@ export default {
   data() {
     return {
       userID: -1,
+      user_id: -1,
       inputMessage: "",
       userData: {},
       mList: [],
       wishlist: [],
       messageList: [],
+      reviewlist: {},
       tableData: [
         {
           laber: "Username",
@@ -362,7 +364,7 @@ export default {
           for (let i = 0; i < this.reviewlist.length; i++) {
             axios
               .get(
-                `http://localhost:8080/movie/searchMovieByID?movie_id=${this.reviewlist[i].movie_id}`
+                `http://localhost:8080/movie/searchMovieByID?movie_id=${this.reviewlist[i].movie_id}&user_id=${this.userID}`
               )
               .then((res) => {
                 console.log(res);

@@ -16,7 +16,7 @@
         <!-- Top-Nav-Bar -->
         <nav-bar></nav-bar>
       </el-header>
-      <el-container style="max-width:1080px;padding-bottom: 60px;margin: 0 auto">
+      <el-container style="max-width:1080px;min-width:720px;padding-bottom: 60px;margin: 0 auto">
         <!-- Side-Nav-Bar -->
         <side-bar> </side-bar>
         <!-- Main layout -->
@@ -32,7 +32,7 @@
           
           >
             
-            <el-menu-item index="1">Ban list</el-menu-item>
+            <el-menu-item index="1" style="min-width:720px;">Ban list</el-menu-item>
           </el-menu>
           <!--  -->
           <el-row :span="20" v-for="(o, index) in banlist" :key="index" style="margin-top: 20px">

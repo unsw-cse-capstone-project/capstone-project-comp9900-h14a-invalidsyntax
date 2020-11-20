@@ -161,7 +161,7 @@
             </el-col>
 
             <!-- Movie Recommend -->
-            <el-col v-if="this.isLogon === 'true'" :span= "6">
+            <el-col v-if="this.recMovieList.length > 0" :span= "6">
               <span> Recommend For You:</span>
               <el-row v-for="(o, index) in this.recMovieList" :key="index" :offset="index > 0 ? 0 : 0">
                 <el-card class="rec-movie-card" :body-style="{ padding: '5px' }" shadow="hover" >
@@ -176,6 +176,22 @@
                 </el-card>
               </el-row>
             </el-col>
+            <el-col v-else :span= "6">
+              <span> Recommend For You:</span>
+              <el-row v-for="(o, index) in this.topMovieList" :key="index" :offset="index > 0 ? 0 : 0">
+                <el-card class="rec-movie-card" :body-style="{ padding: '5px' }" shadow="hover" >
+                  <el-row>
+                    <img :src="o.poster" class="moviePoster" style="margin: auto;width:120px;height:170px">
+
+                  </el-row>
+                  <el-row style="padding: 14px;">
+                    <span> Rate: {{o.rate}} </span><br>
+                    <el-link type="primary" :href="'/#/movie/' + o.movie_id">{{ o.title }}</el-link>
+                  </el-row>
+                </el-card>
+              </el-row>
+            </el-col>
+            
 
           
         </el-main>
@@ -206,6 +222,7 @@ export default {
       user_id: 0, // default user id
       recMovieList: {},
       bFetchMovie: false,
+      topMovieList: {},
     };
   },
   created: function () {
@@ -215,6 +232,7 @@ export default {
       this.getReviewList();
       this.checkAddedWishlist();
       this.getRecommendMovie();
+      this.getMovieList();
   },
   methods: {
     handleSelect(key, keyPath) {
@@ -392,6 +410,25 @@ export default {
         )
       }
     },
+    getMovieList(){ // 获得n个电影详情
+        axios.get(
+          "http://localhost:8080/movie/list_top_movie"
+        )
+        .then((res) => {
+          if (res.status == 404) {
+            alert("Internel Error");
+            console.log("Response:");
+            console.log(res);
+          } else if (res.status == 200) {
+            // console.log(res.data.data);
+            // this.mList.push(res.data.data);
+            const nShow = 5;
+            this.topMovieList = res.data.data.slice(0, nShow);
+          }
+        }); // API post
+        // console.log(this.mList);
+      },
+    // 'x-rapidapi-key': 'c1dff02b90msh3689238935371c8p1dca4bjsncb918e7d6c95',
     getWhereToWatch(movieTitle){
       const options = {
         method: 'POST',

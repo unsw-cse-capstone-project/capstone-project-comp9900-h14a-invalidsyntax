@@ -33,7 +33,7 @@
           
           >
             
-            <el-menu-item index="1">Follow List</el-menu-item>
+            <el-menu-item index="1" style="min-width:720px;">Follow List</el-menu-item>
           </el-menu>
             <el-row :span="20" v-for="(o, index) in followlist" :key="index" style="margin-top: 20px">
           <el-card class="box-card">

@@ -32,14 +32,14 @@
           
           >
             
-            <el-menu-item index="1">Review List</el-menu-item>
+            <el-menu-item index="1" style="min-width:720px;">Review List</el-menu-item>
           </el-menu>
           <el-row :span="10" v-for="(o, index) of reviewlist" :key="index" style="margin-top: 20px">
             <el-card class="box-card" style="width: 100%">
               <div slot="header" class="clearfix">
                 <span>
                     <el-link style="float: left; padding: 0 0; font-size: 18px" type="primary" :href="'/#/movie/' + o.movie_id">{{ `${o.movie_title}  `}}</el-link>
-                    <div style="float: left; padding: 0 100px; font-size: 18px "> Rated: {{ o.rate}}/10 </div>
+                    <div style="float: left; padding: 0 100px; font-size: 18px "> Rated: {{ o.rate}}/5 </div>
                 </span>
                 <el-button style="float: right; padding: 3px 0 font-size: 8px" type="text" @click="DeleteReview(o.review_id)"
                   >Delete Review</el-button

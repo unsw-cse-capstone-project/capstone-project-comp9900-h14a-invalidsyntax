@@ -178,7 +178,16 @@ export default {
           console.log(this.genre);
           if (res.status == 200) {
             console.log(res.data);
+            res.data.data.sort((item1,item2) => {
+                if (parseFloat(item2.rate)-parseFloat(item1.rate) === 0){
+                  return item1.title.localeCompare(item2.title)
+                }
+                else{
+                  return (parseFloat(item2.rate)-parseFloat(item1.rate));
+                }
+              })
             this.moiveData = res.data.data;
+            this.moiveData;
 
             console.log(this.moiveData[0].movie_id);
             console.log(this.moiveData);
